@@ -28,7 +28,7 @@ class App extends Component {
     // } catch (error) {
     //   console.log(error);
     // }
-    this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
+    // this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
     //this.signOutStudent();
     //window.location = "/login";
   }
@@ -52,7 +52,7 @@ class App extends Component {
     ) : (
       <Router>
         <div className="container">
-          <Navbar />
+          <Navbar signOutStudent={this.signOutStudent} />
           <br />
           <Switch>
             <Route path="/" exact component={HomePage} />

@@ -8,41 +8,70 @@ export default class Navbar extends Component {
         style={{
           backgroundColor: "#a42323",
           justifyContent: "Center",
-          flex: 1
+          flex: 1,
+          width: "1200px",
+          marginLeft: "-40px"
         }}
         className="navbar navbar-dark navbar-expand-lg"
       >
         <Link to="/" className="navbar-brand">
-          Student Center
+          Martian College
         </Link>
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
-            <li className="navbar-item">
+            <li style={{ marginLeft: 25 }} className="navbar-item">
               <Link to="/" className="nav-link">
                 HOME
               </Link>
             </li>
-            <li className="navbar-item">
+            <li style={{ marginLeft: 25 }} className="navbar-item">
               <Link to="/class" className="nav-link">
                 CLASS
               </Link>
             </li>
-            <li className="navbar-item">
+            <li style={{ marginLeft: 25 }} className="navbar-item">
               <Link to="/grades" className="nav-link">
                 GRADES
               </Link>
             </li>
-            <li className="navbar-item">
+            <li style={{ marginLeft: 25 }} className="navbar-item">
               <Link to="/finaid" className="nav-link">
                 AIDS AND LOANS
               </Link>
             </li>
-            <li className="navbar-item">
+            <li style={{ marginLeft: 25 }} className="navbar-item">
               <Link to="/advising" className="nav-link">
                 ADVISING
               </Link>
             </li>
           </ul>
+          <div style={{ marginRight: "100px" }}>
+            <button
+              style={{
+                marginLeft: "20px",
+                marginRight: "20px",
+                width: 100,
+                height: 40
+              }}
+              type="button"
+              className="btn btn-warning"
+            >
+              FAQ
+            </button>
+            <button
+              style={{
+                marginLeft: "20px",
+                marginRight: "20px",
+                width: 100,
+                height: 40
+              }}
+              onClick={() => this.props.signOutStudent()}
+              type="button"
+              className="btn btn-danger"
+            >
+              Log Out
+            </button>
+          </div>
         </div>
       </nav>
     );
