@@ -1,75 +1,77 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        email: '',
-        password: ''
-    }
-  
-  this.onInputChange = this.onInputChange.bind(this);
-  this.onSubmit = this.onSubmit.bind(this);
+      email: "",
+      password: ""
+    };
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onInputChange(e){
+  onInputChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
 
   onSubmit(e) {
-      e.preventDefault(); 
+    e.preventDefault();
 
-      const LoginInfo = {
-          email: this.state.email,
-          password: this.state.password
-        }
-    
-      console.log(LoginInfo);
+    const LoginInfo = {
+      email: this.state.email,
+      password: this.state.password
+    };
 
-      window.location = '/';
-      }
+    this.props.signInStudent(LoginInfo);
 
-//textbox for user/password input
+    window.location = "/";
+  }
+
+  //textbox for user/password input
   render() {
     return (
-        <div>
+      <div>
         <h3>Login</h3>
         <form onSubmit={this.onSubmit}>
-
-          <div className="form-group"> 
-            <label>Email: </label>
-            <input  type="email"
-                required
-                autoFocus
-                name="email"
-                className="form-control"
-                placeholder="Enter your email"
-                value={this.state.email}
-                onChange={this.onInputChange}
-                />
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              required
+              autoFocus
+              name="email"
+              className="form-control"
+              placeholder="Enter your email"
+              value={this.state.email}
+              onChange={this.onInputChange}
+            />
           </div>
 
-          <div className="form-group"> 
-            <label>Password: </label>
-            <input  type="password"
-                required
-                name="password"
-                className="form-control"
-                placeholder="Enter your password"
-                value={this.state.password}
-                onChange={this.onInputChange}
-                />
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              required
+              name="password"
+              className="form-control"
+              placeholder="Enter your password"
+              value={this.state.password}
+              onChange={this.onInputChange}
+            />
           </div>
 
           <div className="form-group">
             <input type="submit" value="Confirm" className="btn btn-primary" />
           </div>
-          
         </form>
-        </div>
-    )
+      </div>
+    );
   }
 }
+
+export default LoginPage;

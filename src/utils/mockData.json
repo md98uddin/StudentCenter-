@@ -4,6 +4,7 @@
   "firsName": "James",
   "middleName": "Earl",
   "lastName": "Doe",
+  "campus": "Hunter",
   "gender": "M",
   "year": "Senior",
   "gpa": 3.0,
@@ -13,9 +14,16 @@
   "adviser": {
     "name": "Melissa Wise",
     "room": "W234",
-    "hours": "9:00am-4:00pm"
+    "hours": "9:00am-4:00pm",
+    "contact": "advisor@yale.edu"
   },
-  "holds": [{ "holdCode": "Bursar", "descriptions": "You owe money" }],
+  "holds": [
+    {
+      "holdCode": "Bursar",
+      "descriptions": "You owe money",
+      "campus": "Hunter"
+    }
+  ],
   "currentClasses": [
     {
       "prefix": "CSCI",
@@ -27,22 +35,24 @@
         { "day": "Friday", "hours": "2:00pm-3:15pm" }
       ],
       "year": 2018,
-      "semester": "Fall"
+      "semester": "Fall",
+      "campus": "Hunter"
     },
     {
       "prefix": "SOCI",
       "courseNumber": "10100",
+      "Professor": "Romelu Lu",
+      "room": "NH344",
       "days": [
         {
           "day": "Tuesday",
-          "Professor": "Romelu Lu",
-          "room": "NH344",
           "hours": "3:00pm-4:15pm"
         },
         { "day": "Friday", "hours": "4:00pm-5:15pm" }
       ],
       "year": 2018,
-      "semester": "Fall"
+      "semester": "Fall",
+      "campus": "Hunter"
     }
   ],
   "classesCompleted": [
@@ -57,7 +67,8 @@
       ],
       "grade": "A",
       "year": 2018,
-      "semester": "Spring"
+      "semester": "Spring",
+      "campus": "Hunter"
     },
     {
       "prefix": "ASTRO",
@@ -70,7 +81,8 @@
       ],
       "grade": "B+",
       "year": 2018,
-      "semester": "Spring"
+      "semester": "Spring",
+      "campus": "Hunter"
     }
   ],
   "studentPic": "www.firebase.com/ddaskdalda"
