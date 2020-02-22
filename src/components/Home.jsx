@@ -1,12 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import Navbar from "./NavBar";
 
-export default class HomePage extends Component {
+class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: this.props.user
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
+  }
 
   render() {
-    return (
-        <div>
-            <p>Home Page text</p>
-        </div>
-    )
+    return this.state.user ? (
+      <>
+        <Navbar signOutStudent={this.props.signOutStudent} />
+        <p>Home Page</p>
+      </>
+    ) : (
+      <Redirect to="/login" />
+    );
   }
 }
+
+export default Home;

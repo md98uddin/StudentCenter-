@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
 
-class AidsAndLoans extends Component {
+class Classes extends Component {
   state = { user: this.props.user };
   render() {
     return this.state.user ? (
       <>
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <p>aids Page</p>
+        <p>classes Page</p>
       </>
     ) : (
       <Redirect to="/login" />
@@ -16,4 +16,4 @@ class AidsAndLoans extends Component {
   }
 }
 
-export default AidsAndLoans;
+export default Classes;

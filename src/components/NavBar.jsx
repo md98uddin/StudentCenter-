@@ -10,7 +10,7 @@ export default class Navbar extends Component {
           justifyContent: "Center",
           flex: 1,
           width: "1200px",
-          marginLeft: "-40px"
+          marginLeft: "80px"
         }}
         className="navbar navbar-dark navbar-expand-lg"
       >
@@ -20,12 +20,12 @@ export default class Navbar extends Component {
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li style={{ marginLeft: 25 }} className="navbar-item">
-              <Link to="/" className="nav-link">
+              <Link to="/home" className="nav-link">
                 HOME
               </Link>
             </li>
             <li style={{ marginLeft: 25 }} className="navbar-item">
-              <Link to="/class" className="nav-link">
+              <Link to="/classes" className="nav-link">
                 CLASS
               </Link>
             </li>

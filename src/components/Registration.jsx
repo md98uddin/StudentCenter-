@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import firebase from "../keys/FirebaseConfig";
+import { Redirect } from "react-router-dom";
 
 class RegisterPage extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class RegisterPage extends Component {
       registrationCode
     } = this.state;
     const { onInputChange } = this;
-    return (
+    return !this.props.user ? (
       <div>
         <h3>Student Registration</h3>
         <form onSubmit={this.onSubmit}>
@@ -114,6 +115,8 @@ class RegisterPage extends Component {
           </div>
         </form>
       </div>
+    ) : (
+      <Redirect to="/home" />
     );
   }
 

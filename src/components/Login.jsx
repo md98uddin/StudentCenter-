@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -28,13 +29,11 @@ class LoginPage extends Component {
     };
 
     this.props.signInStudent(LoginInfo);
-
-    window.location = "/";
   }
 
   //textbox for user/password input
   render() {
-    return (
+    return !this.props.user ? (
       <div>
         <h3>Login</h3>
         <form onSubmit={this.onSubmit}>
@@ -70,6 +69,8 @@ class LoginPage extends Component {
           </div>
         </form>
       </div>
+    ) : (
+      <Redirect to="/home" />
     );
   }
 }
