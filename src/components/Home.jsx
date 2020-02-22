@@ -17,8 +17,6 @@ class Home extends Component {
         user: nextProps.user
       };
     }
-
-    // Return null to indicate no change to state.
     return null;
   }
 

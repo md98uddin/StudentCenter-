@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import firebase from "../keys/FirebaseConfig";
 import { Redirect } from "react-router-dom";
 
 class RegisterPage extends Component {
@@ -15,6 +14,15 @@ class RegisterPage extends Component {
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+    return null;
+  }
+
   onInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -22,15 +30,13 @@ class RegisterPage extends Component {
   };
 
   onSubmit = e => {
-    const { password, confirmPassword } = this.state;
+    const { email, password, confirmPassword } = this.state;
     e.preventDefault();
     if (confirmPassword !== password) {
       return console.log("passwords do not match");
     }
 
-    //createStudentAccount(registrationCode);
-    console.log(this.state);
-    //window.location = "/login";
+    this.props.signUpStudent({ email, password });
   };
 
   render() {

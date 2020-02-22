@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,10 +6,6 @@ import {
   Redirect
 } from "react-router-dom";
 import firebase from "./keys/FirebaseConfig";
-import Spinner from "react-activity/lib/Spinner";
-import "react-activity/lib/Spinner/Spinner.css";
-
-import Navbar from "./components/NavBar";
 import HomePage from "./components/Home";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Registration";
@@ -29,22 +24,9 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    //check for auth token
-    //if no authtoken, send to /login
-    // try {
-    //   this.setState({ user: getMockData() });
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    //this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
-    //this.signOutStudent();
-    // if (!this.state.user) {
-    //   window.location = "/login";
-    // }
-  }
   render() {
     const { user } = this.state;
+    console.log("app state", user);
     return (
       <Router>
         <Switch>
@@ -71,7 +53,14 @@ class App extends Component {
           <Route
             exact
             path="/register"
-            render={props => <RegisterPage {...props} user={user} />}
+            render={props => (
+              <RegisterPage
+                {...props}
+                user={user}
+                signUpStudent={this.signUpStudent}
+                signInStudent={this.signInStudent}
+              />
+            )}
           />
           <Route
             exact
@@ -134,11 +123,22 @@ class App extends Component {
   }
 
   signInStudent = obj => {
+    const { email, password } = obj;
     firebase
       .auth()
-      .signInWithEmailAndPassword(obj.email, obj.password)
+      .signInWithEmailAndPassword(email, password)
       .then(data => {
         this.setState({ user: data.user });
+      });
+  };
+
+  signUpStudent = obj => {
+    const { email, password } = obj;
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        this.setState({ user: user.user });
       });
   };
 
@@ -148,9 +148,6 @@ class App extends Component {
       .signOut()
       .then(() => {
         this.setState({ user: null });
-      })
-      .then(() => {
-        console.log("user after signout", this.state.user);
       });
   };
 }
