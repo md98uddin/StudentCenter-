@@ -20,13 +20,15 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: ""
+      user: "",
+      userInfo: getMockData()
     };
   }
 
   render() {
-    const { user } = this.state;
+    const { user, userInfo } = this.state;
     console.log("app state", user);
+    console.log("user info", userInfo);
     return (
       <Router>
         <Switch>
