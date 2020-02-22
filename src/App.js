@@ -25,6 +25,10 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
+  }
+
   render() {
     const { user, userInfo } = this.state;
     console.log("app state", user);

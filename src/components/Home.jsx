@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
+import UpcomingClasses from "../reusables/UpcomingClasses";
+import UserProfile from "../reusables/UserProfile";
+import HoldsResources from "../reusables/HoldsResources";
 
 class Home extends Component {
   constructor(props) {
@@ -22,10 +25,27 @@ class Home extends Component {
 
   render() {
     return this.state.user ? (
-      <>
+      <div>
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <p>Home Page</p>
-      </>
+        <div
+          style={{ display: "inline-block", marginTop: "0px" }}
+          className="upcoming"
+        >
+          <UpcomingClasses />
+        </div>
+        <div
+          style={{
+            display: "inline-block",
+            marginLeft: "60px"
+          }}
+          className="user"
+        >
+          <UserProfile />
+        </div>
+        <div style={{ display: "inline-block" }} className="holds-resources">
+          <HoldsResources />
+        </div>
+      </div>
     ) : (
       <Redirect to="/login" />
     );
