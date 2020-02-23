@@ -27,24 +27,9 @@ class Home extends Component {
     return this.state.user ? (
       <div>
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <div
-          style={{ display: "inline-block", marginTop: "0px" }}
-          className="upcoming"
-        >
-          <UpcomingClasses />
-        </div>
-        <div
-          style={{
-            display: "inline-block",
-            marginLeft: "60px"
-          }}
-          className="user"
-        >
-          <UserProfile />
-        </div>
-        <div style={{ display: "inline-block" }} className="holds-resources">
-          <HoldsResources />
-        </div>
+        <UpcomingClasses />
+        <UserProfile />
+        <HoldsResources />
       </div>
     ) : (
       <Redirect to="/login" />

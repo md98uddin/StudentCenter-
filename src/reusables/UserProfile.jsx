@@ -10,17 +10,20 @@ const UserProfile = props => {
   };
 
   return (
-    <div style={{ marginTop: "0px" }} className="main">
+    <div
+      style={{ float: "left", marginTop: 25, marginLeft: 63 }}
+      className="main"
+    >
       <div
         style={{
-          width: "550px",
+          width: "600px",
           height: "30px",
-          backgroundColor: "#f2f2f2",
+          backgroundColor: "#F2F2F2",
           marginBottom: "5px"
         }}
         className="welcome-message"
       >
-        <p style={{ color: "#A42323", marginLeft: "45px" }}>
+        <p style={{ color: "#A42323", marginLeft: "60px", fontSize: 18 }}>
           {" "}
           WELCOME JOHN DOE, TODAY IS{" "}
           {`${getDay(date.day)}, ${date.date} ${getMonth(date.month)} ${
@@ -31,10 +34,9 @@ const UserProfile = props => {
 
       <div
         style={{
-          width: "550px",
-          height: "465px",
-          backgroundColor: "#A42323",
-          marginTop: "0px"
+          width: "600px",
+          height: "495px",
+          backgroundColor: "#D35D5D"
         }}
         className="profile-block"
       ></div>

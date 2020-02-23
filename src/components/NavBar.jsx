@@ -10,7 +10,9 @@ export default class Navbar extends Component {
           justifyContent: "Center",
           flex: 1,
           width: "1200px",
-          marginLeft: "80px"
+          marginLeft: "80px",
+          height: "40px",
+          marginTop: "10px"
         }}
         className="navbar navbar-dark navbar-expand-lg"
       >
@@ -51,25 +53,26 @@ export default class Navbar extends Component {
                 marginLeft: "20px",
                 marginRight: "20px",
                 width: 100,
-                height: 40
+                height: 30,
+                alignItems: "center"
               }}
               type="button"
               className="btn btn-warning"
             >
-              FAQ
+              <p style={{ margin: "-5px 5px 10px 5px" }}>FAQ</p>
             </button>
             <button
               style={{
                 marginLeft: "20px",
                 marginRight: "20px",
                 width: 100,
-                height: 40
+                height: 30
               }}
               onClick={() => this.props.signOutStudent()}
               type="button"
               className="btn btn-danger"
             >
-              Log Out
+              <p style={{ margin: "-5px 5px 10px 5px" }}>Log Out</p>
             </button>
           </div>
         </div>
