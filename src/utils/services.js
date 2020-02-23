@@ -71,3 +71,26 @@ export function getMonth(num) {
     default:
   }
 }
+
+export function getClassDetails() {
+  const currentCourses = data.currentClasses;
+  var filtered = [];
+  var obj = {
+    id: null,
+    startTime: null,
+    endTime: null,
+    courseNumber: null,
+    room: null
+  };
+  for (let i = 0; i < currentCourses.length; i++) {
+    obj.id = i;
+    obj.courseNumber =
+      currentCourses[i].prefix + " " + currentCourses[i].courseNumber;
+    obj.room = currentCourses[i].room;
+    obj.startTime = new Date(2020, 5, 20, 9, 30);
+    obj.endTime = new Date(2020, 5, 20, 11, 30);
+    filtered.push(obj);
+  }
+
+  return filtered;
+}

@@ -13,7 +13,7 @@ import Grades from "./components/Grades";
 import Classes from "./components/Classes";
 import AidsAndLoans from "./components/AidsAndLoans";
 import Advising from "./components/Advising";
-import { getMockData } from "./utils/services";
+import { getMockData, currentCourses, getClassDetails } from "./utils/services";
 
 class App extends Component {
   constructor(props) {
@@ -31,8 +31,7 @@ class App extends Component {
 
   render() {
     const { user, userInfo } = this.state;
-    console.log("app state", user);
-    console.log("user info", userInfo);
+    console.log("user current classes", getClassDetails());
     return (
       <Router>
         <Switch>
