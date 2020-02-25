@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 export default class Navbar extends Component {
   render() {
+    const path = window.location.pathname;
+    console.log(path);
     return (
       <nav
         style={{
@@ -21,27 +23,54 @@ export default class Navbar extends Component {
         </Link>
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
-            <li style={{ marginLeft: 25 }} className="navbar-item">
+            <li
+              style={{ marginLeft: 25 }}
+              className={
+                path.includes("/home") ? "navbar-item active" : "navbar-item"
+              }
+            >
               <Link to="/home" className="nav-link">
                 HOME
               </Link>
             </li>
-            <li style={{ marginLeft: 25 }} className="navbar-item">
+            <li
+              style={{ marginLeft: 25 }}
+              className={
+                path.includes("/classes") ? "navbar-item active" : "navbar-item"
+              }
+            >
               <Link to="/classes" className="nav-link">
                 CLASS
               </Link>
             </li>
-            <li style={{ marginLeft: 25 }} className="navbar-item">
+            <li
+              style={{ marginLeft: 25 }}
+              className={
+                path.includes("/grades") ? "navbar-item active" : "navbar-item"
+              }
+            >
               <Link to="/grades" className="nav-link">
                 GRADES
               </Link>
             </li>
-            <li style={{ marginLeft: 25 }} className="navbar-item">
+            <li
+              style={{ marginLeft: 25 }}
+              className={
+                path.includes("/finaid") ? "navbar-item active" : "navbar-item"
+              }
+            >
               <Link to="/finaid" className="nav-link">
                 AIDS AND LOANS
               </Link>
             </li>
-            <li style={{ marginLeft: 25 }} className="navbar-item">
+            <li
+              style={{ marginLeft: 25 }}
+              className={
+                path.includes("/advising")
+                  ? "navbar-item active"
+                  : "navbar-item"
+              }
+            >
               <Link to="/advising" className="nav-link">
                 ADVISING
               </Link>
