@@ -4,15 +4,18 @@ import { Link } from "react-router-dom";
 export default class Navbar extends Component {
   render() {
     const path = window.location.pathname;
+    const { innerHeight: height, innerWidth: width } = window;
+    console.log("width", width);
+    console.log("height", height);
     console.log(path);
     return (
       <nav
         style={{
           backgroundColor: "#a42323",
           justifyContent: "Center",
-          flex: 1,
-          width: "1200px",
-          marginLeft: "80px",
+          display: "flex",
+          width: "90%",
+          alignItems: "center",
           height: "40px",
           marginTop: "10px"
         }}

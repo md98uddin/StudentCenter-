@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import SignedOutNavBar from "../reusables/SignedOutNav";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -7,7 +8,9 @@ class LoginPage extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      width: window.innerWidth,
+      height: window.innerHeight
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -33,12 +36,28 @@ class LoginPage extends Component {
 
   //textbox for user/password input
   render() {
+    const { height, width } = this.state;
     return !this.props.user ? (
       <div>
-        <h3>Login</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Email</label>
+        <SignedOutNavBar />
+        <form
+          style={{
+            marginLeft: width / 2.3,
+            marginRight: width / 3,
+            marginTop: height / 9.5
+          }}
+          onSubmit={this.onSubmit}
+        >
+          <h3 style={{ fontSize: 15, marginLeft: width / 31 }}>
+            Log in to Student Center
+          </h3>
+          <div
+            style={{ width: width / 5.5, height: height / 5 }}
+            className="form-group"
+          >
+            <label style={{ fontSize: 18, marginLeft: width / 13.5 }}>
+              Email
+            </label>
             <input
               type="email"
               required
@@ -51,8 +70,16 @@ class LoginPage extends Component {
             />
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
+          <div
+            style={{
+              width: width / 5.5,
+              height: height / 5.5
+            }}
+            className="form-group"
+          >
+            <label style={{ fontSize: 18, marginLeft: width / 15.5 }}>
+              Password
+            </label>
             <input
               type="password"
               required
@@ -65,7 +92,18 @@ class LoginPage extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Confirm" className="btn btn-primary" />
+            <button
+              style={{
+                backgroundColor: "#FFFFFF",
+                width: width / 15,
+                height: height / 14,
+                marginLeft: width / 13
+              }}
+              type="button"
+              class="btn btn-secondary btn-lg"
+            >
+              <p style={{ color: "#B0ACAC", fontSize: 18 }}>LOG IN</p>
+            </button>
           </div>
         </form>
       </div>
