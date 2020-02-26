@@ -42,65 +42,96 @@ class LoginPage extends Component {
         <SignedOutNavBar />
         <form
           style={{
-            marginLeft: width / 2.3,
-            marginRight: width / 3,
-            marginTop: height / 9.5
+            marginLeft: width / 2.57,
+            marginRight: width / 2.95,
+            marginTop: height / 4.5,
+            backgroundColor: "#A42323",
+            borderRadius: 10
           }}
-          onSubmit={this.onSubmit}
         >
-          <h3 style={{ fontSize: 15, marginLeft: width / 31 }}>
+          <h3
+            style={{
+              fontSize: 15,
+              marginLeft: width / 13,
+              color: "#FFFFFF"
+            }}
+          >
             Log in to Student Center
           </h3>
           <div
-            style={{ width: width / 5.5, height: height / 5 }}
+            style={{
+              width: width / 5.5,
+              height: height / 5,
+              marginLeft: height / 10
+            }}
             className="form-group"
           >
-            <label style={{ fontSize: 18, marginLeft: width / 13.5 }}>
+            <label
+              style={{
+                fontSize: 18,
+                marginLeft: width / 13.5,
+                color: "#FFFFFF"
+              }}
+            >
               Email
             </label>
-            <input
-              type="email"
-              required
-              autoFocus
-              name="email"
-              className="form-control"
-              placeholder="Enter your email"
-              value={this.state.email}
-              onChange={this.onInputChange}
-            />
+            <div>
+              <input
+                type="email"
+                required
+                autoFocus
+                name="email"
+                className="form-control"
+                placeholder="Enter your email"
+                value={this.state.email}
+                onChange={this.onInputChange}
+              />
+            </div>
           </div>
 
           <div
             style={{
               width: width / 5.5,
-              height: height / 5.5
+              height: height / 5.5,
+              marginTop: -(height / 13),
+              marginLeft: height / 10
             }}
             className="form-group"
           >
-            <label style={{ fontSize: 18, marginLeft: width / 15.5 }}>
+            <label
+              style={{
+                fontSize: 18,
+                marginLeft: width / 15.5,
+                color: "#ffffff"
+              }}
+            >
               Password
             </label>
-            <input
-              type="password"
-              required
-              name="password"
-              className="form-control"
-              placeholder="Enter your password"
-              value={this.state.password}
-              onChange={this.onInputChange}
-            />
+            <div>
+              <input
+                type="password"
+                required
+                name="password"
+                className="form-control"
+                placeholder="Enter your password"
+                value={this.state.password}
+                onChange={this.onInputChange}
+              />
+            </div>
           </div>
 
-          <div className="form-group">
+          <div style={{ marginTop: -(height / 15) }} className="form-group">
             <button
               style={{
                 backgroundColor: "#FFFFFF",
                 width: width / 15,
                 height: height / 14,
-                marginLeft: width / 13
+                marginLeft: width / 9,
+                marginBottom: "10px"
               }}
               type="button"
               class="btn btn-secondary btn-lg"
+              onClick={this.onSubmit}
             >
               <p style={{ color: "#B0ACAC", fontSize: 18 }}>LOG IN</p>
             </button>
