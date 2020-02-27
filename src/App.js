@@ -21,20 +21,17 @@ class App extends Component {
 
     this.state = {
       user: "",
-      currentPage: "",
       userInfo: getMockData()
     };
   }
 
   componentDidMount() {
     //this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
-    console.log("path", window.location.pathname);
   }
 
   render() {
-    const { user, userInfo, currentPage } = this.state;
+    const { user, userInfo } = this.state;
     console.log("user current classes", getClassDetails());
-    console.log("page on", currentPage);
     return (
       <Router>
         <Switch>

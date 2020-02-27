@@ -9,11 +9,14 @@ const SignedOutNavBar = () => {
         marginRight: height / 6.25,
         background: "#A42323",
         height: height / 11,
-        alignSelf: "center"
+        fontSize: 20,
+        color: "#FFFFFF",
+        marginTop: width / 120,
+        textAlign: "center"
       }}
       className="main"
     >
-      <p style={{ color: "#FFFFFF", fontSize: 22 }}>
+      <p style={{ marginTop: "10px", marginLeft: width / 15 }}>
         WELCOME TO STUDENT CENTER
       </p>
     </div>
