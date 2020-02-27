@@ -25,7 +25,12 @@ class Home extends Component {
 
   render() {
     return this.state.user ? (
-      <div>
+      <div
+        style={{
+          height: "100vh",
+          backgroundColor: "#6b6558"
+        }}
+      >
         <Navbar signOutStudent={this.props.signOutStudent} />
         <UpcomingClasses />
         <UserProfile />

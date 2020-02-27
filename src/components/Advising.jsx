@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
 import AdviserCard from "../reusables/AdviserCard";
-import SignedOutNav from "../reusables/SignedOutNav";
 
 class Advising extends Component {
   constructor(props) {

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import firebase from "../keys/FirebaseConfig";
 import SignedOutNavBar from "../reusables/SignedOutNav";
+import CreateForgot from "../reusables/CreateForgot";
+import FadeIn from "react-fade-in";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -10,11 +13,21 @@ class LoginPage extends Component {
       email: "",
       password: "",
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      user: this.props.user
     };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+    return null;
   }
 
   onInputChange(e) {
@@ -36,108 +49,117 @@ class LoginPage extends Component {
 
   //textbox for user/password input
   render() {
-    const { height, width } = this.state;
-    return !this.props.user ? (
-      <div>
-        <SignedOutNavBar />
-        <form
+    const { height, width, user } = this.state;
+    return !user ? (
+      <FadeIn delay="100">
+        {" "}
+        <div
           style={{
-            marginLeft: width / 2.57,
-            marginRight: width / 2.95,
-            marginTop: height / 4.5,
-            backgroundColor: "#A42323",
-            borderRadius: 10
+            height: "100vh",
+            backgroundColor: "#6b6558"
           }}
         >
-          <h3
+          <SignedOutNavBar />
+          <form
             style={{
-              fontSize: 15,
-              marginLeft: width / 13,
-              color: "#FFFFFF"
+              marginLeft: width / 2.67,
+              marginRight: width / 3.05,
+              marginTop: height / 7,
+              backgroundColor: "#A42323",
+              borderRadius: 25
             }}
           >
-            Log in to Student Center
-          </h3>
-          <div
-            style={{
-              width: width / 5.5,
-              height: height / 5,
-              marginLeft: height / 10
-            }}
-            className="form-group"
-          >
-            <label
+            <h3
               style={{
-                fontSize: 18,
-                marginLeft: width / 13.5,
+                fontSize: 15,
+                marginLeft: width / 11.5,
                 color: "#FFFFFF"
               }}
             >
-              Email
-            </label>
-            <div>
-              <input
-                type="email"
-                required
-                autoFocus
-                name="email"
-                className="form-control"
-                placeholder="Enter your email"
-                value={this.state.email}
-                onChange={this.onInputChange}
-              />
-            </div>
-          </div>
-
-          <div
-            style={{
-              width: width / 5.5,
-              height: height / 5.5,
-              marginTop: -(height / 13),
-              marginLeft: height / 10
-            }}
-            className="form-group"
-          >
-            <label
+              Log in to Student Center
+            </h3>
+            <div
               style={{
-                fontSize: 18,
-                marginLeft: width / 15.5,
-                color: "#ffffff"
+                width: width / 5.5,
+                height: height / 4.5,
+                marginLeft: height / 8.3
               }}
+              className="form-group"
             >
-              Password
-            </label>
-            <div>
-              <input
-                type="password"
-                required
-                name="password"
-                className="form-control"
-                placeholder="Enter your password"
-                value={this.state.password}
-                onChange={this.onInputChange}
-              />
+              <label
+                style={{
+                  fontSize: 18,
+                  marginLeft: width / 13.5,
+                  color: "#FFFFFF"
+                }}
+              >
+                Email
+              </label>
+              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+                <input
+                  type="email"
+                  required
+                  autoFocus
+                  name="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  value={this.state.email}
+                  onChange={this.onInputChange}
+                />
+              </div>
             </div>
-          </div>
 
-          <div style={{ marginTop: -(height / 15) }} className="form-group">
-            <button
+            <div
               style={{
-                backgroundColor: "#FFFFFF",
-                width: width / 15,
-                height: height / 14,
-                marginLeft: width / 9,
-                marginBottom: "10px"
+                width: width / 5.5,
+                height: height / 5.5,
+                marginTop: -(height / 10.5),
+                marginLeft: height / 8.3
               }}
-              type="button"
-              class="btn btn-secondary btn-lg"
-              onClick={this.onSubmit}
+              className="form-group"
             >
-              <p style={{ color: "#B0ACAC", fontSize: 18 }}>LOG IN</p>
-            </button>
-          </div>
-        </form>
-      </div>
+              <label
+                style={{
+                  fontSize: 18,
+                  marginLeft: width / 15.5,
+                  color: "#ffffff"
+                }}
+              >
+                Password
+              </label>
+              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+                <input
+                  type="password"
+                  required
+                  name="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  value={this.state.password}
+                  onChange={this.onInputChange}
+                />
+              </div>
+            </div>
+
+            <div style={{ marginTop: -(height / 15) }} className="form-group">
+              <button
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: width / 15,
+                  height: height / 14,
+                  marginLeft: width / 8.3,
+                  marginBottom: "10px"
+                }}
+                type="button"
+                className="btn btn-secondary btn-lg"
+                onClick={this.onSubmit}
+              >
+                <p style={{ color: "#000000", fontSize: 18 }}>LOG IN</p>
+              </button>
+            </div>
+          </form>
+          <CreateForgot />
+        </div>
+      </FadeIn>
     ) : (
       <Redirect to="/home" />
     );
