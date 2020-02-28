@@ -28,7 +28,7 @@ class Home extends Component {
       <div
         style={{
           height: "100vh",
-          backgroundColor: "#6b6558"
+          backgroundImage: "url('https://img.freepik.com/free-vector/vibrant-diagonal-lines-pattern-background_1017-12311.jpg?size=626&ext=jpg')"
         }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />

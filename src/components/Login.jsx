@@ -65,7 +65,7 @@ class LoginPage extends Component {
               marginLeft: width / 2.67,
               marginRight: width / 3.05,
               marginTop: height / 7,
-              backgroundColor: "#A42323",
+              backgroundColor: "#BBBBBB",
               borderRadius: 25
             }}
           >
