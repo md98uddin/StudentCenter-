@@ -58,14 +58,7 @@ class App extends Component {
           <Route
             exact
             path="/register"
-            render={props => (
-              <RegisterPage
-                {...props}
-                user={user}
-                signUpStudent={this.signUpStudent}
-                signInStudent={this.signInStudent}
-              />
-            )}
+            render={props => <RegisterPage {...props} user={user} />}
           />
           <Route
             exact
@@ -135,16 +128,6 @@ class App extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(data => {
         this.setState({ user: data.user });
-      });
-  };
-
-  signUpStudent = obj => {
-    const { email, password } = obj;
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        this.setState({ user: user.user });
       });
   };
 
