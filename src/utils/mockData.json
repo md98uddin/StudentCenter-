@@ -1,0 +1,89 @@
+{
+  "username": "james.doe54",
+  "password": "ty4W/dwxyyum3m5emmdlurmelwp4/.",
+  "firsName": "James",
+  "middleName": "Earl",
+  "lastName": "Doe",
+  "campus": "Hunter",
+  "gender": "M",
+  "year": "Senior",
+  "gpa": 3.0,
+  "credits": 89,
+  "attending": "FT",
+  "email": "john.doe54@uni.edu",
+  "adviser": {
+    "name": "Melissa Wise",
+    "room": "W234",
+    "hours": "9:00am-4:00pm",
+    "contact": "advisor@yale.edu"
+  },
+  "holds": [
+    {
+      "holdCode": "Bursar",
+      "descriptions": "You owe money",
+      "campus": "Hunter"
+    }
+  ],
+  "currentClasses": [
+    {
+      "prefix": "CSCI",
+      "courseNumber": "27500",
+      "Professor": "Dorothy Holiday",
+      "room": "W454",
+      "days": [
+        { "day": "Wednesday", "hours": "4:00pm-5:15pm" },
+        { "day": "Friday", "hours": "2:00pm-3:15pm" }
+      ],
+      "year": 2018,
+      "semester": "Fall",
+      "campus": "Hunter"
+    },
+    {
+      "prefix": "SOCI",
+      "courseNumber": "10100",
+      "Professor": "Romelu Lu",
+      "room": "NH344",
+      "days": [
+        {
+          "day": "Tuesday",
+          "hours": "3:00pm-4:15pm"
+        },
+        { "day": "Friday", "hours": "4:00pm-5:15pm" }
+      ],
+      "year": 2018,
+      "semester": "Fall",
+      "campus": "Hunter"
+    }
+  ],
+  "classesCompleted": [
+    {
+      "prefix": "CSCI",
+      "courseNumber": "13500",
+      "Professor": "Kyle Miles",
+      "room": "W654",
+      "days": [
+        { "day": "Wednesday", "hours": "4:00pm-5:15pm" },
+        { "day": "Friday", "hours": "2:00pm-3:15pm" }
+      ],
+      "grade": "A",
+      "year": 2018,
+      "semester": "Spring",
+      "campus": "Hunter"
+    },
+    {
+      "prefix": "ASTRO",
+      "courseNumber": "10100",
+      "Professor": "Ryan Newman",
+      "room": "E354",
+      "days": [
+        { "day": "Monday", "hours": "4:00pm-5:15pm" },
+        { "day": "Friday", "hours": "2:00pm-3:15pm" }
+      ],
+      "grade": "B+",
+      "year": 2018,
+      "semester": "Spring",
+      "campus": "Hunter"
+    }
+  ],
+  "studentPic": "www.firebase.com/ddaskdalda"
+}

@@ -1,0 +1,227 @@
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import FadeIn from "react-fade-in";
+import SignedOutNavBar from "../reusables/SignedOutNav";
+
+class RegisterPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      password: "",
+      confirmPassword: "",
+      email: "",
+      registrationCode: "",
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+    return null;
+  }
+
+  onInputChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  onSubmit = e => {
+    const { email, password, confirmPassword } = this.state;
+    e.preventDefault();
+    if (confirmPassword !== password) {
+      return console.log("passwords do not match");
+    }
+
+    this.props.signUpStudent({ email, password });
+  };
+
+  render() {
+    const { height, width } = this.state;
+    const { password, confirmPassword, email, registrationCode } = this.state;
+    const { onInputChange } = this;
+    return !this.props.user ? (
+      <FadeIn delay="100">
+        <div
+          style={{
+            height: "100vh",
+            backgroundColor: "#6b6558"
+          }}
+        >
+          <SignedOutNavBar />
+          <form
+            style={{
+              marginLeft: width / 2.67,
+              marginRight: width / 3.05,
+              marginTop: height / 11,
+              backgroundColor: "#A42323",
+              borderRadius: 25
+            }}
+          >
+            <h3
+              style={{
+                fontSize: 15,
+                marginLeft: width / 13,
+                color: "#FFFFFF"
+              }}
+            >
+              Register for Student Center
+            </h3>
+            <div
+              style={{
+                width: width / 5.5,
+                height: height / 4.5,
+                marginLeft: height / 8.3
+              }}
+              className="form-group"
+            >
+              <label
+                style={{
+                  fontSize: 18,
+                  marginLeft: width / 13.5,
+                  color: "#FFFFFF"
+                }}
+              >
+                Email
+              </label>
+              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+                <input
+                  type="text"
+                  required
+                  name="email"
+                  className="form-control"
+                  placeholder="email"
+                  value={email}
+                  onChange={onInputChange}
+                />
+              </div>
+            </div>
+            <div
+              style={{
+                width: width / 5.5,
+                height: height / 5.5,
+                marginTop: -(height / 10),
+                marginLeft: height / 8.3
+              }}
+              className="form-group"
+            >
+              <label
+                style={{
+                  fontSize: 18,
+                  marginLeft: width / 15.5,
+                  color: "#ffffff"
+                }}
+              >
+                Password
+              </label>
+              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+                <input
+                  type="password"
+                  required
+                  name="password"
+                  className="form-control"
+                  placeholder="password..."
+                  value={password}
+                  onChange={onInputChange}
+                />
+              </div>
+            </div>
+            <div
+              style={{
+                width: width / 5.5,
+                height: height / 4.5,
+                marginLeft: height / 8.3,
+                marginTop: -(height / 17)
+              }}
+              className="form-group"
+            >
+              <label
+                style={{
+                  fontSize: 18,
+                  marginLeft: width / 25,
+                  color: "#ffffff"
+                }}
+              >
+                Confirm Password
+              </label>
+              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  className="form-control"
+                  placeholder="confirm password"
+                  value={confirmPassword}
+                  onChange={onInputChange}
+                />
+              </div>
+            </div>
+            <div
+              style={{
+                width: width / 5.5,
+                height: height / 4.5,
+                marginLeft: height / 8.3,
+                marginTop: -(height / 10.5)
+              }}
+              className="form-group"
+            >
+              <label
+                style={{
+                  fontSize: 18,
+                  marginLeft: width / 25,
+                  color: "#ffffff"
+                }}
+              >
+                Registration Code
+              </label>
+              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+                <input
+                  type="text"
+                  required
+                  name="registrationCode"
+                  className="form-control"
+                  placeholder="school provided code..."
+                  value={registrationCode}
+                  onChange={onInputChange}
+                />
+              </div>
+            </div>
+            <div style={{ marginTop: -(height / 12) }} className="form-group">
+              <button
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: width / 8,
+                  height: height / 14,
+                  marginLeft: width / 11.3,
+                  marginBottom: width / 100
+                }}
+                type="button"
+                className="btn btn-secondary btn-lg"
+                onClick={this.onSubmit}
+              >
+                <p
+                  style={{
+                    color: "#000000",
+                    fontSize: 16,
+                    marginTop: height / 200
+                  }}
+                >
+                  CREATE ACCOUNT
+                </p>
+              </button>
+            </div>
+          </form>
+        </div>
+      </FadeIn>
+    ) : (
+      <Redirect to="/home" />
+    );
+  }
+}
+
+export default RegisterPage;
