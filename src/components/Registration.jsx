@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import firebase from "../keys/FirebaseConfig";
 import FadeIn from "react-fade-in";
 import SignedOutNavBar from "../reusables/SignedOutNav";
 
@@ -13,7 +14,10 @@ class RegisterPage extends Component {
       email: "",
       registrationCode: "",
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      passwordLengthError: "",
+      passwordMatchError: "",
+      registerCodeError: ""
     };
   }
 
@@ -33,19 +37,43 @@ class RegisterPage extends Component {
   };
 
   onSubmit = e => {
-    const { email, password, confirmPassword } = this.state;
+    const { email, password, confirmPassword, registrationCode } = this.state;
+    this.setState({
+      emailError: "",
+      passwordLengthError: "",
+      passwordMatchError: "",
+      registerCodeError: ""
+    });
     e.preventDefault();
     if (confirmPassword !== password) {
-      return console.log("passwords do not match");
+      var passwordMatchErrorMessage = "passwords do not match";
+      this.setState({ passwordMatchError: passwordMatchErrorMessage });
     }
-
-    this.props.signUpStudent({ email, password });
+    if (registrationCode !== "abc123") {
+      var registerCodeErrorMessage = "invalid registration code";
+      this.setState({ registerCodeError: registerCodeErrorMessage });
+    }
+    if (password.length < 6) {
+      var passwordLengthErrorMessage = "password must 6 characters or more";
+      this.setState({ passwordLengthError: passwordLengthErrorMessage });
+    }
+    this.signUpStudent({ email, password });
   };
 
   render() {
     const { height, width } = this.state;
-    const { password, confirmPassword, email, registrationCode } = this.state;
+    const {
+      password,
+      confirmPassword,
+      email,
+      registrationCode,
+      emailError,
+      passwordLengthError,
+      passwordMatchError,
+      registerCodeError
+    } = this.state;
     const { onInputChange } = this;
+    console.log(this.state);
     return !this.props.user ? (
       <FadeIn delay="100">
         <div
@@ -101,6 +129,7 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
+              {emailError ? <p>{emailError}</p> : null}
             </div>
             <div
               style={{
@@ -131,6 +160,7 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
+              {passwordLengthError ? <p>{passwordLengthError}</p> : null}
             </div>
             <div
               style={{
@@ -160,6 +190,16 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
+              {passwordMatchError ? (
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "#ffffff"
+                  }}
+                >
+                  {passwordMatchError}
+                </p>
+              ) : null}
             </div>
             <div
               style={{
@@ -170,6 +210,7 @@ class RegisterPage extends Component {
               }}
               className="form-group"
             >
+              {registerCodeError ? <p>{registerCodeError}</p> : null}
               <label
                 style={{
                   fontSize: 18,
@@ -190,6 +231,7 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
+              {registerCodeError ? <p>{registerCodeError}</p> : null}
             </div>
             <div style={{ marginTop: -(height / 12) }} className="form-group">
               <button
@@ -222,6 +264,21 @@ class RegisterPage extends Component {
       <Redirect to="/home" />
     );
   }
+  signUpStudent = obj => {
+    const { email, password } = obj;
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        this.setState({ user: user.user });
+      })
+      .catch(error => {
+        if (error.code === "auth/invalid-email") {
+          var emailMessage = "email format is not correct";
+          this.setState({ emailError: emailMessage });
+        }
+      });
+  };
 }
 
 export default RegisterPage;
