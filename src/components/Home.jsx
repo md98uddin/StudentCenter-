@@ -25,11 +25,12 @@ class Home extends Component {
 
   render() {
     return this.state.user ? (
-      <div
-        style={{
-          height: "100vh",
-          backgroundColor: "#6b6558"
-        }}
+     <div
+      style={{
+        height: "100vh",
+        backgroundColor: '#A4A4A4',
+        //backgroundImage: "url('https://i2.wp.com/files.123freevectors.com/wp-content/original/105601-red-star-pattern.jpg?w=800&q=95')"
+      }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />
         <UpcomingClasses />

@@ -14,7 +14,7 @@ export default class Navbar extends Component {
           backgroundColor: "#a42323",
           justifyContent: "Center",
           display: "flex",
-          width: "90%",
+          width: "100%",
           alignItems: "center",
           height: "40px",
           marginTop: "10px"

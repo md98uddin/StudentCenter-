@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
+    this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
   }
 
   render() {

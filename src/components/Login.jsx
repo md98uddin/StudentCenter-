@@ -58,7 +58,7 @@ class LoginPage extends Component {
         <div
           style={{
             height: "100vh",
-            backgroundColor: "#6b6558"
+            backgroundColor: "#A4A4A4"
           }}
         >
           <SignedOutNavBar />
@@ -82,6 +82,8 @@ class LoginPage extends Component {
               marginRight: width / 3.05,
               marginTop: height / 12,
               backgroundColor: "#A42323",
+              marginTop: height / 7,
+              backgroundColor: "#BBBBBB",
               borderRadius: 25
             }}
           >
