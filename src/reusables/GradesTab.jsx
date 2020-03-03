@@ -9,16 +9,11 @@ const GradesTab = props => {
         {
           <div style={titleBlock} className="title-block">
             <p style={title}>ACTIONS</p>
-
-            <Button variant="info" size="lg">
-              VIEW TRANSCRIPT
-            </Button>
-            <p></p>
-            <br />
-            <Button variant="info" size="lg">
-              {" "}
-              PRINT TRANSCRIPT
-            </Button>
+            <div className="text-center">
+              <Button variant="info" size="lg">VIEW TRANSCRIPT</Button>
+              <p></p><br />
+              <Button variant="info" size="lg">PRINT TRANSCRIPT</Button>
+            </div>
           </div>
         }
       </div>
@@ -29,13 +24,13 @@ const GradesTab = props => {
 };
 
 const styles = {
-  main: {
+  main: { 
     marginLeft: "80px",
-    // float: "left",
-    marginTop: 25
+   // float: "left", 
+    marginTop: 25 
   },
   titleBlock: {
-    width: "35vh",
+    width: "250px",
     height: "30px",
     marginLeft: "50px",
     marginTop: "20px",
@@ -43,13 +38,13 @@ const styles = {
     float: "left"
   },
   title: {
-    color: "#F2F2F2",
-    marginLeft: "75px",
-    fontSize: 20
+    color: "#F2F2F2", 
+    marginLeft: "75px", 
+    fontSize: 20 
   },
   bigBlock: {
     float: "left",
-    width: "50vh",
+    width: "350px",
     height: "500px",
     backgroundColor: "#F7E8E8",
     marginTop: "50px",
@@ -58,7 +53,7 @@ const styles = {
   biggerBlock: {
     padding: "50 px",
     float: "left",
-    width: "120vh",
+    width: "950px",
     height: "600px",
     backgroundColor: "#F7E8E8",
     marginLeft: "50px",

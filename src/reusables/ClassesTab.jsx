@@ -8,14 +8,16 @@ const ClassesTab = props => {
       <div style={main} className="main">
           <div style = {bigBlock} className= "title">{
             <div style={titleBlock} className="title-block">
-            <p style={title}>ACTIONS</p>
-
-            <Button variant="info" size="lg" >VIEW SCHEDULE</Button>
-            <p></p><br/>
-            <Button variant="info" size="lg">  VIEW SHOPPING CART</Button>
-            <p></p><br/>
-            <Form.Control type="text" placeholder="Search Bar" />
-            <Button variant="primary" type="submit">Submit</Button>
+              <p style={title}>ACTIONS</p>
+              <div className="text-center">
+                <Button variant="info" size="lg" >VIEW SCHEDULE</Button>
+                <p></p><br/>
+                <Button variant="info" size="lg">  VIEW SHOPPING CART</Button>
+                <p></p><br/>
+                <Form.Control type="text" placeholder="Search Bar" />
+                <Button variant="primary" type="submit" justify-content= "center">Submit</Button>
+              </div>
+            
             </div>
 
            }</div>
@@ -34,7 +36,7 @@ const ClassesTab = props => {
       marginTop: 25 
     },
     titleBlock: {
-      width: "35vh",
+      width: "250px",
       height: "30px",
       marginLeft: "50px",
       marginTop: "20px",
@@ -48,7 +50,7 @@ const ClassesTab = props => {
     },
     bigBlock: {
       float: "left",
-      width: "50vh",
+      width: "350px",
       height: "500px",
       backgroundColor: "#F7E8E8",
       marginTop: "50px",
@@ -57,7 +59,7 @@ const ClassesTab = props => {
     biggerBlock: {
       padding: "50 px",
       float: "left",
-      width: "120vh",
+      width: "950px",
       height: "600px",
       backgroundColor: "#F7E8E8",
       marginLeft: "50px",

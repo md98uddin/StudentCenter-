@@ -8,11 +8,11 @@ const AidsTab = props => {
           <div style = {bigBlock} className= "title">{
             <div style={titleBlock} className="title-block">
             <p style={title}>ACTIONS</p>
-
-            <Button variant="info" size="lg" >PAY TUITION</Button>
-            <p></p><br/>
-            <Button variant="info" size="lg">  LOAN </Button>
-
+            <div className="text-center">
+              <Button variant="info" size="lg" >PAY TUITION</Button>
+              <p></p><br/>
+              <Button variant="info" size="lg">  LOAN </Button>
+            </div>
             </div>
 
            }</div>
@@ -31,7 +31,7 @@ const AidsTab = props => {
       marginTop: 25 
     },
     titleBlock: {
-      width: "35vh",
+      width: "250px",
       height: "30px",
       marginLeft: "50px",
       marginTop: "20px",
@@ -45,7 +45,7 @@ const AidsTab = props => {
     },
     bigBlock: {
       float: "left",
-      width: "50vh",
+      width: "350px",
       height: "500px",
       backgroundColor: "#F7E8E8",
       marginTop: "50px",
@@ -54,7 +54,7 @@ const AidsTab = props => {
     biggerBlock: {
       padding: "50 px",
       float: "left",
-      width: "120vh",
+      width: "950px",
       height: "600px",
       backgroundColor: "#F7E8E8",
       marginLeft: "50px",

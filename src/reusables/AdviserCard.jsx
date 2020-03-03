@@ -11,12 +11,14 @@ const AdviserCard = props => {
           <h3 style={{
             textAlign: 'center',
             fontSize: 50,
-            color: "#black"
+            color: "#black",
+            padding: "128px 0",
+            border: "2px solid red",
           }}>
           <span>{props.adviser.name}<br/>
           Room: {props.adviser.room}<br/>
           Hours: {props.adviser.hours}<br/>
-          Room: {props.adviser.contact}</span>
+          Contact: {props.adviser.contact}</span>
           </h3>}
         </div>
 
@@ -74,22 +76,22 @@ const styles = {
     marginTop: 25 
   },
   titleBlock: {
-    float: "left",
-    width: "130vh",
+    //float: "left",
+    width: "1000px",
     height: "30px",
     backgroundColor: "#A42323",
-    marginBottom: "0px"
+    //marginBottom: "0px"
   },
   title: {
-    float: "left",
+    //float: "left",
     color: "#F2F2F2", 
     marginLeft: "37px", 
     fontSize: 20 
   },
   bigBlock: {
-    width: "130vh",
-    height: "500px",
     float: "left",
+    width: "1000px",
+    height: "500px",
     backgroundColor: "#F7E8E8",
     marginTop: "0px",
     borderRadius: "10px"
@@ -97,7 +99,7 @@ const styles = {
   biggerBlock: {
     //padding: "50 px",
     float: "left",
-    width: "30vh",
+    width: "250px",
     height: "600px",
     backgroundColor: "#F7E8E8",
     marginLeft: "50px",
@@ -106,7 +108,7 @@ const styles = {
   },
   titleBlock2: {
     float: "left",
-    width: "30vh",
+    width: "250px",
     height: "30px",
     backgroundColor: "#A42323",
     marginLeft: "50px",
