@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
+import GradesTab from "../reusables/GradesTab";
 
 class Grades extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Grades extends Component {
       }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <p>grades Page</p>
+        <GradesTab />
       </div>
     ) : (
       <Redirect to="/login" />

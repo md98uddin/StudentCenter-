@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
+import AidsTab from "../reusables/AidsTab";
 
 class AidsAndLoans extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class AidsAndLoans extends Component {
       }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <p>aids Page</p>
+        <AidsTab />
       </div>
     ) : (
       <Redirect to="/login" />
