@@ -1,5 +1,6 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 const ClassesTab = props => {
     const { main, titleBlock, title, bigBlock, biggerBlock } = styles;
@@ -12,7 +13,9 @@ const ClassesTab = props => {
             <Button variant="info" size="lg" >VIEW SCHEDULE</Button>
             <p></p><br/>
             <Button variant="info" size="lg">  VIEW SHOPPING CART</Button>
-
+            <p></p><br/>
+            <Form.Control type="text" placeholder="Search Bar" />
+            <Button variant="primary" type="submit">Submit</Button>
             </div>
 
            }</div>
