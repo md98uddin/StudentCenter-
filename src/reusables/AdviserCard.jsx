@@ -1,25 +1,50 @@
 import React from "react";
 
 const AdviserCard = props => {
-  const { main } = styles;
+  const { main, titleBlock, title, bigBlock } = styles;
   return (
-    <div className="card" style={main}>
-      <div className="card-body">
-        <h5 className="card-title">{props.adviser.name}</h5>
-        <p className="card-text">
-          Melissa Wise has been an advisor for nine years and has plenty of
-          experience guiding students to success.
-        </p>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">{`Room: ${props.adviser.room}`}</li>
-        <li className="list-group-item">{`Hours: ${props.adviser.hours}`}</li>
-        <li className="list-group-item">{`Contact: ${props.adviser.contact}`}</li>
-      </ul>
+    <div style={main} className="main">
+        <div style={titleBlock} className="title-block">
+        <p style={title}>Advisor Contact Information</p>
+        </div>
+        <div style = {bigBlock} className= "title">{
+          <h3 style={{
+            fontSize: 50,
+            color: "#black"
+          }}>
+          <span>{props.adviser.name}<br/>
+          Room: {props.adviser.room}<br/>
+          Hours: {props.adviser.hours}<br/>
+          Room: {props.adviser.contact}</span>
+          </h3>}
+        </div>
     </div>
   );
 };
 
-const styles = { main: { width: "18rem", marginLeft: 560, marginTop: 135 } };
+const styles = {
+  main: { 
+    marginLeft: "80px",
+    float: "left", 
+    marginTop: 25 
+  },
+  titleBlock: {
+    width: "130vh",
+    height: "30px",
+    backgroundColor: "#A42323",
+    marginBottom: "0px"
+  },
+  title: {
+    color: "#F2F2F2", 
+    marginLeft: "37px", 
+    fontSize: 20 
+  },
+  bigBlock: {
+    width: "130vh",
+    height: "500px",
+    backgroundColor: "#F7E8E8",
+    marginTop: "0px"
+  }
+};
 
 export default AdviserCard;

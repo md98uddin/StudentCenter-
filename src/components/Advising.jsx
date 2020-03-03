@@ -27,10 +27,11 @@ class Advising extends Component {
     return this.state.user ? (   
       <div 
         style = {{
-          backgroundImage: "url('https://storage.needpix.com/rsynced_images/brown-diagonal-stripes.jpg')",
+          //backgroundImage: "url('https://storage.needpix.com/rsynced_images/brown-diagonal-stripes.jpg')",
           //backgroundSize: 'cover', 
-          backgroundPosition: 'center center',
-          backgroundRepeat: 'repeat',
+          //backgroundPosition: 'center center',
+          //backgroundRepeat: 'repeat',
+          backgroundColor: '#A4A4A4',
           height: "100vh"
             }}
       >

@@ -56,7 +56,7 @@ class LoginPage extends Component {
         <div
           style={{
             height: "100vh",
-            backgroundColor: "#6b6558"
+            backgroundColor: "#A4A4A4"
           }}
         >
           <SignedOutNavBar />
