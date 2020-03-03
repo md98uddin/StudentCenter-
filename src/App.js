@@ -21,7 +21,8 @@ class App extends Component {
 
     this.state = {
       user: "",
-      userInfo: getMockData()
+      userInfo: getMockData(),
+      authError: null
     };
   }
 
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, userInfo } = this.state;
+    const { user, userInfo, authError } = this.state;
     console.log("user current classes", getClassDetails());
     return (
       <Router>
@@ -52,6 +53,7 @@ class App extends Component {
                 {...props}
                 signInStudent={this.signInStudent}
                 user={user}
+                authError={authError}
               />
             )}
           />
@@ -128,6 +130,15 @@ class App extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(data => {
         this.setState({ user: data.user });
+      })
+      .catch(error => {
+        if (
+          error.code === "auth/invalid-email" ||
+          error.code === "auth/user-not-found" ||
+          error.code === "auth/wrong-password"
+        ) {
+          this.setState({ authError: "invalid email or password" });
+        }
       });
   };
 
@@ -139,6 +150,20 @@ class App extends Component {
         this.setState({ user: null });
       });
   };
+
+  // updateError = code => {
+  //   if (
+  //     code === "auth/invalid-email" ||
+  //     code === "auth/user-not-found" ||
+  //     code === "auth/wrong-password"
+  //   ) {
+  //     const { authError } = this.state;
+  //     var authErrorMessage = "invalid email or password";
+  //     this.setState({ authError: authErrorMessage });
+  //   }
+
+  //   console.log("auth error", this.state.authError);
+  // };
 }
 
 export default App;

@@ -15,9 +15,10 @@ class RegisterPage extends Component {
       registrationCode: "",
       width: window.innerWidth,
       height: window.innerHeight,
-      passwordLengthError: "",
-      passwordMatchError: "",
-      registerCodeError: ""
+      passwordLengthError: null,
+      passwordMatchError: null,
+      registerCodeError: null,
+      emailError: null
     };
   }
 
@@ -37,7 +38,16 @@ class RegisterPage extends Component {
   };
 
   onSubmit = e => {
-    const { email, password, confirmPassword, registrationCode } = this.state;
+    const {
+      email,
+      password,
+      confirmPassword,
+      registrationCode,
+      emailError,
+      registerCodeError,
+      passwordLengthError,
+      passwordMatchError
+    } = this.state;
     this.setState({
       emailError: "",
       passwordLengthError: "",
@@ -54,10 +64,18 @@ class RegisterPage extends Component {
       this.setState({ registerCodeError: registerCodeErrorMessage });
     }
     if (password.length < 6) {
-      var passwordLengthErrorMessage = "password must 6 characters or more";
+      var passwordLengthErrorMessage = "password must length 6 or more";
       this.setState({ passwordLengthError: passwordLengthErrorMessage });
     }
-    this.signUpStudent({ email, password });
+
+    if (
+      !passwordLengthError &&
+      !passwordMatchError &&
+      !registerCodeError &&
+      !emailError
+    ) {
+      this.signUpStudent({ email, password });
+    }
   };
 
   render() {
@@ -129,7 +147,17 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
-              {emailError ? <p>{emailError}</p> : null}
+              {emailError ? (
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "#e8af13",
+                    marginLeft: width / 25
+                  }}
+                >
+                  {emailError}
+                </p>
+              ) : null}
             </div>
             <div
               style={{
@@ -160,7 +188,17 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
-              {passwordLengthError ? <p>{passwordLengthError}</p> : null}
+              {passwordLengthError ? (
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "#e8af13",
+                    marginLeft: width / 32
+                  }}
+                >
+                  {passwordLengthError}
+                </p>
+              ) : null}
             </div>
             <div
               style={{
@@ -194,7 +232,8 @@ class RegisterPage extends Component {
                 <p
                   style={{
                     fontSize: 12,
-                    color: "#ffffff"
+                    color: "#e8af13",
+                    marginLeft: width / 22
                   }}
                 >
                   {passwordMatchError}
@@ -210,7 +249,6 @@ class RegisterPage extends Component {
               }}
               className="form-group"
             >
-              {registerCodeError ? <p>{registerCodeError}</p> : null}
               <label
                 style={{
                   fontSize: 18,
@@ -231,7 +269,17 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
-              {registerCodeError ? <p>{registerCodeError}</p> : null}
+              {registerCodeError ? (
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "#e8af13",
+                    marginLeft: width / 22
+                  }}
+                >
+                  {registerCodeError}
+                </p>
+              ) : null}
             </div>
             <div style={{ marginTop: -(height / 12) }} className="form-group">
               <button

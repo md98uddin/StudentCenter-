@@ -14,7 +14,8 @@ class LoginPage extends Component {
       password: "",
       width: window.innerWidth,
       height: window.innerHeight,
-      user: this.props.user
+      user: this.props.user,
+      authError: this.props.authError
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -22,9 +23,10 @@ class LoginPage extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (prevState !== nextProps) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
+        authError: nextProps.authError
       };
     }
     return null;
@@ -49,7 +51,7 @@ class LoginPage extends Component {
 
   //textbox for user/password input
   render() {
-    const { height, width, user } = this.state;
+    const { height, width, user, authError } = this.state;
     return !user ? (
       <FadeIn delay="100">
         {" "}
@@ -60,11 +62,25 @@ class LoginPage extends Component {
           }}
         >
           <SignedOutNavBar />
+          {authError ? (
+            <div
+              style={{
+                height: width / 30,
+                width: width / 6,
+                marginLeft: width / 2.3,
+                marginTop: height / 18
+              }}
+              className="alert alert-warning"
+              role="alert"
+            >
+              <p style={{ marginBottom: width / 25 }}>{authError}</p>
+            </div>
+          ) : null}
           <form
             style={{
               marginLeft: width / 2.67,
               marginRight: width / 3.05,
-              marginTop: height / 7,
+              marginTop: height / 12,
               backgroundColor: "#A42323",
               borderRadius: 25
             }}
