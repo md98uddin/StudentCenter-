@@ -18,18 +18,19 @@ class RegisterPage extends Component {
       passwordLengthError: null,
       passwordMatchError: null,
       registerCodeError: null,
-      emailError: null
+      emailError: null,
+      user: null
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
-      return {
-        user: nextProps.user
-      };
-    }
-    return null;
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (prevState.user !== nextProps.user) {
+  //     return {
+  //       user: nextProps.user
+  //     };
+  //   }
+  //   return null;
+  // }
 
   onInputChange = e => {
     this.setState({
@@ -38,16 +39,7 @@ class RegisterPage extends Component {
   };
 
   onSubmit = e => {
-    const {
-      email,
-      password,
-      confirmPassword,
-      registrationCode,
-      emailError,
-      registerCodeError,
-      passwordLengthError,
-      passwordMatchError
-    } = this.state;
+    const { email, password, confirmPassword, registrationCode } = this.state;
     this.setState({
       emailError: "",
       passwordLengthError: "",
@@ -55,6 +47,7 @@ class RegisterPage extends Component {
       registerCodeError: ""
     });
     e.preventDefault();
+
     if (confirmPassword !== password) {
       var passwordMatchErrorMessage = "passwords do not match";
       this.setState({ passwordMatchError: passwordMatchErrorMessage });
@@ -69,10 +62,10 @@ class RegisterPage extends Component {
     }
 
     if (
-      !passwordLengthError &&
-      !passwordMatchError &&
-      !registerCodeError &&
-      !emailError
+      !this.state.passwordLengthError &&
+      !this.state.passwordMatchError &&
+      !this.state.registerCodeError &&
+      !this.state.emailError
     ) {
       this.signUpStudent({ email, password });
     }
@@ -88,11 +81,12 @@ class RegisterPage extends Component {
       emailError,
       passwordLengthError,
       passwordMatchError,
-      registerCodeError
+      registerCodeError,
+      user
     } = this.state;
     const { onInputChange } = this;
     console.log(this.state);
-    return !this.props.user ? (
+    return !user ? (
       <FadeIn delay="100">
         <div
           style={{
@@ -318,7 +312,7 @@ class RegisterPage extends Component {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
-        this.setState({ user: user.user });
+        this.setState({ user: user });
       })
       .catch(error => {
         if (error.code === "auth/invalid-email") {

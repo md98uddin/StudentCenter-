@@ -150,20 +150,6 @@ class App extends Component {
         this.setState({ user: null });
       });
   };
-
-  // updateError = code => {
-  //   if (
-  //     code === "auth/invalid-email" ||
-  //     code === "auth/user-not-found" ||
-  //     code === "auth/wrong-password"
-  //   ) {
-  //     const { authError } = this.state;
-  //     var authErrorMessage = "invalid email or password";
-  //     this.setState({ authError: authErrorMessage });
-  //   }
-
-  //   console.log("auth error", this.state.authError);
-  // };
 }
 
 export default App;
