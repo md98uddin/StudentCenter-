@@ -4,30 +4,25 @@ import { Link } from "react-router-dom";
 export default class Navbar extends Component {
   render() {
     const path = window.location.pathname;
-    const { innerHeight: height, innerWidth: width } = window;
-    console.log("width", width);
-    console.log("height", height);
     console.log(path);
+    const {
+      main,
+      tabMargin,
+      ButtonDiv,
+      faqButtonStyle,
+      faqButtonLabel,
+      logOutButtonStyle,
+      logOutButtonLabel
+    } = styles;
     return (
-      <nav
-        style={{
-          backgroundColor: "#a42323",
-          justifyContent: "Center",
-          display: "flex",
-          width: "100%",
-          alignItems: "center",
-          height: "40px",
-          marginTop: "10px"
-        }}
-        className="navbar navbar-dark navbar-expand-lg"
-      >
+      <nav style={main} className="navbar navbar-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">
           Martian College
         </Link>
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li
-              style={{ marginLeft: 25 }}
+              style={tabMargin}
               className={
                 path.includes("/home") ? "navbar-item active" : "navbar-item"
               }
@@ -37,7 +32,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
-              style={{ marginLeft: 25 }}
+              style={tabMargin}
               className={
                 path.includes("/classes") ? "navbar-item active" : "navbar-item"
               }
@@ -47,7 +42,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
-              style={{ marginLeft: 25 }}
+              style={tabMargin}
               className={
                 path.includes("/grades") ? "navbar-item active" : "navbar-item"
               }
@@ -57,7 +52,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
-              style={{ marginLeft: 25 }}
+              style={tabMargin}
               className={
                 path.includes("/finaid") ? "navbar-item active" : "navbar-item"
               }
@@ -67,7 +62,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
-              style={{ marginLeft: 25 }}
+              style={tabMargin}
               className={
                 path.includes("/advising")
                   ? "navbar-item active"
@@ -79,32 +74,21 @@ export default class Navbar extends Component {
               </Link>
             </li>
           </ul>
-          <div style={{ marginRight: "100px" }}>
+          <div style={ButtonDiv}>
             <button
-              style={{
-                marginLeft: "20px",
-                marginRight: "20px",
-                width: 100,
-                height: 30,
-                alignItems: "center"
-              }}
+              style={faqButtonStyle}
               type="button"
               className="btn btn-warning"
             >
-              <p style={{ margin: "-5px 5px 10px 5px" }}>FAQ</p>
+              <p style={faqButtonLabel}>FAQ</p>
             </button>
             <button
-              style={{
-                marginLeft: "20px",
-                marginRight: "20px",
-                width: 100,
-                height: 30
-              }}
+              style={logOutButtonStyle}
               onClick={() => this.props.signOutStudent()}
               type="button"
               className="btn btn-danger"
             >
-              <p style={{ margin: "-5px 5px 10px 5px" }}>Log Out</p>
+              <p style={logOutButtonLabel}>Log Out</p>
             </button>
           </div>
         </div>
@@ -112,3 +96,33 @@ export default class Navbar extends Component {
     );
   }
 }
+
+const { innerHeight: height, innerWidth: width } = window;
+
+const styles = {
+  main: {
+    backgroundColor: "#a42323",
+    justifyContent: "center",
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    height: height / 15
+  },
+  tabMargin: { marginLeft: width / 28 },
+  ButtonDiv: { marginRight: width / 51 },
+  faqButtonStyle: {
+    marginLeft: width / 20,
+    marginRight: width / 70,
+    width: width / 13,
+    height: height / 22,
+    alignItems: "center"
+  },
+  faqButtonLabel: { margin: "-5px 5px 10px 5px" },
+  logOutButtonStyle: {
+    marginLeft: width / 140,
+    marginRight: width / 70,
+    width: width / 13,
+    height: height / 22
+  },
+  logOutButtonLabel: { margin: "-5px 5px 10px 5px" }
+};

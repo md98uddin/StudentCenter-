@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import firebase from "../keys/FirebaseConfig";
 import SignedOutNavBar from "../reusables/SignedOutNav";
 import CreateForgot from "../reusables/CreateForgot";
 import FadeIn from "react-fade-in";
@@ -52,68 +51,37 @@ class LoginPage extends Component {
   //textbox for user/password input
   render() {
     const { height, width, user, authError } = this.state;
+    const {
+      mainDiv,
+      mainView,
+      formView,
+      header,
+      emailDiv,
+      passwordDiv,
+      emailLabel,
+      passwordLabel,
+      authErrorLabel,
+      buttonDiv,
+      buttonStyle,
+      buttonLabel,
+      emailInputDiv,
+      passwordInputDiv
+    } = styles;
     return !user ? (
       <FadeIn delay="100">
         {" "}
-        <div
-          style={{
-            height: "100vh",
-            backgroundColor: "#A4A4A4"
-          }}
-        >
+        <div style={mainDiv}>
           <SignedOutNavBar />
           {authError ? (
-            <div
-              style={{
-                height: width / 30,
-                width: width / 6,
-                marginLeft: width / 2.3,
-                marginTop: height / 18
-              }}
-              className="alert alert-warning"
-              role="alert"
-            >
-              <p style={{ marginBottom: width / 25 }}>{authError}</p>
+            <div style={mainView} className="alert alert-warning" role="alert">
+              <p style={authErrorLabel}>{authError}</p>
             </div>
           ) : null}
-          <form
-            style={{
-              marginLeft: width / 2.67,
-              marginRight: width / 3.05,
-              marginTop: height / 12,
-              backgroundColor: "#A42323",
-              marginTop: height / 7,
-              backgroundColor: "#BBBBBB",
-              borderRadius: 25
-            }}
-          >
-            <h3
-              style={{
-                fontSize: 15,
-                marginLeft: width / 11.5,
-                color: "#FFFFFF"
-              }}
-            >
-              Log in to Student Center
-            </h3>
-            <div
-              style={{
-                width: width / 5.5,
-                height: height / 4.5,
-                marginLeft: height / 8.3
-              }}
-              className="form-group"
-            >
-              <label
-                style={{
-                  fontSize: 18,
-                  marginLeft: width / 13.5,
-                  color: "#FFFFFF"
-                }}
-              >
-                Email
-              </label>
-              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+          <form style={formView}>
+            <h3 style={header}>Log in to Student Center</h3>
+            <div style={emailDiv} className="form-group">
+              <label style={emailLabel}>Email</label>
+              <div style={emailInputDiv}>
                 <input
                   type="email"
                   required
@@ -127,25 +95,9 @@ class LoginPage extends Component {
               </div>
             </div>
 
-            <div
-              style={{
-                width: width / 5.5,
-                height: height / 5.5,
-                marginTop: -(height / 10.5),
-                marginLeft: height / 8.3
-              }}
-              className="form-group"
-            >
-              <label
-                style={{
-                  fontSize: 18,
-                  marginLeft: width / 15.5,
-                  color: "#ffffff"
-                }}
-              >
-                Password
-              </label>
-              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+            <div style={passwordDiv} className="form-group">
+              <label style={passwordLabel}>Password</label>
+              <div style={passwordInputDiv}>
                 <input
                   type="password"
                   required
@@ -158,20 +110,14 @@ class LoginPage extends Component {
               </div>
             </div>
 
-            <div style={{ marginTop: -(height / 15) }} className="form-group">
+            <div style={buttonDiv} className="form-group">
               <button
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  width: width / 15,
-                  height: height / 14,
-                  marginLeft: width / 8.3,
-                  marginBottom: "10px"
-                }}
+                style={buttonStyle}
                 type="button"
                 className="btn btn-secondary btn-lg"
                 onClick={this.onSubmit}
               >
-                <p style={{ color: "#000000", fontSize: 18 }}>LOG IN</p>
+                <p style={buttonLabel}>LOG IN</p>
               </button>
             </div>
           </form>
@@ -183,5 +129,66 @@ class LoginPage extends Component {
     );
   }
 }
+
+const { innerHeight: height, innerWidth: width } = window;
+
+const styles = {
+  mainDiv: {
+    height: "100vh",
+    backgroundColor: "#A4A4A4"
+  },
+  mainView: {
+    height: width / 30,
+    width: width / 6,
+    marginLeft: width / 2.3,
+    marginTop: height / 18
+  },
+  formView: {
+    marginLeft: width / 2.67,
+    marginRight: width / 3.05,
+    marginTop: height / 12,
+    marginTop: height / 7,
+    backgroundColor: "#bbbbbb",
+    borderRadius: 25
+  },
+  header: {
+    fontSize: 15,
+    marginLeft: width / 11.5,
+    color: "#FFFFFF"
+  },
+  emailDiv: {
+    width: width / 5.5,
+    height: height / 4.5,
+    marginLeft: height / 8.3
+  },
+  passwordDiv: {
+    width: width / 5.5,
+    height: height / 5.5,
+    marginTop: -(height / 10.5),
+    marginLeft: height / 8.3
+  },
+  emailLabel: {
+    fontSize: 18,
+    marginLeft: width / 13.5,
+    color: "#FFFFFF"
+  },
+  passwordLabel: {
+    fontSize: 18,
+    marginLeft: width / 15.5,
+    color: "#ffffff"
+  },
+  buttonDiv: { marginTop: -(height / 15) },
+  buttonStyle: {
+    backgroundColor: "#FFFFFF",
+    width: width / 15,
+    height: height / 14,
+    marginLeft: width / 8.3,
+    marginBottom: "10px"
+  },
+  buttonLabel: { color: "#000000", fontSize: 18 },
+  emailInputDiv: { border: "solid", borderColor: "#fc0335" },
+  passwordInputDiv: { border: "solid", borderColor: "#fc0335" },
+  authErrorLabel: { marginBottom: width / 25 }
+};
 
 export default LoginPage;

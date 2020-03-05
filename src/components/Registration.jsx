@@ -39,7 +39,16 @@ class RegisterPage extends Component {
   };
 
   onSubmit = e => {
-    const { email, password, confirmPassword, registrationCode } = this.state;
+    const {
+      email,
+      password,
+      confirmPassword,
+      registrationCode,
+      passwordLengthError,
+      passwordMatchError,
+      registerCodeError,
+      emailError
+    } = this.state;
     this.setState({
       emailError: "",
       passwordLengthError: "",
@@ -66,17 +75,16 @@ class RegisterPage extends Component {
     }
 
     if (
-      !this.state.passwordLengthError &&
-      !this.state.passwordMatchError &&
-      !this.state.registerCodeError &&
-      !this.state.emailError
+      !passwordLengthError &&
+      !passwordMatchError &&
+      !registerCodeError &&
+      !emailError
     ) {
       this.signUpStudent({ email, password });
     }
   };
 
   render() {
-    const { height, width } = this.state;
     const {
       password,
       confirmPassword,
@@ -86,55 +94,47 @@ class RegisterPage extends Component {
       passwordLengthError,
       passwordMatchError,
       registerCodeError,
-      user
+      user,
+      height,
+      width
     } = this.state;
+
+    const {
+      mainDiv,
+      formDiv,
+      header,
+      emailDiv,
+      passwordDiv,
+      confirmPassDiv,
+      registerDiv,
+      emailLabel,
+      passwordLabel,
+      confirmPassLabel,
+      registerLabel,
+      emailInputDiv,
+      passwordInputDiv,
+      confirmPassInputDiv,
+      registerInputDiv,
+      emailErrorLabel,
+      passwordErrorLabel,
+      confirmPassErrorLabel,
+      registerErrorLabel,
+      buttonDiv,
+      buttonStyle,
+      buttonLabel
+    } = styles;
+
     const { onInputChange } = this;
     console.log(this.state);
     return !user ? (
       <FadeIn delay="100">
-        <div
-          style={{
-            height: "100vh",
-            backgroundColor: "#6b6558"
-          }}
-        >
+        <div style={mainDiv}>
           <SignedOutNavBar />
-          <form
-            style={{
-              marginLeft: width / 2.67,
-              marginRight: width / 3.05,
-              marginTop: height / 11,
-              backgroundColor: "#A42323",
-              borderRadius: 25
-            }}
-          >
-            <h3
-              style={{
-                fontSize: 15,
-                marginLeft: width / 13,
-                color: "#FFFFFF"
-              }}
-            >
-              Register for Student Center
-            </h3>
-            <div
-              style={{
-                width: width / 5.5,
-                height: height / 4.5,
-                marginLeft: height / 8.3
-              }}
-              className="form-group"
-            >
-              <label
-                style={{
-                  fontSize: 18,
-                  marginLeft: width / 13.5,
-                  color: "#FFFFFF"
-                }}
-              >
-                Email
-              </label>
-              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+          <form style={formDiv}>
+            <h3 style={header}>Register for Student Center</h3>
+            <div style={emailDiv} className="form-group">
+              <label style={emailLabel}>Email</label>
+              <div style={emailInputDiv}>
                 <input
                   type="text"
                   required
@@ -145,37 +145,11 @@ class RegisterPage extends Component {
                   onChange={onInputChange}
                 />
               </div>
-              {emailError ? (
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "#e8af13",
-                    marginLeft: width / 40
-                  }}
-                >
-                  {emailError}
-                </p>
-              ) : null}
+              {emailError ? <p style={emailErrorLabel}>{emailError}</p> : null}
             </div>
-            <div
-              style={{
-                width: width / 5.5,
-                height: height / 5.5,
-                marginTop: -(height / 10),
-                marginLeft: height / 8.3
-              }}
-              className="form-group"
-            >
-              <label
-                style={{
-                  fontSize: 18,
-                  marginLeft: width / 15.5,
-                  color: "#ffffff"
-                }}
-              >
-                Password
-              </label>
-              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+            <div style={passwordDiv} className="form-group">
+              <label style={passwordLabel}>Password</label>
+              <div style={passwordInputDiv}>
                 <input
                   type="password"
                   required
@@ -187,36 +161,12 @@ class RegisterPage extends Component {
                 />
               </div>
               {passwordLengthError ? (
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "#e8af13",
-                    marginLeft: width / 32
-                  }}
-                >
-                  {passwordLengthError}
-                </p>
+                <p style={passwordErrorLabel}>{passwordLengthError}</p>
               ) : null}
             </div>
-            <div
-              style={{
-                width: width / 5.5,
-                height: height / 4.5,
-                marginLeft: height / 8.3,
-                marginTop: -(height / 17)
-              }}
-              className="form-group"
-            >
-              <label
-                style={{
-                  fontSize: 18,
-                  marginLeft: width / 25,
-                  color: "#ffffff"
-                }}
-              >
-                Confirm Password
-              </label>
-              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+            <div style={confirmPassDiv} className="form-group">
+              <label style={confirmPassLabel}>Confirm Password</label>
+              <div style={confirmPassInputDiv}>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -227,36 +177,12 @@ class RegisterPage extends Component {
                 />
               </div>
               {passwordMatchError ? (
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "#e8af13",
-                    marginLeft: width / 22
-                  }}
-                >
-                  {passwordMatchError}
-                </p>
+                <p style={confirmPassErrorLabel}>{passwordMatchError}</p>
               ) : null}
             </div>
-            <div
-              style={{
-                width: width / 5.5,
-                height: height / 4.5,
-                marginLeft: height / 8.3,
-                marginTop: -(height / 10.5)
-              }}
-              className="form-group"
-            >
-              <label
-                style={{
-                  fontSize: 18,
-                  marginLeft: width / 25,
-                  color: "#ffffff"
-                }}
-              >
-                Registration Code
-              </label>
-              <div style={{ border: "solid", borderColor: "#fc0335" }}>
+            <div style={registerDiv} className="form-group">
+              <label style={registerLabel}>Registration Code</label>
+              <div style={registerInputDiv}>
                 <input
                   type="text"
                   required
@@ -268,39 +194,17 @@ class RegisterPage extends Component {
                 />
               </div>
               {registerCodeError ? (
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "#e8af13",
-                    marginLeft: width / 22
-                  }}
-                >
-                  {registerCodeError}
-                </p>
+                <p style={registerErrorLabel}>{registerCodeError}</p>
               ) : null}
             </div>
-            <div style={{ marginTop: -(height / 12) }} className="form-group">
+            <div style={buttonDiv} className="form-group">
               <button
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  width: width / 8,
-                  height: height / 14,
-                  marginLeft: width / 11.3,
-                  marginBottom: width / 100
-                }}
+                style={buttonStyle}
                 type="button"
                 className="btn btn-secondary btn-lg"
                 onClick={this.onSubmit}
               >
-                <p
-                  style={{
-                    color: "#000000",
-                    fontSize: 16,
-                    marginTop: height / 200
-                  }}
-                >
-                  CREATE ACCOUNT
-                </p>
+                <p style={buttonLabel}>CREATE ACCOUNT</p>
               </button>
             </div>
           </form>
@@ -326,5 +230,106 @@ class RegisterPage extends Component {
       });
   };
 }
+
+const { innerHeight: height, innerWidth: width } = window;
+
+const styles = {
+  mainDiv: {
+    height: "100vh",
+    backgroundColor: "#6b6558"
+  },
+  formDiv: {
+    marginLeft: width / 2.67,
+    marginRight: width / 3.05,
+    marginTop: height / 11,
+    backgroundColor: "#bbbbbb",
+    borderRadius: 25
+  },
+  header: {
+    fontSize: 15,
+    marginLeft: width / 13,
+    color: "#FFFFFF"
+  },
+  emailDiv: {
+    width: width / 5.5,
+    height: height / 4.5,
+    marginLeft: height / 8.3
+  },
+  passwordDiv: {
+    width: width / 5.5,
+    height: height / 5.5,
+    marginTop: -(height / 10),
+    marginLeft: height / 8.3
+  },
+  confirmPassDiv: {
+    width: width / 5.5,
+    height: height / 4.5,
+    marginLeft: height / 8.3,
+    marginTop: -(height / 17)
+  },
+  registerDiv: {
+    width: width / 5.5,
+    height: height / 4.5,
+    marginLeft: height / 8.3,
+    marginTop: -(height / 10.5)
+  },
+  emailLabel: {
+    fontSize: 18,
+    marginLeft: width / 13.5,
+    color: "#FFFFFF"
+  },
+  passwordLabel: {
+    fontSize: 18,
+    marginLeft: width / 15.5,
+    color: "#ffffff"
+  },
+  confirmPassLabel: {
+    fontSize: 18,
+    marginLeft: width / 25,
+    color: "#ffffff"
+  },
+  registerLabel: {
+    fontSize: 18,
+    marginLeft: width / 25,
+    color: "#ffffff"
+  },
+  emailInputDiv: { border: "solid", borderColor: "#fc0335" },
+  passwordInputDiv: { border: "solid", borderColor: "#fc0335" },
+  confirmPassInputDiv: { border: "solid", borderColor: "#fc0335" },
+  registerInputDiv: { border: "solid", borderColor: "#fc0335" },
+  emailErrorLabel: {
+    fontSize: 12,
+    color: "#000000",
+    marginLeft: width / 40
+  },
+  passwordErrorLabel: {
+    fontSize: 12,
+    color: "#000000",
+    marginLeft: width / 32
+  },
+  confirmPassErrorLabel: {
+    fontSize: 12,
+    color: "#000000",
+    marginLeft: width / 22
+  },
+  registerErrorLabel: {
+    fontSize: 12,
+    color: "#000000",
+    marginLeft: width / 22
+  },
+  buttonDiv: { marginTop: -(height / 12) },
+  buttonStyle: {
+    backgroundColor: "#FFFFFF",
+    width: width / 8,
+    height: height / 14,
+    marginLeft: width / 11.3,
+    marginBottom: width / 100
+  },
+  buttonLabel: {
+    color: "#000000",
+    fontSize: 16,
+    marginTop: height / 200
+  }
+};
 
 export default RegisterPage;
