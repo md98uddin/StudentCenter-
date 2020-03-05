@@ -33,18 +33,24 @@ const UserProfile = props => {
   );
 };
 
+const { innerWidth: width, innerHeight: height } = window;
+
 const styles = {
-  main: { float: "left", marginTop: 25, marginLeft: 63 },
+  main: { float: "left", marginTop: width / 50, marginLeft: width / 20 },
   welcomeMessageBlock: {
-    width: "600px",
-    height: "30px",
+    width: width / 2.2,
+    height: height / 22,
     backgroundColor: "#F2F2F2",
-    marginBottom: "5px"
+    marginBottom: height / 100
   },
-  welcomeMessageTitle: { color: "#A42323", marginLeft: "60px", fontSize: 18 },
+  welcomeMessageTitle: {
+    color: "#A42323",
+    marginLeft: width / 22.5,
+    fontSize: height / 35
+  },
   profileRedBlock: {
-    width: "600px",
-    height: "495px",
+    width: width / 2.2,
+    height: height / 1.3,
     backgroundColor: "#D35D5D"
   }
 };

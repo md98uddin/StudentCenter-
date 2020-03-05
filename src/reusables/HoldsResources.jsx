@@ -34,50 +34,63 @@ const HoldsResources = props => {
   );
 };
 
+const { innerWidth: width, innerHeight: height } = window;
+
 const styles = {
   main: {
-    marginTop: 25,
-    marginLeft: 63,
+    marginTop: width / 50,
+    marginLeft: width / 20,
     display: "inline-block"
   },
   holdTitleBlock: {
-    width: "220px",
-    height: "30px",
+    width: width / 5.7,
+    height: height / 22,
     backgroundColor: "#F2F2F2",
-    marginBottom: "0px"
+    marginBottom: height / 100
   },
-  holdTitle: { color: "#A42323", marginLeft: "80px", fontSize: 20 },
+  holdTitle: {
+    color: "#A42323",
+    marginLeft: width / 15,
+    fontSize: height / 30
+  },
   holdRedBlock: {
-    width: "220px",
-    height: "147px",
-    backgroundColor: "#A42323",
-    marginTop: "0px"
+    width: width / 5.7,
+    height: height / 4.69,
+    backgroundColor: "#A42323"
   },
   adviserTitleBlock: {
-    width: "220px",
-    height: "30px",
+    width: width / 5.7,
+    height: height / 22,
     backgroundColor: "#F2F2F2",
-    marginBottom: "0px"
+    marginBottom: height / 100,
+    marginTop: height / 100
   },
-  adviserTitle: { color: "#A42323", marginLeft: "60px", fontSize: 20 },
+  adviserTitle: {
+    color: "#A42323",
+    marginLeft: width / 22,
+    fontSize: height / 30
+  },
   adviserRedBlock: {
-    width: "220px",
-    height: "147px",
-    backgroundColor: "#A42323",
-    marginTop: "0px"
+    width: width / 5.7,
+    height: height / 4.69,
+    backgroundColor: "#A42323"
   },
   resourcesTitleBlock: {
-    width: "220px",
-    height: "30px",
+    width: width / 5.7,
+    height: height / 22,
     backgroundColor: "#F2F2F2",
-    marginBottom: "0px"
+    marginBottom: height / 100,
+    marginTop: height / 100
   },
-  resourcesTitle: { color: "#A42323", marginLeft: "63px", fontSize: 20 },
+  resourcesTitle: {
+    color: "#A42323",
+    marginLeft: width / 21,
+    fontSize: height / 30
+  },
   resourcesRedBlock: {
-    width: "220px",
-    height: "147px",
-    backgroundColor: "#A42323",
-    marginTop: "0px"
+    width: width / 5.7,
+    height: height / 4.69,
+    backgroundColor: "#A42323"
   }
 };
 

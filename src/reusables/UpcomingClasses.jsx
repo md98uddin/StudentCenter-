@@ -13,20 +13,20 @@ const UpcomingClasses = props => {
   );
 };
 
+const { innerWidth: width, innerHeight: height } = window;
 const styles = {
-  main: { marginLeft: "80px", float: "left", marginTop: 25 },
+  main: { marginLeft: width / 30, float: "left", marginTop: width / 50 },
   titleBlock: {
-    width: "255px",
-    height: "30px",
+    width: width / 5.2,
+    height: height / 22,
     backgroundColor: "#F2F2F2",
-    marginBottom: "0px"
+    marginBottom: height / 100
   },
-  title: { color: "#A42323", marginLeft: "37px", fontSize: 20 },
+  title: { color: "#A42323", marginLeft: width / 30, fontSize: height / 35 },
   bigBlock: {
-    width: "255px",
-    height: "500px",
-    backgroundColor: "#A42323",
-    marginTop: "0px"
+    width: width / 5.2,
+    height: height / 1.3,
+    backgroundColor: "#A42323"
   }
 };
 

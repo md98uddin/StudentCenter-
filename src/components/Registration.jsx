@@ -48,7 +48,11 @@ class RegisterPage extends Component {
     });
     e.preventDefault();
 
-    if (confirmPassword !== password) {
+    if (
+      confirmPassword !== password ||
+      confirmPassword === null ||
+      password === null
+    ) {
       var passwordMatchErrorMessage = "passwords do not match";
       this.setState({ passwordMatchError: passwordMatchErrorMessage });
     }
@@ -146,7 +150,7 @@ class RegisterPage extends Component {
                   style={{
                     fontSize: 12,
                     color: "#e8af13",
-                    marginLeft: width / 25
+                    marginLeft: width / 40
                   }}
                 >
                   {emailError}
@@ -315,8 +319,8 @@ class RegisterPage extends Component {
         this.setState({ user: user });
       })
       .catch(error => {
-        if (error.code === "auth/invalid-email") {
-          var emailMessage = "email format is not correct";
+        if (error.code === "auth/invalid-email" || this.state.email === null) {
+          var emailMessage = "email format is not correct or taken";
           this.setState({ emailError: emailMessage });
         }
       });
