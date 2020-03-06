@@ -13,6 +13,7 @@ import Grades from "./components/Grades";
 import Classes from "./components/Classes";
 import AidsAndLoans from "./components/AidsAndLoans";
 import Advising from "./components/Advising";
+import ForgotPassword from "./components/ForgotPassword";
 import { getMockData, currentCourses, getClassDetails } from "./utils/services";
 
 class App extends Component {
@@ -31,8 +32,8 @@ class App extends Component {
   }
 
   render() {
-    const { user, userInfo, authError } = this.state;
-    console.log("user info", userInfo);
+    const { user, userInfo, authError, email } = this.state;
+    console.log("user current classes", getClassDetails());
     return (
       <Router>
         <Switch>
@@ -61,6 +62,18 @@ class App extends Component {
             exact
             path="/register"
             render={props => <RegisterPage {...props} user={user} />}
+          />
+          <Route
+            exact
+            path="/forgotPassword"
+            render={props => (
+              <ForgotPassword
+                {...props}
+                user={user}
+                email={email}
+                doPasswordReset={this.doPasswordReset}
+              />
+            )}
           />
           <Route
             exact
@@ -151,6 +164,17 @@ class App extends Component {
         this.setState({ user: null });
       });
   };
-}
 
+  doPasswordReset = email => {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        this.setState({ email: "", error: null });
+      })
+      .catch(error => {
+        this.setState({ user: null, error: "Invalid Email" });
+      });
+  };
+}
 export default App;
