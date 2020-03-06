@@ -10,14 +10,16 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      user: this.props.user
+      user: this.props.user,
+      userInfo: this.props.userInfo
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (prevState !== nextProps) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
+        userInfo: nextProps.userInfo
       };
     }
     return null;
@@ -33,7 +35,7 @@ class Home extends Component {
         }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <UpcomingClasses />
+        <UpcomingClasses currentClasses={this.state.userInfo.currentClasses} />
         <UserProfile />
         <HoldsResources />
       </div>

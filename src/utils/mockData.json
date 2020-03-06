@@ -53,6 +53,19 @@
       "year": 2018,
       "semester": "Fall",
       "campus": "Hunter"
+    },
+    {
+      "prefix": "ASTR",
+      "courseNumber": "15500",
+      "Professor": "Dean Elgar",
+      "room": "E334",
+      "days": [
+        { "day": "Tuesday", "hours": "2:00pm-3:15pm" },
+        { "day": "Wedneday", "hours": "3:00pm-4:15pm" }
+      ],
+      "year": 2018,
+      "semester": "Fall",
+      "campus": "Hunter"
     }
   ],
   "classesCompleted": [

@@ -125,7 +125,7 @@ class LoginPage extends Component {
         </div>
       </FadeIn>
     ) : (
-      <Redirect to="/advising" />
+      <Redirect to="/home" />
     );
   }
 }

@@ -32,7 +32,7 @@ class App extends Component {
 
   render() {
     const { user, userInfo, authError } = this.state;
-    console.log("user current classes", getClassDetails());
+    console.log("user info", userInfo);
     return (
       <Router>
         <Switch>
@@ -69,6 +69,7 @@ class App extends Component {
               <HomePage
                 {...props}
                 user={user}
+                userInfo={userInfo}
                 signOutStudent={this.signOutStudent}
               />
             )}
