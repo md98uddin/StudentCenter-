@@ -125,7 +125,8 @@ const styles = {
   headerBig: {
     textAlign: "center",
     fontSize: height / 47,
-    color: "#black"
+    color: "#black",
+    marginTop: -(height / 50)
   },
   biggerBlock: {
     //padding: "50 px",
