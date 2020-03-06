@@ -94,9 +94,7 @@ class RegisterPage extends Component {
       passwordLengthError,
       passwordMatchError,
       registerCodeError,
-      user,
-      height,
-      width
+      user
     } = this.state;
 
     const {

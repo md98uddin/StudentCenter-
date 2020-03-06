@@ -24,24 +24,19 @@ class Advising extends Component {
   }
 
   render() {
-    return this.state.user ? (   
-      <div 
-        style = {{
-          //backgroundImage: "url('https://storage.needpix.com/rsynced_images/brown-diagonal-stripes.jpg')",
-          //backgroundSize: 'cover', 
-          //backgroundPosition: 'center center',
-          //backgroundRepeat: 'repeat',
-          backgroundColor: '#A4A4A4',
+    return this.state.user ? (
+      <div
+        style={{
+          backgroundColor: "#A4A4A4",
           height: "100vh"
-            }}
+        }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />
         <AdviserCard adviser={this.state.userInfo.adviser} />
       </div>
     ) : (
       <Redirect to="/login" />
-    );    
-    
+    );
   }
 }
 

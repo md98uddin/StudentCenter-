@@ -50,7 +50,7 @@ class LoginPage extends Component {
 
   //textbox for user/password input
   render() {
-    const { height, width, user, authError } = this.state;
+    const { user, authError } = this.state;
     const {
       mainDiv,
       mainView,
@@ -125,7 +125,7 @@ class LoginPage extends Component {
         </div>
       </FadeIn>
     ) : (
-      <Redirect to="/home" />
+      <Redirect to="/advising" />
     );
   }
 }
@@ -146,8 +146,7 @@ const styles = {
   formView: {
     marginLeft: width / 2.67,
     marginRight: width / 3.05,
-    marginTop: height / 12,
-    marginTop: height / 7,
+    marginTop: height / 15,
     backgroundColor: "#bbbbbb",
     borderRadius: 25
   },
