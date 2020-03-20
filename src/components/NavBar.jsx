@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { getCampus } from "../utils/services";
 
 export default class Navbar extends Component {
   render() {
@@ -17,7 +18,7 @@ export default class Navbar extends Component {
     return (
       <nav style={main} className="navbar navbar-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">
-          Martian College
+          {getCampus(this.props.campus)}
         </Link>
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">

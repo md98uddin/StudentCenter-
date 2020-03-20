@@ -6,6 +6,7 @@ import {
   Redirect
 } from "react-router-dom";
 import firebase from "./keys/FirebaseConfig";
+import axios from "axios";
 import HomePage from "./components/Home";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Registration";
@@ -21,19 +22,17 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: "",
-      userInfo: getMockData(),
-      authError: null
+      user: null,
+      authError: null,
+      courses: null,
+      faculties: null,
+      swap: []
     };
   }
 
-  componentDidMount() {
-    this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
-  }
-
   render() {
-    const { user, userInfo, authError, email } = this.state;
-    console.log("user current classes", getClassDetails());
+    const { user, userInfo, authError } = this.state;
+    console.log("api call", user);
     return (
       <Router>
         <Switch>
@@ -70,7 +69,6 @@ class App extends Component {
               <ForgotPassword
                 {...props}
                 user={user}
-                email={email}
                 doPasswordReset={this.doPasswordReset}
               />
             )}
@@ -82,7 +80,6 @@ class App extends Component {
               <HomePage
                 {...props}
                 user={user}
-                userInfo={userInfo}
                 signOutStudent={this.signOutStudent}
               />
             )}
@@ -127,7 +124,6 @@ class App extends Component {
               <Advising
                 {...props}
                 user={user}
-                userInfo={userInfo}
                 signOutStudent={this.signOutStudent}
               />
             )}
@@ -142,8 +138,11 @@ class App extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(data => {
-        this.setState({ user: data.user });
+      .then(async data => {
+        const user = await axios.get(
+          `http://localhost:3000/students/${data.user.email}`
+        );
+        this.setState({ user: user.data[0] });
       })
       .catch(error => {
         if (

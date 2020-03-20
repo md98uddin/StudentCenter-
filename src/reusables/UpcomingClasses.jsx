@@ -13,8 +13,7 @@ const UpcomingClasses = props => {
     classRoom
   } = styles;
   var top3 = props.currentClasses.slice(0, 3);
-  console.log("days info", top3[0]);
-
+  console.log(props.currentClasses);
   if (top3)
     return (
       <div style={main} className="main">
@@ -31,7 +30,7 @@ const UpcomingClasses = props => {
                   style={classHead}
                   className="classTitle"
                 >{`${classes.prefix} ${classes.courseNumber}`}</h3>
-                <p style={classProf}>{classes.Professor}</p>
+                <p style={classProf}>{classes.professor}</p>
                 <p style={classHours}>{classes.days[0].hours}</p>
                 <p style={classRoom}>{classes.room}</p>
               </div>

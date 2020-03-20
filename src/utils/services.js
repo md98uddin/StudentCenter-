@@ -30,6 +30,22 @@ export function getDay(num) {
   }
 }
 
+export function getCampus(num) {
+  switch (num) {
+    case 1234:
+      return "Hunter College";
+    case 2345:
+      return "Baruch College";
+
+    case 3456:
+      return "City College";
+
+    case 4567:
+      return "York College";
+    default:
+  }
+}
+
 export function getMonth(num) {
   switch (num) {
     case 0:

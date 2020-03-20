@@ -6,25 +6,11 @@ import AdviserCard from "../reusables/AdviserCard";
 class Advising extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      user: this.props.user,
-      userInfo: this.props.userInfo
-    };
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
-      return {
-        user: nextProps.user,
-        userInfo: nextProps.userInfo
-      };
-    }
-    return null;
   }
 
   render() {
-    return this.state.user ? (
+    const { user } = this.props;
+    return user ? (
       <div
         style={{
           backgroundColor: "#A4A4A4",
@@ -32,7 +18,7 @@ class Advising extends Component {
         }}
       >
         <Navbar signOutStudent={this.props.signOutStudent} />
-        <AdviserCard adviser={this.state.userInfo.adviser} />
+        <AdviserCard adviser={user.adviser} />
       </div>
     ) : (
       <Redirect to="/login" />

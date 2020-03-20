@@ -10,25 +10,11 @@ class LoginPage extends Component {
 
     this.state = {
       email: "",
-      password: "",
-      width: window.innerWidth,
-      height: window.innerHeight,
-      user: this.props.user,
-      authError: this.props.authError
+      password: ""
     };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState !== nextProps) {
-      return {
-        user: nextProps.user,
-        authError: nextProps.authError
-      };
-    }
-    return null;
   }
 
   onInputChange(e) {
@@ -40,17 +26,12 @@ class LoginPage extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const LoginInfo = {
-      email: this.state.email,
-      password: this.state.password
-    };
-
-    this.props.signInStudent(LoginInfo);
+    const { email, password } = this.state;
+    this.props.signInStudent({ email, password });
   }
 
-  //textbox for user/password input
   render() {
-    const { user, authError } = this.state;
+    const { user, authError } = this.props;
     const {
       mainDiv,
       mainView,
