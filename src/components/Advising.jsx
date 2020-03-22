@@ -6,6 +6,17 @@ import AdviserCard from "../reusables/AdviserCard";
 class Advising extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { user: this.props.user };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+    return null;
   }
 
   render() {
@@ -17,7 +28,10 @@ class Advising extends Component {
           height: "100vh"
         }}
       >
-        <Navbar signOutStudent={this.props.signOutStudent} />
+        <Navbar
+          signOutStudent={this.props.signOutStudent}
+          campus={user.campusId}
+        />
         <AdviserCard adviser={user.adviser} />
       </div>
     ) : (

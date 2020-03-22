@@ -22,14 +22,19 @@ class Classes extends Component {
   }
 
   render() {
-    return this.state.user ? (
+    const { user } = this.state;
+    return user ? (
       <div
-      style={{
-        height: "100vh",
-        backgroundColor: '#A4A4A4',
-        //backgroundImage: "url('https://i2.wp.com/files.123freevectors.com/wp-content/original/105601-red-star-pattern.jpg?w=800&q=95')"
-      }}>
-        <Navbar signOutStudent={this.props.signOutStudent} />
+        style={{
+          height: "100vh",
+          backgroundColor: "#A4A4A4"
+          //backgroundImage: "url('https://i2.wp.com/files.123freevectors.com/wp-content/original/105601-red-star-pattern.jpg?w=800&q=95')"
+        }}
+      >
+        <Navbar
+          signOutStudent={this.props.signOutStudent}
+          campus={user.campusId}
+        />
         <ClassesTab />
       </div>
     ) : (

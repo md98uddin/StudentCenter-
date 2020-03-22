@@ -15,7 +15,6 @@ import Classes from "./components/Classes";
 import AidsAndLoans from "./components/AidsAndLoans";
 import Advising from "./components/Advising";
 import ForgotPassword from "./components/ForgotPassword";
-import { getMockData, currentCourses, getClassDetails } from "./utils/services";
 
 class App extends Component {
   constructor(props) {
@@ -30,9 +29,12 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
+  }
+
   render() {
-    const { user, userInfo, authError } = this.state;
-    console.log("api call", user);
+    const { user, authError, courses } = this.state;
     return (
       <Router>
         <Switch>
@@ -60,7 +62,13 @@ class App extends Component {
           <Route
             exact
             path="/register"
-            render={props => <RegisterPage {...props} user={user} />}
+            render={props => (
+              <RegisterPage
+                {...props}
+                user={user}
+                signUpStudent={this.signUpStudent}
+              />
+            )}
           />
           <Route
             exact
@@ -81,6 +89,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
@@ -92,6 +101,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
@@ -103,6 +113,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
@@ -114,6 +125,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
@@ -125,6 +137,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
@@ -142,7 +155,10 @@ class App extends Component {
         const user = await axios.get(
           `http://localhost:3000/students/${data.user.email}`
         );
-        this.setState({ user: user.data[0] });
+        const courses = await axios.get(
+          `http://localhost:3000/courses?campusId=${user.data[0].campusId}`
+        );
+        this.setState({ user: user.data[0], courses });
       })
       .catch(error => {
         if (
@@ -152,6 +168,28 @@ class App extends Component {
         ) {
           this.setState({ authError: "invalid email or password" });
         }
+      });
+  };
+
+  signUpStudent = async obj => {
+    const { email, password, registrationCode } = obj;
+    axios
+      .post(`http://localhost:3000/students/add/${registrationCode}`, { email })
+      .then(res => {
+        if (res.data === "code matches") {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(async res => {
+              this.setState({ user: res.user });
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      })
+      .catch(error => {
+        console.log("error", error);
       });
   };
 

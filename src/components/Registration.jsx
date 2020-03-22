@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import firebase from "../keys/FirebaseConfig";
+import axios from "axios";
 import FadeIn from "react-fade-in";
 import SignedOutNavBar from "../reusables/SignedOutNav";
 
@@ -19,18 +20,9 @@ class RegisterPage extends Component {
       passwordMatchError: null,
       registerCodeError: null,
       emailError: null,
-      user: null
+      user: this.props.user
     };
   }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (prevState.user !== nextProps.user) {
-  //     return {
-  //       user: nextProps.user
-  //     };
-  //   }
-  //   return null;
-  // }
 
   onInputChange = e => {
     this.setState({
@@ -38,50 +30,69 @@ class RegisterPage extends Component {
     });
   };
 
-  onSubmit = e => {
-    const {
-      email,
-      password,
-      confirmPassword,
-      registrationCode,
-      passwordLengthError,
-      passwordMatchError,
-      registerCodeError,
-      emailError
-    } = this.state;
-    this.setState({
-      emailError: "",
-      passwordLengthError: "",
-      passwordMatchError: "",
-      registerCodeError: ""
-    });
+  onSubmit = async e => {
     e.preventDefault();
+    const { email, password, confirmPassword, registrationCode } = this.state;
 
-    if (
-      confirmPassword !== password ||
-      confirmPassword === null ||
-      password === null
-    ) {
-      var passwordMatchErrorMessage = "passwords do not match";
-      this.setState({ passwordMatchError: passwordMatchErrorMessage });
-    }
-    if (registrationCode !== "abc123") {
-      var registerCodeErrorMessage = "invalid registration code";
-      this.setState({ registerCodeError: registerCodeErrorMessage });
-    }
-    if (password.length < 6) {
-      var passwordLengthErrorMessage = "password must length 6 or more";
-      this.setState({ passwordLengthError: passwordLengthErrorMessage });
-    }
+    await axios
+      .get(`http://localhost:3000/students/${email}`)
+      .then(async res => {
+        var registerCodeErrorMessage = "invalid registration code";
+        var emailErrorMessage = "invalid/or already taken email";
+        var passwordMatchErrorMessage = "passwords do not match";
+        var passwordLengthErrorMessage = "password must length 6 or more";
+        if (registrationCode !== res.data[0].registrationCode) {
+          this.setState({ registerCodeError: registerCodeErrorMessage });
+        } else if (registrationCode === res.data[0].registrationCode) {
+          this.setState({ registerCodeError: "" });
+        }
 
-    if (
-      !passwordLengthError &&
-      !passwordMatchError &&
-      !registerCodeError &&
-      !emailError
-    ) {
-      this.signUpStudent({ email, password });
-    }
+        if (res.data[0].email !== email) {
+          this.setState({ emailError: emailErrorMessage });
+        } else if (res.data[0].email === email) {
+          this.setState({ emailError: "" });
+        }
+        if (
+          confirmPassword !== password &&
+          confirmPassword !== null &&
+          password !== null &&
+          password.length >= 6
+        ) {
+          this.setState({ passwordMatchError: passwordMatchErrorMessage });
+        } else if (
+          confirmPassword === password &&
+          confirmPassword !== null &&
+          password !== null
+        ) {
+          this.setState({ passwordMatchError: "" });
+        }
+        if (password.length < 6) {
+          this.setState({ passwordLengthError: passwordLengthErrorMessage });
+        } else if (password.length >= 6) {
+          this.setState({ passwordLengthError: "" });
+        }
+      })
+      .then(async () => {
+        const {
+          emailError,
+          passwordLengthError,
+          passwordMatchError,
+          registerCodeError
+        } = this.state;
+        if (
+          !emailError &&
+          !passwordLengthError &&
+          !passwordMatchError &&
+          !registerCodeError
+        ) {
+          //student must be created by admin before this runs successfully
+          const { email, password } = this.state;
+          this.signUpStudent({ email, password });
+        }
+      })
+      .catch(error => {
+        console.log("signUp", error);
+      });
   };
 
   render() {
@@ -123,7 +134,6 @@ class RegisterPage extends Component {
     } = styles;
 
     const { onInputChange } = this;
-    console.log(this.state);
     return !user ? (
       <FadeIn delay="100">
         <div style={mainDiv}>
@@ -212,19 +222,27 @@ class RegisterPage extends Component {
       <Redirect to="/home" />
     );
   }
-  signUpStudent = obj => {
+
+  signUpStudent = async obj => {
     const { email, password } = obj;
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        this.setState({ user: user });
+    const { registrationCode } = this.state;
+    axios
+      .post(`http://localhost:3000/students/add/${registrationCode}`, { email })
+      .then(res => {
+        if (res.data === "code matches") {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(user => {
+              this.setState({ user: user });
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
       })
       .catch(error => {
-        if (error.code === "auth/invalid-email" || this.state.email === null) {
-          var emailMessage = "email format is not correct or taken";
-          this.setState({ emailError: emailMessage });
-        }
+        console.log("error", error);
       });
   };
 }

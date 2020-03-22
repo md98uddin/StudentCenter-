@@ -8,10 +8,23 @@ import HoldsResources from "../reusables/HoldsResources";
 class Home extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      user: this.props.user
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+    return null;
   }
 
   render() {
-    const { user } = this.props;
+    const { user } = this.state;
     return user ? (
       <div
         style={{
