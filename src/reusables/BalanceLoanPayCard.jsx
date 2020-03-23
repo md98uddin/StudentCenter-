@@ -1,7 +1,19 @@
 import React from "react";
+import PayForm from "./PayForm";
 
-const BalanceCard = props => {
-  const { tuition, onInputChange, onSubmit, successMsg, paymentError } = props;
+const BalanceLoanPayCard = props => {
+  const {
+    tuition,
+    onInputChange,
+    onSubmitLoan,
+    onSubmitPay,
+    successMsg,
+    successMsgPay,
+    fieldError,
+    payAmtError,
+    paymentError,
+    yearError
+  } = props;
   const {
     main,
     titleDiv,
@@ -11,11 +23,16 @@ const BalanceCard = props => {
     DueFuture,
     inputYear,
     inputAmt,
-    loanBtn
+    loanBtn,
+    msgDivPE,
+    msgDivSM
   } = styles;
   var formatTuition = tuition
+    .toFixed(2)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  var dueNow = (formatTuition / 1.5).toFixed(2);
+  var futureDue = (formatTuition - dueNow).toFixed(2);
   console.log("tuition", tuition);
   return (
     <div style={main} className="main">
@@ -25,20 +42,35 @@ const BalanceCard = props => {
       <div className="balanceMain">
         <div style={balanceAmt} className="balanceAmtDiv">
           <p style={balanceTitle}>* You owe ${formatTuition}.</p>
-          <p style={DueFuture}>* Due Now:$0.00</p>
-          <p style={DueFuture}>* Future Due: ${formatTuition}</p>
+          <p style={DueFuture}>* Due Now:${dueNow}</p>
+          <p style={DueFuture}>* Future Due: ${futureDue}</p>
         </div>
       </div>
+      {paymentError ? (
+        <div style={msgDivPE} className="msgDiv">
+          <p>{paymentError}</p>
+        </div>
+      ) : null}
+      {successMsg ? (
+        <div style={msgDivSM} className="msgDiv">
+          <p>{successMsg}</p>
+        </div>
+      ) : null}
+      {yearError ? (
+        <div style={msgDivPE} className="msgDiv">
+          <p>{yearError}</p>
+        </div>
+      ) : null}
       <div style={titleDiv} className="titleDiv">
         <p style={title}>Loan Request</p>
       </div>
       <div className="balanceMain">
-        {successMsg ? <p>{successMsg}</p> : <p>{paymentError}</p>}
         <div style={balanceAmt} className="balanceAmtDiv">
           <input
             onChange={onInputChange}
             style={inputYear}
             type="text"
+            maxLength="4"
             name="loanYear"
             placeholder="enter year..."
           />
@@ -46,15 +78,27 @@ const BalanceCard = props => {
             onChange={onInputChange}
             style={inputAmt}
             type="number"
+            maxLength="5"
             name="loanAmt"
             placeholder="enter amount..."
           />
           <br />
-          <button onClick={onSubmit} style={loanBtn} className="btn btn-info">
+          <button
+            onClick={onSubmitLoan}
+            style={loanBtn}
+            className="btn btn-info"
+          >
             Request Loan
           </button>
         </div>
       </div>
+      <PayForm
+        onInputChange={onInputChange}
+        onSubmitPay={onSubmitPay}
+        fieldError={fieldError}
+        successMsgPay={successMsgPay}
+        payAmtError={payAmtError}
+      />
     </div>
   );
 };
@@ -70,18 +114,22 @@ const styles = {
   },
   titleDiv: {
     marginLeft: width / 15,
-    marginTop: height / 25,
+    marginTop: height / 50,
     backgroundColor: "#A42323",
     width: height / 2.2,
     height: height / 17,
-    textAlign: "center"
+    textAlign: "center",
+    border: "solid",
+    borderColor: "#91434b"
   },
   balanceAmt: {
     marginTop: 0,
     marginLeft: width / 15,
     width: height / 2.2,
     height: height / 3,
-    backgroundColor: "#FFEFEF"
+    backgroundColor: "#FFEFEF",
+    border: "solid",
+    borderColor: "#91434b"
   },
   balanceTitle: {
     fontSize: height / 30,
@@ -102,7 +150,36 @@ const styles = {
     border: "solid",
     borderColor: "#fc0335"
   },
-  loanBtn: { marginLeft: width / 14.7, marginTop: height / 30 }
+  loanBtn: { marginLeft: width / 14.7, marginTop: height / 30 },
+  msgTitleError: {
+    marginLeft: width / 30
+  },
+  msgDivPE: {
+    marginLeft: width / 11,
+    marginTop: height / 100,
+    backgroundColor: "#f59542",
+    width: height / 2.75,
+    height: height / 17,
+    fontSize: width / 80,
+    textAlign: "center",
+    paddingTop: 5,
+    border: "solid",
+    borderColor: "#fc0335",
+    borderRadius: 20
+  },
+  msgDivSM: {
+    marginLeft: width / 11,
+    marginTop: height / 100,
+    backgroundColor: "#45962a",
+    width: height / 2.75,
+    height: height / 17,
+    fontSize: width / 80,
+    textAlign: "center",
+    paddingTop: 5,
+    border: "solid",
+    borderColor: "#80d164",
+    borderRadius: 20
+  }
 };
 
-export default BalanceCard;
+export default BalanceLoanPayCard;

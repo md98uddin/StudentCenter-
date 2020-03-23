@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
-import BalanceCard from "../reusables/BalanceLoanCard";
 import axios from "axios";
+import BalanceLoanPayCard from "../reusables/BalanceLoanPayCard";
 
 class AidsAndLoans extends Component {
   constructor(props) {
@@ -12,9 +12,17 @@ class AidsAndLoans extends Component {
       user: this.props.user,
       loanAmt: null,
       loanYear: null,
-      payAmt: null,
       paymentError: null,
-      successMsg: null
+      successMsg: null,
+      yearError: null,
+      cardName: null,
+      cardNumber: null,
+      expiration: null,
+      ccv: null,
+      payAmt: null,
+      payAmtError: null,
+      fieldError: null,
+      successMsgPay: null
     };
   }
 
@@ -33,43 +41,117 @@ class AidsAndLoans extends Component {
     });
   };
 
-  onSubmit = async e => {
-    const { user, paymentError, successMsg, loanAmt } = this.state;
+  onSubmitLoan = async e => {
+    const { user, loanAmt, loanYear } = this.state;
     e.preventDefault();
-    if (user.tuition < loanAmt) {
-      var paymentErrorMessage = "your balance is below requested loan.";
-      this.setState({ paymentError: paymentErrorMessage });
-    } else if (user.tuition >= loanAmt) {
-      await axios.post(
-        `http://localhost:3000/students/finance/pay/${user.email}?amount=${loanAmt}&credits=0`
-      );
-      var successMessage = "payment made!";
-      this.setState({ successMsg: successMessage });
+    if (user && loanYear >= new Date().getFullYear()) {
+      if (user.tuition < loanAmt) {
+        var paymentErrorMessage = "Loan  is greater than balance ";
+        this.setState({ paymentError: paymentErrorMessage, successMsg: null });
+      } else if (user.tuition >= loanAmt) {
+        await axios.post(
+          `http://localhost:3000/students/finance/pay/${user.email}?amount=${loanAmt}&credits=0`
+        );
+        var successMessage = "Loan Approved!";
+        var updateUser = user;
+        updateUser.tuition -= loanAmt;
+        this.setState({
+          successMsg: successMessage,
+          paymentError: null,
+          user: updateUser,
+          yearError: null
+        });
+      }
+    } else if (
+      (user && loanYear < new Date().getFullYear()) ||
+      loanYear <= new Date().getFullYear()
+    ) {
+      var yearErrorMessage = "year minimum is current year";
+      this.setState({
+        successMsg: null,
+        paymentError: null,
+        yearError: yearErrorMessage
+      });
+    } else {
+      console.log("no user detected");
+    }
+  };
+
+  onSubmitPay = async e => {
+    const { user, payAmt, cardName, cardNumber, ccv, expiration } = this.state;
+    console.log("on submit", this.state);
+    if (user) {
+      if (user.tuition < payAmt) {
+        var payAmtErrorMessage = "amount is greater than balance";
+        this.setState({
+          payAmtError: payAmtErrorMessage,
+          successMsgPay: null,
+          fieldError: null
+        });
+      } else if (
+        user.tuition >= payAmt &&
+        cardName &&
+        cardNumber &&
+        ccv &&
+        expiration &&
+        payAmt > 0
+      ) {
+        await axios.post(
+          `http://localhost:3000/students/finance/pay/${user.email}?amount=${payAmt}&credits=0`
+        );
+        var successMessage = "Payment Sent!";
+        var updateUser = user;
+        updateUser.tuition -= payAmt;
+        this.setState({
+          successMsgPay: successMessage,
+          payAmtError: null,
+          fieldError: null,
+          user: updateUser
+        });
+      } else if (!cardName || cardNumber || ccv || expiration || payAmt) {
+        var fieldErrorMessage = "some inputs are invalid";
+        this.setState({
+          successMsgPay: null,
+          payAmtError: null,
+          fieldError: fieldErrorMessage
+        });
+      }
     }
   };
 
   render() {
-    const { user, paymentError, successMsg } = this.state;
+    const {
+      user,
+      paymentError,
+      successMsg,
+      yearError,
+      fieldError,
+      successMsgPay,
+      payAmtError
+    } = this.state;
+    console.log("after pay", this.state);
 
     return user ? (
       <div
         style={{
-          height: "110vh",
-          width: "100%",
           backgroundColor: "#A4A4A4"
-          //backgroundImage: "url('https://i2.wp.com/files.123freevectors.com/wp-content/original/105601-red-star-pattern.jpg?w=800&q=95')"
         }}
       >
         <Navbar
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
         />
-        <BalanceCard
+        <BalanceLoanPayCard
           tuition={user.tuition}
           onInputChange={this.onInputChange}
-          onSubmit={this.onSubmit}
+          onSubmitLoan={this.onSubmitLoan}
+          onSubmitPay={this.onSubmitPay}
           successMsg={successMsg}
+          successMsgPay={successMsgPay}
+          payAmtError={payAmtError}
           paymentError={paymentError}
+          yearError={yearError}
+          fieldError={fieldError}
         />
       </div>
     ) : (
