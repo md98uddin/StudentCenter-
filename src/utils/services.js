@@ -30,6 +30,15 @@ export function getDay(num) {
   }
 }
 
+export function formatCount(num) {
+  var format = num
+    .toFixed(2)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+  return format;
+}
+
 export function getCampus(num) {
   switch (num) {
     case 1234:
@@ -88,24 +97,12 @@ export function getMonth(num) {
   }
 }
 
-export function getClassDetails() {
-  const currentCourses = data.currentClasses;
+export function getClassBySemesterYear(semester, year, arr) {
   var filtered = [];
-  var obj = {
-    id: null,
-    startTime: null,
-    endTime: null,
-    courseNumber: null,
-    room: null
-  };
-  for (let i = 0; i < currentCourses.length; i++) {
-    obj.id = i;
-    obj.courseNumber =
-      currentCourses[i].prefix + " " + currentCourses[i].courseNumber;
-    obj.room = currentCourses[i].room;
-    obj.startTime = new Date(2020, 5, 20, 9, 30);
-    obj.endTime = new Date(2020, 5, 20, 11, 30);
-    filtered.push(obj);
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].semester === semester && arr[i].year === year) {
+      filtered.push(arr[i]);
+    }
   }
 
   return filtered;

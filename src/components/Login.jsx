@@ -106,7 +106,7 @@ class LoginPage extends Component {
         </div>
       </FadeIn>
     ) : (
-      <Redirect to="/finaid" />
+      <Redirect to="/grades" />
     );
   }
 }

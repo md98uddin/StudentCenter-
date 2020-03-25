@@ -1,18 +1,47 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
-import GradesTab from "../reusables/GradesTab";
+import TranscriptSemester from "../reusables/TranscriptSemester";
+import GradesTable from "../reusables/GradesTable";
 
 class Grades extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: this.props.user
+      user: this.props.user,
+      activeSemester: "Fall",
+      activeYear: 2018
     };
   }
+
+  componentDidMount() {
+    this.setState({});
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.user !== nextProps.user) {
+      return {
+        user: nextProps.user
+      };
+    }
+    return null;
+  }
+
+  // onViewTranscript=e=> {
+
+  // }
+
+  // onPrintTranscript=e=> {
+
+  // }
+
+  onSemesterChange = (semester, year) => {
+    this.setState({ activeSemester: semester, activeYear: year });
+  };
+
   render() {
-    const { user } = this.state;
+    const { user, activeSemester, activeYear } = this.state;
     return user ? (
       <div
         style={{
@@ -25,7 +54,16 @@ class Grades extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
         />
-        <GradesTab />
+        <GradesTable
+          semesterClasses={user.classesCompleted.concat(user.currentClasses)}
+          activeSemester={activeSemester}
+          activeYear={activeYear}
+        />
+        <TranscriptSemester
+          activeSemester={activeSemester}
+          activeYear={activeYear}
+          onSemesterChange={this.onSemesterChange}
+        />
       </div>
     ) : (
       <Redirect to="/login" />

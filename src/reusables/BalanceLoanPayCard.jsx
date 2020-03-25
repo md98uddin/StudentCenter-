@@ -1,5 +1,6 @@
 import React from "react";
 import PayForm from "./PayForm";
+import { formatCount } from "../utils/services";
 
 const BalanceLoanPayCard = props => {
   const {
@@ -12,7 +13,9 @@ const BalanceLoanPayCard = props => {
     fieldError,
     payAmtError,
     paymentError,
-    yearError
+    yearError,
+    futureDue,
+    dueNow
   } = props;
   const {
     main,
@@ -27,13 +30,7 @@ const BalanceLoanPayCard = props => {
     msgDivPE,
     msgDivSM
   } = styles;
-  var formatTuition = tuition
-    .toFixed(2)
-    .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  var dueNow = (formatTuition / 1.5).toFixed(2);
-  var futureDue = (formatTuition - dueNow).toFixed(2);
-  console.log("tuition", tuition);
+
   return (
     <div style={main} className="main">
       <div style={titleDiv} className="titleDiv">
@@ -41,9 +38,9 @@ const BalanceLoanPayCard = props => {
       </div>
       <div className="balanceMain">
         <div style={balanceAmt} className="balanceAmtDiv">
-          <p style={balanceTitle}>* You owe ${formatTuition}.</p>
-          <p style={DueFuture}>* Due Now:${dueNow}</p>
-          <p style={DueFuture}>* Future Due: ${futureDue}</p>
+          <p style={balanceTitle}>* You owe ${formatCount(tuition)}</p>
+          <p style={DueFuture}>* Due Now:${formatCount(dueNow)}</p>
+          <p style={DueFuture}>* Future Due: ${formatCount(futureDue)}</p>
         </div>
       </div>
       {paymentError ? (

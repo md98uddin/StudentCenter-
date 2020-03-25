@@ -47,7 +47,11 @@ class AidsAndLoans extends Component {
     if (user && loanYear >= new Date().getFullYear()) {
       if (user.tuition < loanAmt) {
         var paymentErrorMessage = "Loan  is greater than balance ";
-        this.setState({ paymentError: paymentErrorMessage, successMsg: null });
+        this.setState({
+          paymentError: paymentErrorMessage,
+          successMsg: null,
+          yearError: null
+        });
       } else if (user.tuition >= loanAmt) {
         await axios.post(
           `http://localhost:3000/students/finance/pay/${user.email}?amount=${loanAmt}&credits=0`
@@ -129,8 +133,6 @@ class AidsAndLoans extends Component {
       successMsgPay,
       payAmtError
     } = this.state;
-    console.log("after pay", this.state);
-
     return user ? (
       <div
         style={{
@@ -152,6 +154,8 @@ class AidsAndLoans extends Component {
           paymentError={paymentError}
           yearError={yearError}
           fieldError={fieldError}
+          futureDue={user.tuition - user.tuition / 1.5}
+          dueNow={user.tuition / 1.5}
         />
       </div>
     ) : (
