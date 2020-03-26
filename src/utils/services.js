@@ -97,6 +97,18 @@ export function getMonth(num) {
   }
 }
 
+export function filterClassesQuery(subject, courseNum, arr) {
+  var filtered = [];
+  subject = subject.toUpperCase();
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].prefix === subject && arr[i].courseNumber === courseNum) {
+      filtered.push(arr[i]);
+    }
+  }
+
+  return filtered;
+}
+
 export function getGradeValue(letter) {
   switch (letter) {
     case "A+":

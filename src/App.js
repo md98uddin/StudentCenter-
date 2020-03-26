@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import { filterClassesQuery } from "./utils/services";
 import firebase from "./keys/FirebaseConfig";
 import axios from "axios";
 import HomePage from "./components/Home";
@@ -158,7 +159,7 @@ class App extends Component {
         const courses = await axios.get(
           `http://localhost:3000/courses?campusId=${user.data[0].campusId}`
         );
-        this.setState({ user: user.data[0], courses });
+        this.setState({ user: user.data[0], courses: courses.data });
       })
       .catch(error => {
         if (

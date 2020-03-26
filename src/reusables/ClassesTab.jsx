@@ -1,5 +1,4 @@
 import React from "react";
-import CourseSearch from "./CourseSearch";
 
 const ClassesTab = props => {
   const { onTabChange, currentTab } = props;

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { filterClassesQuery } from "../utils/services";
+import axios from "axios";
 import Navbar from "./NavBar";
 import ClassesTab from "../reusables/ClassesTab";
-import CourseSearch from "../reusables/CourseSearch";
+import AddCourseSearch from "../reusables/AddCourseSearch";
 
 class Classes extends Component {
   constructor(props) {
@@ -10,7 +12,9 @@ class Classes extends Component {
 
     this.state = {
       user: this.props.user,
+      courses: this.props.courses,
       currentTab: "Add Courses",
+      shopCart: [],
       subject: null,
       courseNo: null,
       searchQuery: null,
@@ -39,12 +43,36 @@ class Classes extends Component {
     });
   };
 
-  onSubmit = e => {
+  onSelect = async obj => {
+    const { user } = this.state;
+    await axios
+      .post(`http://localhost:3000/students/add/current/${user.email}`, obj)
+      .then(() => {
+        console.log("sent to server");
+      });
+  };
+
+  onSubmit = async e => {
     e.preventDefault();
+    const { courses, subject, courseNo, user } = this.state;
+
+    if (user) {
+      if (!subject || !courseNo) {
+        var fieldErrorMessage = "both field is required";
+        this.setState({
+          fieldError: fieldErrorMessage
+        });
+      } else if (subject !== null && courseNo !== null) {
+        const filter = await axios.get(
+          `http://localhost:3000/courses?campusId=${user.campusId}&prefix=${subject}&courseNumber=${courseNo}`
+        );
+        this.setState({ searchQuery: filter.data });
+      }
+    }
   };
 
   render() {
-    const { user, currentTab } = this.state;
+    const { user, currentTab, subject, courseNo, searchQuery } = this.state;
     return user ? (
       <div className="main">
         <div
@@ -57,10 +85,14 @@ class Classes extends Component {
             signOutStudent={this.props.signOutStudent}
             campus={user.campusId}
           />
-          <CourseSearch
+          <AddCourseSearch
             currentTab={currentTab}
+            subject={subject}
+            courseNo={courseNo}
+            searchQuery={searchQuery}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
+            onSelect={this.onSelect}
           />
           <ClassesTab onTabChange={this.onTabChange} currentTab={currentTab} />
         </div>

@@ -1,7 +1,9 @@
 import React from "react";
+import { filterClassesQuery } from "../utils/services";
+import SearchResult from "./SearchResult";
 
-const CourseSearch = props => {
-  const { currentTab } = props;
+const AddCourseSearch = props => {
+  const { currentTab, onChange, onSubmit, searchQuery, onSelect } = props;
   const {
     overview,
     main,
@@ -11,7 +13,7 @@ const CourseSearch = props => {
     btnStyles
   } = styles;
 
-  const { onChange, onSubmit } = props;
+  console.log("searchQuery", searchQuery);
 
   return currentTab === "Add Courses" ? (
     <div style={overview} className="main">
@@ -44,14 +46,15 @@ const CourseSearch = props => {
               onChange={onChange}
               style={{ borderRadius: 10 }}
               type="number"
-              name="subject"
+              name="courseNo"
             />
           </div>
         </div>
-        <button style={btnStyles} className="btn-sm">
+        <button onClick={onSubmit} style={btnStyles} className="btn-sm">
           FIND COURSES
         </button>
       </div>
+      <SearchResult searchQuery={searchQuery} onSelect={onSelect} />
     </div>
   ) : null;
 };
@@ -96,4 +99,4 @@ const styles = {
   }
 };
 
-export default CourseSearch;
+export default AddCourseSearch;
