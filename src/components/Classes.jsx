@@ -4,6 +4,7 @@ import { filterClassesQuery } from "../utils/services";
 import axios from "axios";
 import Navbar from "./NavBar";
 import ClassesTab from "../reusables/ClassesTab";
+import Schedule from "../reusables/Schedule";
 import AddCourseSearch from "../reusables/AddCourseSearch";
 
 class Classes extends Component {
@@ -84,6 +85,9 @@ class Classes extends Component {
           <Navbar
             signOutStudent={this.props.signOutStudent}
             campus={user.campusId}
+          />
+          <Schedule 
+            currentTab = {currentTab}
           />
           <AddCourseSearch
             currentTab={currentTab}
