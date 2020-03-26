@@ -9,8 +9,7 @@ const GradesTable = props => {
     activeYear,
     semesterClasses
   );
-  console.log("filtered", filtered);
-  return filtered.length > 0 ? (
+  return (
     <div>
       <table style={main} className="table">
         <thead>
@@ -34,17 +33,12 @@ const GradesTable = props => {
           ))}
         </tbody>
       </table>
-      <GradesOverview overview={overview} />
-    </div>
-  ) : (
-    <div>
-      <table style={main} className="table">
-        <p style={error}>
-          NO CLASSES ARE ONGOING OR TAKEN {activeSemester.toUpperCase()}{" "}
-          {activeYear}
-        </p>
-      </table>
-      <GradesOverview overview={overview} />
+      <GradesOverview
+        overview={overview}
+        activeSemester={activeSemester}
+        activeYear={activeYear}
+        semesterClasses={semesterClasses}
+      />
     </div>
   );
 };

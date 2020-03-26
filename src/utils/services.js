@@ -97,11 +97,101 @@ export function getMonth(num) {
   }
 }
 
+export function getGradeValue(letter) {
+  switch (letter) {
+    case "A+":
+      return 4.0;
+
+    case "A-":
+      return 3.67;
+
+    case "B+":
+      return 3.33;
+
+    case "B":
+      return 3.0;
+
+    case "B-":
+      return 2.67;
+
+    case "C+":
+      return 2.33;
+
+    case "C":
+      return 2.0;
+
+    case "D":
+      return 1.0;
+
+    default:
+      return 0.0;
+  }
+}
+
+export function getGradedClasses(arr) {
+  var filtered = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].grade && arr[i].grade !== "Ongoing") {
+      filtered.push(arr[i]);
+    }
+  }
+
+  return filtered;
+}
+
+export function getCumulativeGPA(arr) {
+  const filtered = getSemesterGPA(getGradedClasses(arr));
+  return filtered;
+}
+
+export function getSemesterCredits(arr) {
+  var totalCredits = 0;
+  var totalGradePoint = 0;
+  for (let i = 0; i < arr.length; i++) {
+    totalCredits += arr[i].credits;
+    totalGradePoint += getGradeValue(arr[i].grade) * arr[i].credits;
+    console.log("grade", getGradeValue(arr[i].grade));
+  }
+
+  console.log("totalCredits", totalCredits);
+  console.log("totalGpaPoint", totalGradePoint);
+
+  return [totalCredits, totalGradePoint];
+}
+
+export function getSemesterGPA(arr) {
+  const semesterGPA = getSemesterCredits(arr);
+  return semesterGPA[1] / semesterGPA[0];
+}
+
 export function getClassBySemesterYear(semester, year, arr) {
   var filtered = [];
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].semester === semester && arr[i].year === year) {
       filtered.push(arr[i]);
+    }
+  }
+
+  return filtered;
+}
+
+export function getSemestersAttended(arr) {
+  var semesters = [];
+  var obj = { semester: null, year: null };
+  for (let i = 0; i < arr.length; i++) {
+    var obj = { semester: arr[i].semester, year: arr[i].year };
+    semesters.push(obj);
+  }
+
+  const filtered = [];
+  const map = new Map();
+  for (const item of semesters) {
+    if (!map.has(`${item.semester}${item.year}`)) {
+      map.set(`${item.semester}${item.year}`);
+      filtered.push({
+        semester: item.semester,
+        year: item.year
+      });
     }
   }
 

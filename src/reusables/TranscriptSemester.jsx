@@ -1,23 +1,43 @@
 import React from "react";
+import { getSemestersAttended } from "../utils/services";
 
 const TranscriptSemester = props => {
-  const { viewBtn, printBtn, listingStyle, titleStyle } = styles;
-  const { onSemesterChange, activeSemester, activeYear } = props;
-  const semesters = [
-    { semester: "Fall", year: 2018 },
-    { semester: "Spring", year: 2018 },
-    { semester: "Fall", year: 2017 },
-    { semester: "Spring", year: 2017 },
-    { semester: "Fall", year: 2016 }
-  ];
+  const { btnStyles, listingStyle, titleStyle } = styles;
+  const {
+    onSemesterChange,
+    activeSemester,
+    activeYear,
+    semesterClasses,
+    viewTranscript,
+    printTranscript,
+    onMouseHoverPrint,
+    onMouseHoverTranscript,
+    onMouseLeave,
+    onPrintTranscript
+  } = props;
+  const semesters = getSemestersAttended(semesterClasses);
+
+  console.log("on mouse enter transcript", viewTranscript);
+  console.log("on mouse enter print", printTranscript);
 
   return (
     <div className="main">
-      <button style={viewBtn} className="btn-sm">
+      <button
+        onMouseEnter={onMouseHoverTranscript}
+        onMouseLeave={onMouseLeave}
+        style={btnStyles}
+        className={`btn-sm ${viewTranscript ? "btn-info" : null}`}
+      >
         VIEW TRANSCRIPT
       </button>
       <br />
-      <button style={printBtn} className="btn-sm">
+      <button
+        onMouseEnter={onMouseHoverPrint}
+        onMouseLeave={onMouseLeave}
+        onClick={onPrintTranscript}
+        style={btnStyles}
+        className={`btn-sm ${printTranscript ? "btn-info" : null}`}
+      >
         PRINT TRANSCRIPT
       </button>
       <br />
@@ -47,21 +67,12 @@ const TranscriptSemester = props => {
 const { innerHeight: height, innerWidth: width } = window;
 
 const styles = {
-  viewBtn: {
+  btnStyles: {
     marginLeft: width / 13,
     borderRadius: 20,
     border: "solid",
     borderColor: "#ffffff",
     marginTop: height / 13,
-    height: height / 12,
-    width: width / 8
-  },
-  printBtn: {
-    marginLeft: width / 13,
-    borderRadius: 20,
-    border: "solid",
-    borderColor: "#ffffff",
-    marginTop: height / 40,
     height: height / 12,
     width: width / 8
   },

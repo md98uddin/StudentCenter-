@@ -1,71 +1,86 @@
 import React from "react";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import CourseSearch from "./CourseSearch";
 
 const ClassesTab = props => {
-    const { main, titleBlock, title, bigBlock, biggerBlock } = styles;
-    return (
-      <div style={main} className="main">
-          <div style = {bigBlock} className= "title">{
-            <div style={titleBlock} className="title-block">
-              <p style={title}>ACTIONS</p>
-              <div className="text-center">
-                <Button variant="info" size="lg" >VIEW SCHEDULE</Button>
-                <p></p><br/>
-                <Button variant="info" size="lg">  VIEW SHOPPING CART</Button>
-                <p></p><br/>
-                <Form.Control type="text" placeholder="Search Bar" />
-                <Button variant="primary" type="submit" justify-content= "center">Submit</Button>
-              </div>
-            
-            </div>
+  const { onTabChange, currentTab } = props;
+  const { btnStyles, main } = styles;
+  return (
+    <div style={main} className="main">
+      <button
+        onClick={() => onTabChange("View Schedule")}
+        style={btnStyles}
+        className={`btn-sm ${
+          currentTab === "View Schedule" ? "btn-info active" : null
+        }`}
+      >
+        VIEW SCHEDULE
+      </button>
+      <br />
+      <button
+        onClick={() => onTabChange("View Cart")}
+        style={btnStyles}
+        className={`btn-sm ${
+          currentTab === "View Cart" ? "btn-info active" : null
+        }`}
+      >
+        VIEW SHOPPING CART
+      </button>
+      <br />
+      <button
+        onClick={() => onTabChange("Add Courses")}
+        style={btnStyles}
+        className={`btn-sm ${
+          currentTab === "Add Courses" ? "btn-info active" : null
+        }`}
+      >
+        ADD COURSES
+      </button>
+      <br />
+      <button
+        onClick={() => onTabChange("Drop Courses")}
+        style={btnStyles}
+        className={`btn-sm ${
+          currentTab === "Drop Courses" ? "btn-info active" : null
+        }`}
+      >
+        DROP COURSES
+      </button>
+      <br />
+      <button
+        onClick={() => onTabChange("Swap Courses")}
+        style={btnStyles}
+        className={`btn-sm ${
+          currentTab === "Swap Courses" ? "btn-info active" : null
+        }`}
+      >
+        SWAP COURSES
+      </button>
+    </div>
+  );
+};
 
-           }</div>
+const { innerHeight: height, innerWidth: width } = window;
 
-          <div style={biggerBlock} className="biggerBlock">
-          </div>
-
-      </div>
-    );
-  };
-  
-  const styles = {
-    main: { 
-      marginLeft: "80px",
-     // float: "left", 
-      marginTop: 25 
-    },
-    titleBlock: {
-      width: "250px",
-      height: "30px",
-      marginLeft: "50px",
-      marginTop: "20px",
-      backgroundColor: "#483A3A",
-      float: "left"
-    },
-    title: {
-      color: "#F2F2F2", 
-      marginLeft: "75px", 
-      fontSize: 20 
-    },
-    bigBlock: {
-      float: "left",
-      width: "350px",
-      height: "500px",
-      backgroundColor: "#F7E8E8",
-      marginTop: "50px",
-      borderRadius: "10px"
-    },
-    biggerBlock: {
-      padding: "50 px",
-      float: "left",
-      width: "950px",
-      height: "600px",
-      backgroundColor: "#F7E8E8",
-      marginLeft: "50px",
-      marginTop: "10px",
-      borderRadius: "10px"
-    }
-  };
+const styles = {
+  main: {
+    width: width / 6,
+    height: height / 1.15,
+    backgroundColor: "#9e151e",
+    marginLeft: width / 15,
+    marginTop: height / 20,
+    border: "solid",
+    borderRadius: 20
+  },
+  btnStyles: {
+    marginLeft: width / 45,
+    marginBottom: height / 1000,
+    borderRadius: 20,
+    border: "none",
+    borderColor: "#ffffff",
+    marginTop: height / 14,
+    height: height / 12,
+    width: width / 8
+  }
+};
 
 export default ClassesTab;
