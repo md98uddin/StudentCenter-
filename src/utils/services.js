@@ -114,6 +114,9 @@ export function getGradeValue(letter) {
     case "A+":
       return 4.0;
 
+    case "A":
+      return 3.8;
+
     case "A-":
       return 3.67;
 
@@ -208,4 +211,35 @@ export function getSemestersAttended(arr) {
   }
 
   return filtered;
+}
+
+export function getSchedule(arr) {
+  var filter = [];
+  var obj = {
+    title: null,
+    daysOfWeek: [],
+    startTime: null,
+    endTime: null,
+    start: null,
+    end: null
+  };
+  for (let i = 0; i < arr.length; i++) {
+    obj.title = `${arr[i].prefix} ${arr[i].courseNumber}`;
+    obj.daysOfWeek = obj.daysOfWeek.push([arr[i].days[0].day]); //[1,2,3]
+    obj.startTime = arr[i].days[0].hours[0]; //'12:00:00
+    obj.endTime = arr[i].days[0].hours[1]; //14:00:00
+    obj.start = arr[i].duration.start; //"2020-12-27"
+    obj.end = arr[i].duration.end; //"2020-12-31"
+    obj.filter.push(obj);
+  }
+
+  return obj;
+}
+
+export function checkCartDuplicate(course, arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i]._id === course._id) {
+      return true;
+    }
+  }
 }

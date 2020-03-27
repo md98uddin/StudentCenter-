@@ -153,6 +153,7 @@ class App extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(async data => {
+        console.log("data after submit", data.user.email);
         const user = await axios.get(
           `http://localhost:3000/students/${data.user.email}`
         );

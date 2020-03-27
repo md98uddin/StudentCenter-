@@ -10,7 +10,7 @@ const GradesTable = props => {
     semesterClasses
   );
   return (
-    <div>
+    <div className="container">
       <table style={main} className="table">
         <thead>
           <tr>
@@ -46,7 +46,7 @@ const { innerHeight: height, innerWidth: width } = window;
 
 const styles = {
   main: {
-    width: width / 2.5,
+    width: width / 2,
     height: height / 2,
     float: "right",
     marginRight: width / 10,
@@ -57,11 +57,11 @@ const styles = {
     borderColor: "#053ef7"
   },
   overview: {
-    width: width / 2.5,
-    height: height / 4,
+    width: width / 2,
+    height: height / 7,
     float: "right",
     marginRight: width / 10,
-    marginTop: height / 14,
+    marginTop: height / 16,
     color: "#000000",
     backgroundColor: "#ffffff",
     border: "solid",

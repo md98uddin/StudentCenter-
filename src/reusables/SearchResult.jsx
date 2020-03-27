@@ -1,6 +1,7 @@
 import React from "react";
+import { checkCartDuplicate } from "../utils/services";
 
-const SearchResult = ({ searchQuery, onSelect }) => {
+const SearchResult = ({ searchQuery, onSelect, shopCart }) => {
   const { main } = styles;
   return searchQuery ? (
     <table style={main} className="table">
@@ -23,9 +24,13 @@ const SearchResult = ({ searchQuery, onSelect }) => {
             <td>{`${item.days[0].day}`}</td>
             <td>{`${item.days[0].hours}`}</td>
             <td>
-              <button onClick={() => onSelect(item)} className="btn-sm">
-                +
-              </button>
+              {checkCartDuplicate(item, shopCart) === true ? (
+                <p>In Cart</p>
+              ) : (
+                <button onClick={() => onSelect(item)} className="btn-sm">
+                  +
+                </button>
+              )}
             </td>
           </tr>
         ))}

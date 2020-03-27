@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { filterClassesQuery } from "../utils/services";
+import { checkCartDuplicate } from "../utils/services";
 import axios from "axios";
 import Navbar from "./NavBar";
 import ClassesTab from "../reusables/ClassesTab";
 import Schedule from "../reusables/Schedule";
 import AddCourseSearch from "../reusables/AddCourseSearch";
+import ShopCart from "../reusables/ShopCart";
 
 class Classes extends Component {
   constructor(props) {
@@ -14,13 +15,31 @@ class Classes extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Add Courses",
+      currentTab: "View Cart",
+      currentClasses: [],
       shopCart: [],
       subject: null,
       courseNo: null,
       searchQuery: null,
-      fieldError: null
+      fieldError: null,
+      courseExists: false
     };
+  }
+
+  async componentDidMount() {
+    const { user } = this.state;
+    if (user) {
+      await axios
+        .get(`http://localhost:3000/students/cart/${user.email}`)
+        .then(res => {
+          this.setState({ shopCart: res.data });
+        });
+      await axios
+        .get(`http://localhost:3000/students/current/${user.email}`)
+        .then(res => {
+          this.setState({ currentClasses: res.data });
+        });
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -45,12 +64,18 @@ class Classes extends Component {
   };
 
   onSelect = async obj => {
-    const { user } = this.state;
-    await axios
-      .post(`http://localhost:3000/students/add/current/${user.email}`, obj)
-      .then(() => {
-        console.log("sent to server");
-      });
+    const { user, shopCart } = this.state;
+    const courseExist = checkCartDuplicate(obj, shopCart);
+    if (courseExist !== true) {
+      await axios
+        .post(`http://localhost:3000/students/cart/${user.email}`, obj)
+        .then(async () => {
+          const res = await axios.get(
+            `http://localhost:3000/students/cart/${user.email}`
+          );
+          this.setState({ shopCart: res.data });
+        });
+    }
   };
 
   onSubmit = async e => {
@@ -72,8 +97,34 @@ class Classes extends Component {
     }
   };
 
+  onEnroll = async obj => {
+    const { user, currentClasses } = this.state;
+    const courseExists = checkCartDuplicate(obj, currentClasses);
+    if (courseExists !== true) {
+      await axios.post(
+        `http://localhost:3000/students/cart/${user.email}`,
+        obj
+      );
+      await axios
+        .get(`http://localhost:3000/students/cart/${user.email}`)
+        .then(res => {
+          this.setState({ currentClasses: res.data });
+        });
+    }
+  };
+
   render() {
-    const { user, currentTab, subject, courseNo, searchQuery } = this.state;
+    const {
+      user,
+      currentTab,
+      subject,
+      courseNo,
+      searchQuery,
+      shopCart,
+      currentClasses
+    } = this.state;
+    console.log("current classes", currentClasses);
+
     return user ? (
       <div className="main">
         <div
@@ -86,9 +137,7 @@ class Classes extends Component {
             signOutStudent={this.props.signOutStudent}
             campus={user.campusId}
           />
-          <Schedule 
-            currentTab = {currentTab}
-          />
+          <Schedule currentTab={currentTab} />
           <AddCourseSearch
             currentTab={currentTab}
             subject={subject}
@@ -97,6 +146,13 @@ class Classes extends Component {
             onChange={this.onChange}
             onSubmit={this.onSubmit}
             onSelect={this.onSelect}
+            shopCart={shopCart}
+          />
+          <ShopCart
+            currentTab={currentTab}
+            currentClasses={currentClasses}
+            shopCart={shopCart}
+            onEnroll={this.onEnroll}
           />
           <ClassesTab onTabChange={this.onTabChange} currentTab={currentTab} />
         </div>

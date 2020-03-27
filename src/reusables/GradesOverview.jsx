@@ -36,11 +36,11 @@ const GradesOverview = props => {
         </tr>
       </thead>
       <tbody>
-        <tr style={{ marginBottom: "0px" }}>
-          <td>{semesterGPA.toFixed(2)}</td>
-          <td>{cumulativeGPA.toFixed(2)}</td>
-          <td>{semesterCredits[0]}</td>
-          <td>{totalCredits[0]}</td>
+        <tr>
+          <td>{semesterGPA ? semesterGPA.toFixed(2) : 0.0}</td>
+          <td>{cumulativeGPA ? cumulativeGPA.toFixed(2) : 0.0}</td>
+          <td>{semesterCredits ? semesterCredits[0] : 0}</td>
+          <td>{totalCredits ? totalCredits[0] : 0}</td>
         </tr>
       </tbody>
     </table>

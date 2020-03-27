@@ -1,9 +1,15 @@
 import React from "react";
-import { filterClassesQuery } from "../utils/services";
 import SearchResult from "./SearchResult";
 
 const AddCourseSearch = props => {
-  const { currentTab, onChange, onSubmit, searchQuery, onSelect } = props;
+  const {
+    currentTab,
+    onChange,
+    onSubmit,
+    searchQuery,
+    onSelect,
+    shopCart
+  } = props;
   const {
     overview,
     main,
@@ -54,7 +60,11 @@ const AddCourseSearch = props => {
           FIND COURSES
         </button>
       </div>
-      <SearchResult searchQuery={searchQuery} onSelect={onSelect} />
+      <SearchResult
+        searchQuery={searchQuery}
+        onSelect={onSelect}
+        shopCart={shopCart}
+      />
     </div>
   ) : null;
 };

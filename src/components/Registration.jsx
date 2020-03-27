@@ -227,9 +227,10 @@ class RegisterPage extends Component {
     const { email, password } = obj;
     const { registrationCode } = this.state;
     axios
-      .post(`http://localhost:3000/students/add/${registrationCode}`, { email })
-      .then(res => {
+      .get(`http://localhost:3000/students/add/${registrationCode}`, { email })
+      .then(async res => {
         if (res.data === "code matches") {
+          //modifyEmail to the body
           firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
