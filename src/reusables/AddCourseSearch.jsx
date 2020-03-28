@@ -19,8 +19,6 @@ const AddCourseSearch = props => {
     btnStyles
   } = styles;
 
-  console.log("searchQuery", searchQuery);
-
   return currentTab === "Add Courses" ? (
     <div style={overview} className="main">
       <div style={titleDiv} className="title">

@@ -237,6 +237,7 @@ export function getSchedule(arr) {
 }
 
 export function checkCartDuplicate(course, arr) {
+  if (course.length <= 0) return false;
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]._id === course._id) {
       return true;

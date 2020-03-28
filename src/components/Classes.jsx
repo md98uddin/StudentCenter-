@@ -22,7 +22,8 @@ class Classes extends Component {
       courseNo: null,
       searchQuery: null,
       fieldError: null,
-      courseExists: false
+      duplicateError: null,
+      successMsg: null
     };
   }
 
@@ -66,6 +67,7 @@ class Classes extends Component {
   onSelect = async obj => {
     const { user, shopCart } = this.state;
     const courseExist = checkCartDuplicate(obj, shopCart);
+    console.log("on select", courseExist);
     if (courseExist !== true) {
       await axios
         .post(`http://localhost:3000/students/cart/${user.email}`, obj)
@@ -76,6 +78,59 @@ class Classes extends Component {
           this.setState({ shopCart: res.data });
         });
     }
+  };
+
+  onEnroll = async obj => {
+    const { user } = this.state;
+    await axios
+      .get(`http://localhost:3000/students/current/${user.email}?id=${obj._id}`)
+      .then(async res => {
+        if (res.data === "course exists") {
+          var duplicateErrorMsg = "course already in schedule";
+          this.setState({
+            duplicateError: duplicateErrorMsg,
+            successMsg: null
+          });
+        } else if (
+          res.data === "none matched" ||
+          res.data === "no course match id"
+        ) {
+          await axios
+            .post(`http://localhost:3000/students/current/${user.email}`, obj)
+            .then(() => {
+              var successMessage = "course was added to schedule";
+              this.setState({
+                successMsg: successMessage,
+                duplicateError: null
+              });
+            });
+        }
+      })
+      .then(async () => {
+        await axios.put(
+          `http://localhost:3000/students/cart/${user.email}?id=${obj._id}`
+        );
+      })
+      .finally(async () => {
+        await axios
+          .get(`http://localhost:3000/students/cart/${user.email}`)
+          .then(res => {
+            this.setState({ shopCart: res.data });
+          });
+      });
+  };
+
+  onRemoveCart = async id => {
+    const { user } = this.state;
+    await axios
+      .put(`http://localhost:3000/students/cart/${user.email}?id=${id}`)
+      .then(async () => {
+        await axios
+          .get(`http://localhost:3000/students/cart/${user.email}`)
+          .then(res => {
+            this.setState({ shopCart: res.data });
+          });
+      });
   };
 
   onSubmit = async e => {
@@ -97,22 +152,6 @@ class Classes extends Component {
     }
   };
 
-  onEnroll = async obj => {
-    const { user, currentClasses } = this.state;
-    const courseExists = checkCartDuplicate(obj, currentClasses);
-    if (courseExists !== true) {
-      await axios.post(
-        `http://localhost:3000/students/cart/${user.email}`,
-        obj
-      );
-      await axios
-        .get(`http://localhost:3000/students/cart/${user.email}`)
-        .then(res => {
-          this.setState({ currentClasses: res.data });
-        });
-    }
-  };
-
   render() {
     const {
       user,
@@ -121,10 +160,14 @@ class Classes extends Component {
       courseNo,
       searchQuery,
       shopCart,
-      currentClasses
+      currentClasses,
+      duplicateError,
+      successMsg
     } = this.state;
     console.log("current classes", currentClasses);
-
+    // console.log("shopCart", shopCart);
+    console.log("duplicate error", duplicateError);
+    console.log("success message", successMsg);
     return user ? (
       <div className="main">
         <div
@@ -150,9 +193,11 @@ class Classes extends Component {
           />
           <ShopCart
             currentTab={currentTab}
-            currentClasses={currentClasses}
             shopCart={shopCart}
             onEnroll={this.onEnroll}
+            onRemoveCart={this.onRemoveCart}
+            duplicateError={duplicateError}
+            successMsg={successMsg}
           />
           <ClassesTab onTabChange={this.onTabChange} currentTab={currentTab} />
         </div>
