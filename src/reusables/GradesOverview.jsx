@@ -28,7 +28,7 @@ const GradesOverview = props => {
   return (
     <table style={overview} className="table">
       <thead>
-        <tr scope="row">
+        <tr>
           <th scope="col">Semester GPA</th>
           <th scope="col">Cumulative GPA</th>
           <th scope="col">Semester Credits</th>

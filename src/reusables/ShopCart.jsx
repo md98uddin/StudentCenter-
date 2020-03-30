@@ -1,5 +1,4 @@
 import React from "react";
-import { checkCartDuplicate } from "../utils/services";
 
 const ShopCart = ({
   currentTab,
@@ -26,7 +25,7 @@ const ShopCart = ({
         </thead>
         <tbody style={{ backgroundColor: "#4d0917", color: "#ffffff" }}>
           {shopCart.map((course, index) => (
-            <tr key={index}>
+            <tr key={course._id}>
               <td>{`${course.prefix} ${course.courseNumber}`}</td>
               <td>{course.professor}</td>
               <td>{course.credits}</td>

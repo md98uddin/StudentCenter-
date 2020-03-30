@@ -5,7 +5,6 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import { filterClassesQuery } from "./utils/services";
 import firebase from "./keys/FirebaseConfig";
 import axios from "axios";
 import HomePage from "./components/Home";
@@ -25,8 +24,7 @@ class App extends Component {
       user: null,
       authError: null,
       courses: null,
-      faculties: null,
-      swap: []
+      faculties: null
     };
   }
 

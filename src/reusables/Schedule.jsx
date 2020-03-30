@@ -9,7 +9,7 @@ const EventCalendar = props => {
   const { main } = styles;
 
   return currentTab === "View Schedule" ? (
-    <div style={main} classname="main">
+    <div style={main} className="main">
       <FullCalendar
         defaultView="timeGridWeek"
         plugins={[dayGridPlugin, timeGridPlugin]}

@@ -2,7 +2,7 @@ import React from "react";
 import { getClassBySemesterYear } from "../utils/services";
 import GradesOverview from "./GradesOverview";
 const GradesTable = props => {
-  const { main, error, overview } = styles;
+  const { main, overview } = styles;
   const { semesterClasses, activeSemester, activeYear } = props;
   var filtered = getClassBySemesterYear(
     activeSemester,
@@ -24,7 +24,7 @@ const GradesTable = props => {
         <tbody>
           {filtered.map((filter, index) => (
             <tr key={index}>
-              <td scope="row">{`${filter.prefix} ${filter.courseNumber}`}</td>
+              <td>{`${filter.prefix} ${filter.courseNumber}`}</td>
               <td>{filter.professor}</td>
               <td>{filter.grade ? filter.grade : "Ongoing"}</td>
               <td>{filter.semester}</td>

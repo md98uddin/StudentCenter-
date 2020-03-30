@@ -7,6 +7,7 @@ import ClassesTab from "../reusables/ClassesTab";
 import Schedule from "../reusables/Schedule";
 import AddCourseSearch from "../reusables/AddCourseSearch";
 import ShopCart from "../reusables/ShopCart";
+import DropCourse from "../reusables/DropCourse";
 
 class Classes extends Component {
   constructor(props) {
@@ -15,15 +16,17 @@ class Classes extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "View Cart",
+      currentTab: "Drop Courses",
       currentClasses: [],
       shopCart: [],
       subject: null,
       courseNo: null,
+      dropCourse: null,
       searchQuery: null,
       fieldError: null,
       duplicateError: null,
-      successMsg: null
+      successMsg: null,
+      onDropMsg: "please refresh for update!"
     };
   }
 
@@ -80,6 +83,32 @@ class Classes extends Component {
     }
   };
 
+  onDropChange = obj => {
+    const identifer =
+      obj.prefix + obj.courseNumber + obj.professor.replace(/\s/g, "");
+    this.setState({
+      dropCourse: identifer
+    });
+  };
+
+  onDrop = async obj => {
+    const { user } = this.state;
+    await axios
+      .post(`http://localhost:3000/students/remove/${user.email}`, obj)
+      .then(async res => {
+        this.setState({
+          dropCourse: null
+        });
+        await axios
+          .get(`http://localhost:3000/students/current/${user.email}`)
+          .then(async res => {
+            this.setState({
+              currentClasses: res.data
+            });
+          });
+      });
+  };
+
   onEnroll = async obj => {
     const { user } = this.state;
     await axios
@@ -128,14 +157,18 @@ class Classes extends Component {
         await axios
           .get(`http://localhost:3000/students/cart/${user.email}`)
           .then(res => {
-            this.setState({ shopCart: res.data });
+            this.setState({
+              shopCart: res.data,
+              duplicateError: null,
+              successMsg: null
+            });
           });
       });
   };
 
   onSubmit = async e => {
     e.preventDefault();
-    const { courses, subject, courseNo, user } = this.state;
+    const { subject, courseNo, user } = this.state;
 
     if (user) {
       if (!subject || !courseNo) {
@@ -160,9 +193,11 @@ class Classes extends Component {
       courseNo,
       searchQuery,
       shopCart,
+      dropCourse,
       currentClasses,
       duplicateError,
-      successMsg
+      successMsg,
+      onDropMsg
     } = this.state;
     console.log("current classes", currentClasses);
     // console.log("shopCart", shopCart);
@@ -198,6 +233,14 @@ class Classes extends Component {
             onRemoveCart={this.onRemoveCart}
             duplicateError={duplicateError}
             successMsg={successMsg}
+          />
+          <DropCourse
+            currentClasses={currentClasses}
+            currentTab={currentTab}
+            onDropChange={this.onDropChange}
+            dropCourse={dropCourse}
+            onDrop={this.onDrop}
+            onDropMsg={onDropMsg}
           />
           <ClassesTab onTabChange={this.onTabChange} currentTab={currentTab} />
         </div>

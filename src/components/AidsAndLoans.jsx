@@ -43,6 +43,18 @@ class AidsAndLoans extends Component {
 
   onSubmitLoan = async e => {
     const { user, loanAmt, loanYear } = this.state;
+    const transaction = {
+      transactionId:
+        new Date().getMonth() +
+        new Date().getDay() +
+        new Date().getFullYear() +
+        user.email +
+        (Math.random() * (150 - 100) + 100),
+      type: "loan",
+      amount: "$" + loanAmt + ".00",
+      date:
+        new Date().getMonth() + new Date().getDay() + new Date().getFullYear()
+    };
     e.preventDefault();
     if (user && loanYear >= new Date().getFullYear()) {
       if (user.tuition < loanAmt) {
@@ -55,6 +67,10 @@ class AidsAndLoans extends Component {
       } else if (user.tuition >= loanAmt) {
         await axios.post(
           `http://localhost:3000/students/finance/pay/${user.email}?amount=${loanAmt}&credits=0`
+        );
+        await axios.put(
+          `http://localhost:3000/students/finance/transactions/${user.email}`,
+          transaction
         );
         var successMessage = "Loan Approved!";
         var updateUser = user;
@@ -83,6 +99,18 @@ class AidsAndLoans extends Component {
 
   onSubmitPay = async e => {
     const { user, payAmt, cardName, cardNumber, ccv, expiration } = this.state;
+    const transaction = {
+      transactionId:
+        new Date().getMonth() +
+        new Date().getDay() +
+        new Date().getFullYear() +
+        user.email +
+        (Math.random() * (150 - 100) + 100),
+      type: "pay",
+      amount: "$" + payAmt + ".00",
+      date:
+        new Date().getMonth() + new Date().getDay() + new Date().getFullYear()
+    };
     console.log("on submit", this.state);
     if (user) {
       if (user.tuition < payAmt) {
@@ -102,6 +130,10 @@ class AidsAndLoans extends Component {
       ) {
         await axios.post(
           `http://localhost:3000/students/finance/pay/${user.email}?amount=${payAmt}&credits=0`
+        );
+        await axios.put(
+          `http://localhost:3000/students/finance/transactions/${user.email}`,
+          transaction
         );
         var successMessage = "Payment Sent!";
         var updateUser = user;

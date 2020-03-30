@@ -17,7 +17,7 @@ const SearchResult = ({ searchQuery, onSelect, shopCart }) => {
       </thead>
       <tbody style={{ backgroundColor: "#4d0917", color: "#ffffff" }}>
         {searchQuery.map((item, index) => (
-          <tr key={index}>
+          <tr key={item._id}>
             <td>{`${item.prefix} ${item.courseNumber}`}</td>
             <td>{item.professor}</td>
             <td>{item.credits}</td>
@@ -39,7 +39,7 @@ const SearchResult = ({ searchQuery, onSelect, shopCart }) => {
   ) : null;
 };
 
-const { innerHeight: height, innerWidth: width } = window;
+const { innerHeight: height } = window;
 
 const styles = { main: { marginTop: height / 15 } };
 

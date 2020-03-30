@@ -192,7 +192,6 @@ export function getClassBySemesterYear(semester, year, arr) {
 
 export function getSemestersAttended(arr) {
   var semesters = [];
-  var obj = { semester: null, year: null };
   for (let i = 0; i < arr.length; i++) {
     var obj = { semester: arr[i].semester, year: arr[i].year };
     semesters.push(obj);
@@ -233,7 +232,7 @@ export function getSchedule(arr) {
     obj.filter.push(obj);
   }
 
-  return obj;
+  return filter;
 }
 
 export function checkCartDuplicate(course, arr) {
