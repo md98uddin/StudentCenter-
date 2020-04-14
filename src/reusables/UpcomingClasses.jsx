@@ -1,6 +1,7 @@
 import React from "react";
+import { convertMilitaryTime } from "../utils/services";
 
-const UpcomingClasses = props => {
+const UpcomingClasses = (props) => {
   const {
     main,
     titleBlock,
@@ -10,7 +11,7 @@ const UpcomingClasses = props => {
     classHead,
     classProf,
     classHours,
-    classRoom
+    classRoom,
   } = styles;
   var top3 = props.currentClasses.slice(0, 3);
   console.log(props.currentClasses);
@@ -31,7 +32,9 @@ const UpcomingClasses = props => {
                   className="classTitle"
                 >{`${classes.prefix} ${classes.courseNumber}`}</h3>
                 <p style={classProf}>{classes.professor}</p>
-                <p style={classHours}>{classes.days[0].hours}</p>
+                <p style={classHours}>{`${convertMilitaryTime(
+                  classes.days[0].startTime
+                )}-${convertMilitaryTime(classes.days[0].endTime)}`}</p>
                 <p style={classRoom}>{classes.room}</p>
               </div>
             ))}
@@ -48,38 +51,38 @@ const styles = {
     width: width / 5.2,
     height: height / 22,
     backgroundColor: "#F2F2F2",
-    marginBottom: height / 100
+    marginBottom: height / 100,
   },
   title: { color: "#A42323", marginLeft: width / 30, fontSize: height / 35 },
   bigBlock: {
     width: width / 5.2,
     height: height / 1.3,
-    backgroundColor: "#A42323"
+    backgroundColor: "#A42323",
   },
   classDiv: {
     backgroundColor: "#d0d5db",
-    marginLeft: width / 300
+    marginLeft: width / 300,
   },
   classHead: {
     fontSize: height / 35,
     marginLeft: width / 25,
-    color: "#A42323"
+    color: "#A42323",
   },
   classProf: {
     marginLeft: width / 25,
     fontSize: height / 45,
-    color: "#A42323"
+    color: "#A42323",
   },
   classHours: {
     marginLeft: width / 25,
     fontSize: height / 45,
-    color: "#A42323"
+    color: "#A42323",
   },
   classRoom: {
     marginLeft: width / 25,
     fontSize: height / 45,
-    color: "#A42323"
-  }
+    color: "#A42323",
+  },
 };
 
 export default UpcomingClasses;

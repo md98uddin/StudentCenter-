@@ -30,6 +30,32 @@ export function getDay(num) {
   }
 }
 
+export function getDayNum(day) {
+  switch (day) {
+    case "Sunday":
+      return "0";
+    case "Monday":
+      return "1";
+
+    case "Tuesday":
+      return "2";
+
+    case "Wednesday":
+      return "3";
+
+    case "Thursday":
+      return "4";
+
+    case "Friday":
+      return "5";
+
+    case "Saturday":
+      return "6";
+
+    default:
+  }
+}
+
 export function formatCount(num) {
   var format = num
     .toFixed(2)
@@ -204,7 +230,7 @@ export function getSemestersAttended(arr) {
       map.set(`${item.semester}${item.year}`);
       filtered.push({
         semester: item.semester,
-        year: item.year
+        year: item.year,
       });
     }
   }
@@ -214,22 +240,17 @@ export function getSemestersAttended(arr) {
 
 export function getSchedule(arr) {
   var filter = [];
-  var obj = {
-    title: null,
-    daysOfWeek: [],
-    startTime: null,
-    endTime: null,
-    start: null,
-    end: null
-  };
   for (let i = 0; i < arr.length; i++) {
-    obj.title = `${arr[i].prefix} ${arr[i].courseNumber}`;
-    obj.daysOfWeek = obj.daysOfWeek.push([arr[i].days[0].day]); //[1,2,3]
-    obj.startTime = arr[i].days[0].hours[0]; //'12:00:00
-    obj.endTime = arr[i].days[0].hours[1]; //14:00:00
-    obj.start = arr[i].duration.start; //"2020-12-27"
-    obj.end = arr[i].duration.end; //"2020-12-31"
-    obj.filter.push(obj);
+    var day = [[getDayNum(arr[i].days[0].day)]];
+    var obj = {
+      title: `${arr[i].prefix} ${arr[i].courseNumber}`,
+      daysOfWeek: day,
+      startTime: arr[i].days[0].startTime,
+      endTime: arr[i].days[0].endTime,
+      start: arr[i].duration.start,
+      end: arr[i].duration.end,
+    };
+    filter.push(obj);
   }
 
   return filter;
@@ -242,4 +263,28 @@ export function checkCartDuplicate(course, arr) {
       return true;
     }
   }
+}
+
+export function convertMilitaryTime(time) {
+  time = time.split(":"); // convert to array
+
+  // fetch
+  var hours = Number(time[0]);
+  var minutes = Number(time[1]);
+
+  // calculate
+  var timeValue;
+
+  if (hours > 0 && hours <= 12) {
+    timeValue = "" + hours;
+  } else if (hours > 12) {
+    timeValue = "" + (hours - 12);
+  } else if (hours == 0) {
+    timeValue = "12";
+  }
+
+  timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes; // get minutes
+  timeValue += hours >= 12 ? " PM" : " AM"; // get AM/PM
+
+  return timeValue;
 }

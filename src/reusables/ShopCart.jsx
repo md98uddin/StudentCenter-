@@ -1,4 +1,5 @@
 import React from "react";
+import { convertMilitaryTime } from "../utils/services";
 
 const ShopCart = ({
   currentTab,
@@ -6,7 +7,7 @@ const ShopCart = ({
   onEnroll,
   successMsg,
   duplicateError,
-  onRemoveCart
+  onRemoveCart,
 }) => {
   const { main, duplicateErrStyle, successMsgStyle } = styles;
   return currentTab === "View Cart" ? (
@@ -30,14 +31,16 @@ const ShopCart = ({
               <td>{course.professor}</td>
               <td>{course.credits}</td>
               <td>{course.days[0].day}</td>
-              <td>{course.days[0].hours}</td>
+              <td>{`${convertMilitaryTime(
+                course.days[0].startTime
+              )}-${convertMilitaryTime(course.days[0].endTime)}`}</td>
               <td>
                 {
                   <button
                     style={{
                       borderRadius: 10,
                       backgroundColor: "#0f0c6e",
-                      color: "#ffffff"
+                      color: "#ffffff",
                     }}
                     onClick={() => onEnroll(course)}
                     className="btn-sm"
@@ -51,7 +54,7 @@ const ShopCart = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: "#9e151e",
-                    color: "#ffffff"
+                    color: "#ffffff",
                   }}
                   className="btn-sm"
                   onClick={() => onRemoveCart(course._id)}
@@ -83,7 +86,7 @@ const styles = {
     width: width / 2,
     marginRight: width / 16,
     marginTop: height / 16.5,
-    float: "right"
+    float: "right",
   },
   duplicateErrStyle: {
     width: width / 7,
@@ -91,7 +94,7 @@ const styles = {
     marginLeft: width / 5.7,
     color: "#ffffff",
     backgroundColor: "#1e19a6",
-    borderRadius: 10
+    borderRadius: 10,
   },
   successMsgStyle: {
     width: width / 6,
@@ -99,8 +102,8 @@ const styles = {
     marginLeft: width / 5.9,
     color: "#ffffff",
     backgroundColor: "#4a8a48",
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 };
 
 export default ShopCart;

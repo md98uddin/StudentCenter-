@@ -1,5 +1,5 @@
 import React from "react";
-import { checkCartDuplicate } from "../utils/services";
+import { checkCartDuplicate, convertMilitaryTime } from "../utils/services";
 
 const SearchResult = ({ searchQuery, onSelect, shopCart }) => {
   const { main } = styles;
@@ -22,7 +22,9 @@ const SearchResult = ({ searchQuery, onSelect, shopCart }) => {
             <td>{item.professor}</td>
             <td>{item.credits}</td>
             <td>{`${item.days[0].day}`}</td>
-            <td>{`${item.days[0].hours}`}</td>
+            <td>{`${convertMilitaryTime(
+              item.days[0].startTime
+            )}-${convertMilitaryTime(item.days[0].endTime)}`}</td>
             <td>
               {checkCartDuplicate(item, shopCart) === true ? (
                 <p>In Cart</p>

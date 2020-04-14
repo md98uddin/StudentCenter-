@@ -1,12 +1,15 @@
 import React from "react";
 import "../App.css";
+import { getSchedule } from "../utils/services";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-const EventCalendar = props => {
-  const { currentTab } = props;
+const EventCalendar = (props) => {
+  const { currentTab, currentClasses } = props;
   const { main } = styles;
+  console.log("current classes schedule", currentClasses);
+  console.log("schedule classes schedule", getSchedule(currentClasses));
 
   return currentTab === "View Schedule" ? (
     <div style={main} className="main">
@@ -19,16 +22,7 @@ const EventCalendar = props => {
         maxTime="24:00:00"
         eventColor="#4d0917"
         eventBackgroundColor="#4d0917"
-        events={[
-          {
-            title: "test",
-            daysOfWeek: ["1", "2", "4", "5"],
-            startTime: "12:00:00",
-            endTime: "14:00:00",
-            start: "2020-03-24",
-            end: "2020-04-04"
-          }
-        ]}
+        events={getSchedule(currentClasses)}
       />
     </div>
   ) : null;
@@ -45,8 +39,8 @@ const styles = {
     color: "#ffffff",
     border: "solid",
     borderColor: "#000000",
-    marginTop: height / 18
-  }
+    marginTop: height / 18,
+  },
 };
 
 export default EventCalendar;
