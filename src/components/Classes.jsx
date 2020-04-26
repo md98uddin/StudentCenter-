@@ -17,7 +17,7 @@ class Classes extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Swap Courses",
+      currentTab: "View Schedule",
       currentClasses: [],
       shopCart: [],
       subject: null,

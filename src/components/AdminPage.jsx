@@ -8,7 +8,9 @@ class AdminPage extends Component {
     super(props);
 
     this.state = {
-      user: this.props.user
+      user: this.props.user,
+      courses: this.props.courses,
+      currentTab: "Students"
     };
   }
 
@@ -21,8 +23,24 @@ class AdminPage extends Component {
     return null;
   }
 
+  onTabChange = (tab) => {
+    this.setState({
+      currentTab: tab,
+    });
+  };
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
   render() {
-    const { user } = this.state;
+    const {
+      user,
+      currentTab,
+    } = this.state;
+    
     return user ? (
       <div
         style={{
@@ -34,6 +52,9 @@ class AdminPage extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
         />
+
+        <AdminTab onTabChange={this.onTabChange} currentTab={currentTab} />
+
       </div>
     ) : (
       <Redirect to="/login" />
