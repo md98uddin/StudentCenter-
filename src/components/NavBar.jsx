@@ -73,6 +73,18 @@ export default class Navbar extends Component {
                 ADVISING
               </Link>
             </li>
+            <li
+              style={tabMargin}
+              className={
+                path.includes("/admin")
+                  ? "navbar-item active"
+                  : "navbar-item"
+              }
+            >
+              <Link to="/admin" className="nav-link">
+                STAFF ONLY
+              </Link>
+            </li>
           </ul>
           <div style={ButtonDiv}>
             <button

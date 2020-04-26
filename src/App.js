@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import firebase from "./keys/FirebaseConfig";
 import axios from "axios";
+import AdminPage from "./components/AdminPage";
 import HomePage from "./components/Home";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Registration";
@@ -77,6 +78,18 @@ class App extends Component {
                 {...props}
                 user={user}
                 doPasswordReset={this.doPasswordReset}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/admin"
+            render={props => (
+              <AdminPage
+                {...props}
+                user={user}
+                signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
