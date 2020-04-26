@@ -92,7 +92,9 @@ export default class Navbar extends Component {
               type="button"
               className="btn btn-warning"
             >
-              <p style={faqButtonLabel}>FAQ</p>
+              <Link to="/faq" className="nav-link">
+                <p style={faqButtonLabel}>FAQ</p>
+              </Link>
             </button>
             <button
               style={logOutButtonStyle}
@@ -129,7 +131,7 @@ const styles = {
     height: height / 22,
     alignItems: "center"
   },
-  faqButtonLabel: { margin: "-5px 5px 10px 5px" },
+  faqButtonLabel: { margin: "-12px 5px 100px 5px" },
   logOutButtonStyle: {
     marginLeft: width / 140,
     marginRight: width / 70,

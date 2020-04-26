@@ -16,6 +16,7 @@ import Classes from "./components/Classes";
 import AidsAndLoans from "./components/AidsAndLoans";
 import Advising from "./components/Advising";
 import ForgotPassword from "./components/ForgotPassword";
+import FAQPage from "./components/FAQPage";
 
 class App extends Component {
   constructor(props) {
@@ -86,6 +87,18 @@ class App extends Component {
             path="/admin"
             render={props => (
               <AdminPage
+                {...props}
+                user={user}
+                signOutStudent={this.signOutStudent}
+                courses={courses}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/faq"
+            render={props => (
+              <FAQPage
                 {...props}
                 user={user}
                 signOutStudent={this.signOutStudent}
