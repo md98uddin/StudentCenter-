@@ -12,7 +12,7 @@ const AdminTab = props => {
           currentTab === "Students" ? "btn-info active" : null
         }`}
       >
-        STUDENTS
+        ADD STUDENTS
       </button>
       <br />
       <button
@@ -22,7 +22,7 @@ const AdminTab = props => {
           currentTab === "Faculty" ? "btn-info active" : null
         }`}
       >
-        FACULTY
+        ADD FACULTY
       </button>
       <br />
       <button
@@ -32,7 +32,7 @@ const AdminTab = props => {
           currentTab === "Courses" ? "btn-info active" : null
         }`}
       >
-        COURSES
+        ADD COURSES
       </button>
       <br />
       </div>

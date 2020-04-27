@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Navbar from "./NavBar";
 import AdminTab from "../reusables/AdminTab";
+import AdminStudent from "../reusables/AdminStudent";
+import AdminFaculty from "../reusables/AdminFaculty";
+import AdminCourses from "../reusables/AdminCourses";
 
 class AdminPage extends Component {
   constructor(props) {
@@ -40,7 +43,7 @@ class AdminPage extends Component {
       user,
       currentTab,
     } = this.state;
-    
+
     return user ? (
       <div
         style={{
@@ -52,8 +55,13 @@ class AdminPage extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
         />
-
-        <AdminTab onTabChange={this.onTabChange} currentTab={currentTab} />
+        <AdminStudent currentTab={currentTab}/>
+        <AdminFaculty currentTab={currentTab}/>
+        <AdminCourses currentTab={currentTab}/>
+        <AdminTab 
+          onTabChange={this.onTabChange}
+          currentTab={currentTab}
+        />
 
       </div>
     ) : (
