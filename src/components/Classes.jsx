@@ -17,20 +17,26 @@ class Classes extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Swap Courses",
+      currentTab: "View Schedule",
       currentClasses: [],
       shopCart: [],
       subject: null,
       courseNo: null,
       dropCourse: null,
       droppedMarker: null,
-      swapDrop: null,
-      swapAdd: null,
+      onDropId: null,
+      addId: null,
+      dropId: null,
+      swapCourseAdd: null,
+      swapCourseDrop: null,
+      swapNext: false,
       searchQuery: null,
       fieldError: null,
       duplicateError: null,
       successMsg: null,
-      onDropMsg: "please refresh for update!",
+      onDropMsg: null,
+      duplicateSwapMsg: null,
+      swapSuccessMsg: null,
     };
   }
 
@@ -71,21 +77,30 @@ class Classes extends Component {
     });
   };
 
-  onSwapAdd = (selectedOption) => {
-    this.setState(
-      {
-        swapAdd: selectedOption.prefix + selectedOption.courseNumber,
-      },
-      console.log("swap add click", this.state.swapAdd)
-    );
+  onGoBack = () => {
+    this.setState({
+      swapNext: false,
+      dropId: null,
+      addId: null,
+      swapCourseAdd: null,
+      swapCourseDrop: null,
+    });
+  };
+  onSwapAdd = (courseId, courseName) => {
+    this.setState({
+      addId: courseId,
+      swapCourseAdd: courseName,
+    });
   };
 
-  onSwapDrop = (selectedOption) => {
+  onSwapDrop = (courseId, courseName) => {
     this.setState(
       {
-        swapDrop: selectedOption.prefix + selectedOption.courseNumber,
+        dropId: courseId,
+        swapCourseDrop: courseName,
+        swapNext: true,
       },
-      console.log("swap drop click", this.state.swapDrop)
+      console.log("on drop id", this.state.swapNext)
     );
   };
 
@@ -105,35 +120,63 @@ class Classes extends Component {
     }
   };
 
-  onDropChange = (obj) => {
-    const identifer =
-      obj.prefix + obj.courseNumber + obj.professor.replace(/\s/g, "");
+  onDropId = (id) => {
     this.setState({
-      dropCourse: identifer,
-      droppedMarker: null,
+      onDropId: id,
+      onDropMsg: null,
     });
   };
 
-  onDrop = async (obj) => {
+  onDrop = async (id) => {
     const { user } = this.state;
-    const identifer =
-      obj.prefix + obj.courseNumber + obj.professor.replace(/\s/g, "");
-    this.setState({
-      droppedMarker: identifer,
-    });
+    console.log("id on drop", id);
     await axios
-      .post(`http://localhost:3000/students/remove/${user.email}`, obj)
-      .then(async (res) => {
+      .post(`http://localhost:3000/students/current/remove/${user.email}/${id}`)
+      .then(() => {
+        window.location.reload();
+      })
+      .then(() => {
+        var onDropMsg = "class was dropped";
         this.setState({
-          dropCourse: null,
+          onDropMsg,
         });
-        await axios
-          .get(`http://localhost:3000/students/current/${user.email}`)
-          .then(async (res) => {
-            this.setState({
-              currentClasses: res.data,
-            });
+      });
+  };
+
+  onSwapCourse = async () => {
+    const { addId, dropId, user } = this.state;
+    axios
+      .post(`http://localhost:3000/students/current/add/${user.email}/${addId}`)
+      .then(async (res) => {
+        if (res.data === "duplicate exists in current") {
+          var errMsg = "course already in schedule";
+          this.setState({
+            duplicateSwapMsg: errMsg,
+            swapSuccessMsg: null,
           });
+        } else if (res.data === "course was added") {
+          var successMsg = "courses were swapped";
+          this.setState({
+            swapSuccessMsg: successMsg,
+            duplicateSwapMsg: null,
+          });
+
+          await axios
+            .post(
+              `http://localhost:3000/students/current/remove/${user.email}/${dropId}`
+            )
+            .then(async (res) => {
+              if (res.data === "course was removed") {
+                await axios
+                  .put(
+                    `http://localhost:3000/students/cart/${user.email}?id=${addId}`
+                  )
+                  .then((res) => {
+                    window.location.reload();
+                  });
+              }
+            });
+        }
       });
   };
 
@@ -173,6 +216,9 @@ class Classes extends Component {
           .get(`http://localhost:3000/students/cart/${user.email}`)
           .then((res) => {
             this.setState({ shopCart: res.data });
+          })
+          .then(async () => {
+            window.location.reload();
           });
       });
   };
@@ -190,6 +236,9 @@ class Classes extends Component {
               duplicateError: null,
               successMsg: null,
             });
+          })
+          .then(async () => {
+            window.location.reload();
           });
       });
   };
@@ -222,17 +271,23 @@ class Classes extends Component {
       searchQuery,
       shopCart,
       dropCourse,
-      swapAdd,
-      swapDrop,
+      swapCourseAdd,
+      swapCourseDrop,
+      swapNext,
       currentClasses,
       duplicateError,
       successMsg,
       onDropMsg,
+      onDropId,
       droppedMarker,
+      swapSuccessMsg,
+      duplicateSwapMsg,
     } = this.state;
 
-    console.log("swapDrop", swapDrop);
-    console.log("swapAdd", swapAdd);
+    console.log("swap success message", swapSuccessMsg);
+    console.log("swap error message", duplicateSwapMsg);
+    console.log("on drop id", onDropId);
+
     return user ? (
       <div className="main">
         <div
@@ -267,8 +322,8 @@ class Classes extends Component {
           <DropCourse
             currentClasses={currentClasses}
             currentTab={currentTab}
-            onDropChange={this.onDropChange}
-            dropCourse={dropCourse}
+            onDropId={this.onDropId}
+            dropId={onDropId}
             onDrop={this.onDrop}
             onDropMsg={onDropMsg}
             droppedMarker={droppedMarker}
@@ -277,10 +332,15 @@ class Classes extends Component {
             currentTab={currentTab}
             currentClasses={currentClasses}
             shopCart={shopCart}
-            onChangeSwapAdd={this.onSwapAdd}
-            onChangeSwapDrop={this.onSwapDrop}
-            swapAdd={swapAdd}
-            swapDrop={swapDrop}
+            swapAdd={this.onSwapAdd}
+            swapDrop={this.onSwapDrop}
+            swapCourseAdd={swapCourseAdd}
+            swapCourseDrop={swapCourseDrop}
+            swapNext={swapNext}
+            onGoBack={this.onGoBack}
+            onSwapCourse={this.onSwapCourse}
+            duplicateSwapMsg={duplicateSwapMsg}
+            swapSuccessMsg={swapSuccessMsg}
           />
           <ClassesTab onTabChange={this.onTabChange} currentTab={currentTab} />
         </div>

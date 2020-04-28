@@ -4,13 +4,12 @@ import { convertMilitaryTime } from "../utils/services";
 const DropCourse = ({
   currentClasses,
   currentTab,
-  onDropChange,
-  dropCourse,
+  onDropId,
+  dropId,
   onDrop,
   onDropMsg,
-  droppedMarker,
 }) => {
-  const { main, onDropMsgStyle } = styles;
+  const { main, dropBtnStyle, dropMsg } = styles;
   return currentTab === "Drop Courses" ? (
     <div style={main} className="container">
       <table className="table">
@@ -25,61 +24,54 @@ const DropCourse = ({
           </tr>
         </thead>
         <tbody style={{ backgroundColor: "#4d0917", color: "#ffffff" }}>
-          {currentClasses.length > 0
-            ? currentClasses.map((course, index) => (
-                <tr key={course._id}>
-                  <td>{`${course.prefix} ${course.courseNumber}`}</td>
-                  <td>{course.professor}</td>
-                  <td>{course.credits}</td>
-                  <td>{course.days[0].day}</td>
-                  <td>{`${convertMilitaryTime(
-                    course.days[0].startTime
-                  )}-${convertMilitaryTime(course.days[0].endTime)}`}</td>
-                  <td>
-                    {dropCourse !==
-                    course.prefix +
-                      course.courseNumber +
-                      course.professor.replace(/\s/g, "") ? (
-                      <button
-                        onClick={() => onDropChange(course)}
-                        style={{
-                          borderRadius: 10,
-                          backgroundColor: "#0f0c6e",
-                          color: "#ffffff",
-                        }}
-                        className="btn-sm"
-                      >
-                        Drop
-                      </button>
-                    ) : (
-                      <div className="container">
-                        {droppedMarker === null ? (
-                          <button
-                            onClick={() => onDrop(course)}
-                            style={{
-                              borderRadius: 10,
-                              color: "#ffffff",
-                            }}
-                            className="btn-sm btn-warning"
-                          >
-                            Confirm?
-                          </button>
-                        ) : (
-                          <p>Dropped</p>
-                        )}
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))
-            : null}
+          {currentClasses.length >= 0 &&
+            currentClasses.map((course) => (
+              <tr key={course._id}>
+                <td>{`${course.prefix} ${course.courseNumber}`}</td>
+                <td>{course.professor}</td>
+                <td>{course.credits}</td>
+                <td>{course.days[0].day}</td>
+                <td>{`${convertMilitaryTime(
+                  course.days[0].startTime
+                )}-${convertMilitaryTime(course.days[0].endTime)}`}</td>
+                <td>
+                  {" "}
+                  {dropId !== course._id ? (
+                    <button
+                      onClick={() => onDropId(course._id)}
+                      style={{
+                        borderRadius: 10,
+                        backgroundColor: "#0f0c6e",
+                        color: "#ffffff",
+                      }}
+                      className="btn-sm"
+                    >
+                      Drop
+                    </button>
+                  ) : (
+                    "selected"
+                  )}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
-      {currentClasses.length > 0 ? (
-        <div style={onDropMsgStyle} className="container">
-          <p style={{ paddingTop: height / 70 }}>{onDropMsg}</p>
+      {dropId && (
+        <div>
+          <button
+            style={dropBtnStyle}
+            onClick={() => onDrop(dropId)}
+            className="btn-sm "
+          >
+            Confirm Drop
+          </button>
         </div>
-      ) : null}
+      )}
+      {onDropMsg && (
+        <div style={dropMsg}>
+          <p>{onDropMsg}</p>
+        </div>
+      )}
     </div>
   ) : null;
 };
@@ -92,13 +84,18 @@ const styles = {
     marginTop: height / 16.5,
     float: "right",
   },
-  onDropMsgStyle: {
+  dropBtnStyle: {
+    marginLeft: width / 4.75,
     backgroundColor: "#4d0917",
-    width: width / 6.3,
-    height: height / 15,
-    borderRadius: 15,
-    marginLeft: width / 5.7,
-    color: "#ffffff",
+    color: "white",
+  },
+  dropMsg: {
+    backgroundColor: "#4d0917",
+    color: "white",
+    width: width / 10,
+    borderRadius: 10,
+    marginLeft: width / 5.1,
+    marginTop: height / 15,
   },
 };
 
