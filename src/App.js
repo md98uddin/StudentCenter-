@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import firebase from "./keys/FirebaseConfig";
 import axios from "axios";
+import AdminPage from "./components/AdminPage";
 import HomePage from "./components/Home";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Registration";
@@ -15,6 +16,7 @@ import Classes from "./components/Classes";
 import AidsAndLoans from "./components/AidsAndLoans";
 import Advising from "./components/Advising";
 import ForgotPassword from "./components/ForgotPassword";
+import FAQPage from "./components/FAQPage";
 
 class App extends Component {
   constructor(props) {
@@ -77,6 +79,30 @@ class App extends Component {
                 {...props}
                 user={user}
                 doPasswordReset={this.doPasswordReset}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/admin"
+            render={props => (
+              <AdminPage
+                {...props}
+                user={user}
+                signOutStudent={this.signOutStudent}
+                courses={courses}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/faq"
+            render={props => (
+              <FAQPage
+                {...props}
+                user={user}
+                signOutStudent={this.signOutStudent}
+                courses={courses}
               />
             )}
           />
