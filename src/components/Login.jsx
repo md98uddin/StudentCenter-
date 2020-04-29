@@ -10,7 +10,7 @@ class LoginPage extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -19,7 +19,7 @@ class LoginPage extends Component {
 
   onInputChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
@@ -46,7 +46,7 @@ class LoginPage extends Component {
       buttonStyle,
       buttonLabel,
       emailInputDiv,
-      passwordInputDiv
+      passwordInputDiv,
     } = styles;
     return !user ? (
       <FadeIn delay="100">
@@ -105,8 +105,10 @@ class LoginPage extends Component {
           <CreateForgot />
         </div>
       </FadeIn>
+    ) : !user.privilege ? (
+      <Redirect to="/home" />
     ) : (
-      <Redirect to="/classes" />
+      <Redirect to="/admin" />
     );
   }
 }
@@ -116,46 +118,46 @@ const { innerHeight: height, innerWidth: width } = window;
 const styles = {
   mainDiv: {
     height: "100vh",
-    backgroundColor: "#A4A4A4"
+    backgroundColor: "#A4A4A4",
   },
   mainView: {
     height: width / 30,
     width: width / 6,
     marginLeft: width / 2.3,
-    marginTop: height / 18
+    marginTop: height / 18,
   },
   formView: {
     marginLeft: width / 2.67,
     marginRight: width / 3.05,
     marginTop: height / 15,
     backgroundColor: "#bbbbbb",
-    borderRadius: 25
+    borderRadius: 25,
   },
   header: {
     fontSize: 15,
     marginLeft: width / 11.5,
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   emailDiv: {
     width: width / 5.5,
     height: height / 4.5,
-    marginLeft: height / 8.3
+    marginLeft: height / 8.3,
   },
   passwordDiv: {
     width: width / 5.5,
     height: height / 5.5,
     marginTop: -(height / 10.5),
-    marginLeft: height / 8.3
+    marginLeft: height / 8.3,
   },
   emailLabel: {
     fontSize: 18,
     marginLeft: width / 13.5,
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   passwordLabel: {
     fontSize: 18,
     marginLeft: width / 15.5,
-    color: "#ffffff"
+    color: "#ffffff",
   },
   buttonDiv: { marginTop: -(height / 15) },
   buttonStyle: {
@@ -163,12 +165,12 @@ const styles = {
     width: width / 15,
     height: height / 14,
     marginLeft: width / 8.3,
-    marginBottom: "10px"
+    marginBottom: "10px",
   },
   buttonLabel: { color: "#000000", fontSize: 18 },
   emailInputDiv: { border: "solid", borderColor: "#fc0335" },
   passwordInputDiv: { border: "solid", borderColor: "#fc0335" },
-  authErrorLabel: { marginBottom: width / 25 }
+  authErrorLabel: { marginBottom: width / 25 },
 };
 
 export default LoginPage;

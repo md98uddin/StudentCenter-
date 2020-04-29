@@ -13,7 +13,7 @@ class Advising extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.user !== nextProps.user) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
       };
     }
     return null;
@@ -25,12 +25,13 @@ class Advising extends Component {
       <div
         style={{
           backgroundColor: "#A4A4A4",
-          height: "100vh"
+          height: "100vh",
         }}
       >
         <Navbar
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
+          privilege={user.privilege}
         />
         <AdviserCard adviser={user.adviser} />
       </div>

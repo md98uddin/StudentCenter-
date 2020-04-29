@@ -10,14 +10,14 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      user: this.props.user
+      user: this.props.user,
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.user !== nextProps.user) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
       };
     }
     return null;
@@ -29,12 +29,13 @@ class Home extends Component {
       <div
         style={{
           height: "100vh",
-          backgroundColor: "#A4A4A4"
+          backgroundColor: "#A4A4A4",
         }}
       >
         <Navbar
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
+          privilege={user.privilege}
         />
         <UpcomingClasses currentClasses={user.currentClasses} />
         <UserProfile />

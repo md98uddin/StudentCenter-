@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import firebase from "./keys/FirebaseConfig";
 import axios from "axios";
@@ -26,12 +26,12 @@ class App extends Component {
       user: null,
       authError: null,
       courses: null,
-      faculties: null
+      faculties: null,
     };
   }
 
   componentDidMount() {
-    this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
+    this.signInStudent({ email: "admin@admin.com", password: "123456" });
   }
 
   render() {
@@ -51,7 +51,7 @@ class App extends Component {
           <Route
             exact
             path="/login"
-            render={props => (
+            render={(props) => (
               <LoginPage
                 {...props}
                 signInStudent={this.signInStudent}
@@ -63,7 +63,7 @@ class App extends Component {
           <Route
             exact
             path="/register"
-            render={props => (
+            render={(props) => (
               <RegisterPage
                 {...props}
                 user={user}
@@ -74,7 +74,7 @@ class App extends Component {
           <Route
             exact
             path="/forgotPassword"
-            render={props => (
+            render={(props) => (
               <ForgotPassword
                 {...props}
                 user={user}
@@ -85,7 +85,7 @@ class App extends Component {
           <Route
             exact
             path="/admin"
-            render={props => (
+            render={(props) => (
               <AdminPage
                 {...props}
                 user={user}
@@ -97,7 +97,7 @@ class App extends Component {
           <Route
             exact
             path="/faq"
-            render={props => (
+            render={(props) => (
               <FAQPage
                 {...props}
                 user={user}
@@ -109,7 +109,7 @@ class App extends Component {
           <Route
             exact
             path="/home"
-            render={props => (
+            render={(props) => (
               <HomePage
                 {...props}
                 user={user}
@@ -121,7 +121,7 @@ class App extends Component {
           <Route
             exact
             path="/classes"
-            render={props => (
+            render={(props) => (
               <Classes
                 {...props}
                 user={user}
@@ -133,7 +133,7 @@ class App extends Component {
           <Route
             exact
             path="/grades"
-            render={props => (
+            render={(props) => (
               <Grades
                 {...props}
                 user={user}
@@ -145,7 +145,7 @@ class App extends Component {
           <Route
             exact
             path="/finaid"
-            render={props => (
+            render={(props) => (
               <AidsAndLoans
                 {...props}
                 user={user}
@@ -157,7 +157,7 @@ class App extends Component {
           <Route
             exact
             path="/advising"
-            render={props => (
+            render={(props) => (
               <Advising
                 {...props}
                 user={user}
@@ -171,12 +171,12 @@ class App extends Component {
     );
   }
 
-  signInStudent = obj => {
+  signInStudent = (obj) => {
     const { email, password } = obj;
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(async data => {
+      .then(async (data) => {
         const user = await axios.get(
           `http://localhost:3000/students/${data.user.email}`
         );
@@ -185,7 +185,7 @@ class App extends Component {
         );
         this.setState({ user: user.data[0], courses: courses.data });
       })
-      .catch(error => {
+      .catch((error) => {
         if (
           error.code === "auth/invalid-email" ||
           error.code === "auth/user-not-found" ||
@@ -196,24 +196,24 @@ class App extends Component {
       });
   };
 
-  signUpStudent = async obj => {
+  signUpStudent = async (obj) => {
     const { email, password, registrationCode } = obj;
     axios
       .post(`http://localhost:3000/students/add/${registrationCode}`, { email })
-      .then(res => {
+      .then((res) => {
         if (res.data === "code matches") {
           firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(async res => {
+            .then(async (res) => {
               this.setState({ user: res.user });
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("error", error);
       });
   };
@@ -227,14 +227,14 @@ class App extends Component {
       });
   };
 
-  doPasswordReset = email => {
+  doPasswordReset = (email) => {
     firebase
       .auth()
       .sendPasswordResetEmail(email)
       .then(() => {
         this.setState({ email: "", error: null });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ user: null, error: "Invalid Email" });
       });
   };

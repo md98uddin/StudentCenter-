@@ -13,14 +13,14 @@ class AdminPage extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Students"
+      currentTab: "Students",
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.user !== nextProps.user) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
       };
     }
     return null;
@@ -39,30 +39,26 @@ class AdminPage extends Component {
   };
 
   render() {
-    const {
-      user,
-      currentTab,
-    } = this.state;
+    const { user, currentTab } = this.state;
+    console.log(user);
 
     return user ? (
       <div
         style={{
           height: "100vh",
-          backgroundColor: "#A4A4A4"
+          backgroundColor: "#A4A4A4",
         }}
       >
         <Navbar
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
+          privilege={user.privilege}
+          adminName={`${user.firstName} ${user.lastName}`}
         />
-        <AdminStudent currentTab={currentTab}/>
-        <AdminFaculty currentTab={currentTab}/>
-        <AdminCourses currentTab={currentTab}/>
-        <AdminTab 
-          onTabChange={this.onTabChange}
-          currentTab={currentTab}
-        />
-
+        <AdminStudent currentTab={currentTab} />
+        <AdminFaculty currentTab={currentTab} />
+        <AdminCourses currentTab={currentTab} />
+        <AdminTab onTabChange={this.onTabChange} currentTab={currentTab} />
       </div>
     ) : (
       <Redirect to="/login" />

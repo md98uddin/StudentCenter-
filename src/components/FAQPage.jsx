@@ -12,7 +12,7 @@ class FAQPage extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.user !== nextProps.user) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
       };
     }
     return null;
@@ -24,27 +24,32 @@ class FAQPage extends Component {
       <div
         style={{
           backgroundColor: "#A4A4A4",
-          height: "100vh"
+          height: "100vh",
         }}
       >
         <Navbar
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
+          privilege={user.privilege}
         />
         <span>
-            What is the name of this project?<br />
-            Student Center <br /><br />
-            What is this project about? <br />
-            To create a new and efficient college management system. <br /><br />
-            Who are the members? <br />
-            Wei Lin, MD R Uddin, Nabil Hayet <br /><br />
-            When did this project begin? <br />
-            February 4th, 2020 <br /><br />
-            What is the goal of this project? <br />
-            A capstone course project where students are to work in a team of 3-4 people to design a program from scratch. <br />
+          What is the name of this project?
+          <br />
+          Student Center <br />
+          <br />
+          What is this project about? <br />
+          To create a new and efficient college management system. <br />
+          <br />
+          Who are the members? <br />
+          Wei Lin, MD R Uddin, Nabil Hayet <br />
+          <br />
+          When did this project begin? <br />
+          February 4th, 2020 <br />
+          <br />
+          What is the goal of this project? <br />
+          A capstone course project where students are to work in a team of 3-4
+          people to design a program from scratch. <br />
         </span>
-        
-
       </div>
     ) : (
       <Redirect to="/login" />

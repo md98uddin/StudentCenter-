@@ -22,26 +22,26 @@ class AidsAndLoans extends Component {
       payAmt: null,
       payAmtError: null,
       fieldError: null,
-      successMsgPay: null
+      successMsgPay: null,
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.user !== nextProps.user) {
       return {
-        user: nextProps.user
+        user: nextProps.user,
       };
     }
     return null;
   }
 
-  onInputChange = e => {
+  onInputChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  onSubmitLoan = async e => {
+  onSubmitLoan = async (e) => {
     const { user, loanAmt, loanYear } = this.state;
     const transaction = {
       transactionId:
@@ -53,7 +53,7 @@ class AidsAndLoans extends Component {
       type: "loan",
       amount: "$" + loanAmt + ".00",
       date:
-        new Date().getMonth() + new Date().getDay() + new Date().getFullYear()
+        new Date().getMonth() + new Date().getDay() + new Date().getFullYear(),
     };
     e.preventDefault();
     if (user && loanYear >= new Date().getFullYear()) {
@@ -62,7 +62,7 @@ class AidsAndLoans extends Component {
         this.setState({
           paymentError: paymentErrorMessage,
           successMsg: null,
-          yearError: null
+          yearError: null,
         });
       } else if (user.tuition >= loanAmt) {
         await axios.post(
@@ -79,7 +79,7 @@ class AidsAndLoans extends Component {
           successMsg: successMessage,
           paymentError: null,
           user: updateUser,
-          yearError: null
+          yearError: null,
         });
       }
     } else if (
@@ -90,14 +90,14 @@ class AidsAndLoans extends Component {
       this.setState({
         successMsg: null,
         paymentError: null,
-        yearError: yearErrorMessage
+        yearError: yearErrorMessage,
       });
     } else {
       console.log("no user detected");
     }
   };
 
-  onSubmitPay = async e => {
+  onSubmitPay = async (e) => {
     const { user, payAmt, cardName, cardNumber, ccv, expiration } = this.state;
     const transaction = {
       transactionId:
@@ -109,7 +109,7 @@ class AidsAndLoans extends Component {
       type: "pay",
       amount: "$" + payAmt + ".00",
       date:
-        new Date().getMonth() + new Date().getDay() + new Date().getFullYear()
+        new Date().getMonth() + new Date().getDay() + new Date().getFullYear(),
     };
     console.log("on submit", this.state);
     if (user) {
@@ -118,7 +118,7 @@ class AidsAndLoans extends Component {
         this.setState({
           payAmtError: payAmtErrorMessage,
           successMsgPay: null,
-          fieldError: null
+          fieldError: null,
         });
       } else if (
         user.tuition >= payAmt &&
@@ -142,14 +142,14 @@ class AidsAndLoans extends Component {
           successMsgPay: successMessage,
           payAmtError: null,
           fieldError: null,
-          user: updateUser
+          user: updateUser,
         });
       } else if (!cardName || cardNumber || ccv || expiration || payAmt) {
         var fieldErrorMessage = "some inputs are invalid";
         this.setState({
           successMsgPay: null,
           payAmtError: null,
-          fieldError: fieldErrorMessage
+          fieldError: fieldErrorMessage,
         });
       }
     }
@@ -163,17 +163,18 @@ class AidsAndLoans extends Component {
       yearError,
       fieldError,
       successMsgPay,
-      payAmtError
+      payAmtError,
     } = this.state;
     return user ? (
       <div
         style={{
-          backgroundColor: "#A4A4A4"
+          backgroundColor: "#A4A4A4",
         }}
       >
         <Navbar
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
+          privilege={user.privilege}
         />
         <BalanceLoanPayCard
           tuition={user.tuition}

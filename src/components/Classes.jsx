@@ -299,6 +299,7 @@ class Classes extends Component {
           <Navbar
             signOutStudent={this.props.signOutStudent}
             campus={user.campusId}
+            privilege={user.privilege}
           />
           <Schedule currentTab={currentTab} currentClasses={currentClasses} />
           <AddCourseSearch
