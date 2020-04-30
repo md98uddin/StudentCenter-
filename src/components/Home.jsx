@@ -38,8 +38,18 @@ class Home extends Component {
           privilege={user.privilege}
         />
         <UpcomingClasses currentClasses={user.currentClasses} />
-        <UserProfile />
-        <HoldsResources holds={user.holds} />
+        <UserProfile 
+          firstName={user.firstName}
+          lastName={user.lastName}
+        />
+        <HoldsResources
+          tuition={user.tuition}
+          holdCode={user.holdCode}
+          descriptions={user.descriptions}
+          holds={user.holds}
+          campus={user.holds.campus}
+          adviser={user.adviser}
+         />
       </div>
     ) : (
       <Redirect to="/login" />
