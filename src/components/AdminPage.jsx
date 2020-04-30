@@ -13,7 +13,7 @@ class AdminPage extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Students",
+      currentTab: "Faculty",
     };
   }
 
@@ -40,7 +40,6 @@ class AdminPage extends Component {
 
   render() {
     const { user, currentTab } = this.state;
-    console.log(user);
 
     return user ? (
       <div
