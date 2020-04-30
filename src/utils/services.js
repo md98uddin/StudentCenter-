@@ -288,3 +288,67 @@ export function convertMilitaryTime(time) {
 
   return timeValue;
 }
+
+//return department eg. CSCI, MATH
+export function returnDepartment(department) {
+  switch (department) {
+    case "Comp Sci":
+      return "CSCI";
+    case "Romance Language":
+      return "LANG";
+    case "Math":
+      return "MATH";
+    case "Business":
+      return "ECON";
+  }
+}
+
+//return 5 digit number randomly
+export function generateRandom() {
+  return Math.floor(Math.random() * (99999 - 10000) + 10000);
+}
+
+//return first character of name
+export function getNameInital(name) {
+  var splitName = name.split(" ");
+  return (
+    splitName[0].charAt(0).toUpperCase() + splitName[1].charAt(0).toUpperCase()
+  );
+}
+
+//create contacts object
+export function contactObject(contact) {
+  var split = contact.split(",");
+  var contactObj = {
+    email: split[0],
+    phone: split[1],
+  };
+  return contactObj;
+}
+
+//create facultyObject from inputs
+export function createFaculty(
+  name,
+  department,
+  employeeType,
+  room,
+  hours,
+  days,
+  campusId,
+  contact
+) {
+  var facultyObject = {
+    name,
+    department,
+    employeeType,
+    room,
+    hours,
+    days: [days],
+    facultyId:
+      getNameInital(name) + returnDepartment(department) + generateRandom(),
+    campusId,
+    contact: contactObject(contact),
+  };
+
+  return facultyObject;
+}

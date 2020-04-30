@@ -115,15 +115,6 @@ export default class Navbar extends Component {
         </li>
         <div style={ButtonDiv}>
           <button
-            style={faqButtonStyle}
-            type="button"
-            className="btn btn-warning"
-          >
-            <Link to="/faq" className="nav-link">
-              <p style={faqButtonLabel}>FAQ</p>
-            </Link>
-          </button>
-          <button
             style={logOutButtonStyle}
             onClick={() => this.props.signOutStudent()}
             type="button"
@@ -132,6 +123,15 @@ export default class Navbar extends Component {
             <p style={logOutButtonLabel}>Log Out</p>
           </button>
         </div>
+        <li
+          style={{
+            marginBottom: window.innerHeight / 50,
+            marginRight: window.innerWidth / 10,
+            color: "#ffffff",
+          }}
+        >
+          <p>IT Support: tel:718-938-1489/email:helpdesk@cuny.com</p>
+        </li>
       </nav>
     );
   }
