@@ -53,6 +53,12 @@ const HoldsResources = props => {
         <p style={resourcesTitle}>RESOURCES</p>
         <p style={textStyle}>
           Blackboard
+          <br />
+          FASFA
+          <br />
+          TAP
+          <br />
+          DegreeWorks
 
         </p>
       </div>

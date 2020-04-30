@@ -41,13 +41,19 @@ class Home extends Component {
         <UserProfile 
           firstName={user.firstName}
           lastName={user.lastName}
+          studentPic={user.studentPic}
+          email={user.email}
+          studentId={user.studentId}
+          gender={user.gender}
+          year={user.year}
+          campusId={user.campusId}
+          major={user.major}
+          gpa={user.gpa}
+          credits={user.credits}
+          attending={user.attending}
         />
         <HoldsResources
-          tuition={user.tuition}
-          holdCode={user.holdCode}
-          descriptions={user.descriptions}
           holds={user.holds}
-          campus={user.holds.campus}
           adviser={user.adviser}
          />
       </div>
