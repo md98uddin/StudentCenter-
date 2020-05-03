@@ -13,7 +13,7 @@ class AdminPage extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Faculty",
+      currentTab: "Courses",
     };
   }
 

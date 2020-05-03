@@ -352,3 +352,74 @@ export function createFaculty(
 
   return facultyObject;
 }
+
+//create duration object
+export function durationObject(duration) {
+  var split = duration.split(",");
+  var durationObj = {
+    start: split[0],
+    end: split[1],
+  };
+  return durationObj;
+}
+
+//create days object
+export function daysObject(days) {
+  var split = days.split(",");
+  var durationObj = {
+    day: split[0],
+    startTime: split[1],
+    endTime: split[2],
+  };
+  return durationObj;
+}
+
+//get department from prefix
+export function getDepartment(prefix) {
+  switch (prefix) {
+    case "CSCI":
+      return "Comp Sci";
+    case "LANG":
+      return "Romance Language";
+    case "ECON":
+      return "Business";
+    default:
+      return "Math";
+  }
+}
+
+//create course obj
+export function createCourse(
+  prefix,
+  courseNumber,
+  professor,
+  room,
+  days,
+  credits,
+  semester,
+  year,
+  duration,
+  studentsLimit,
+  campus,
+  campusId,
+  section
+) {
+  const courseObject = {
+    prefix,
+    department: getDepartment(prefix),
+    courseNumber,
+    professor,
+    room,
+    days: [daysObject(days)],
+    credits,
+    semester,
+    year,
+    duration: durationObject(duration),
+    studentsLimit,
+    campusId,
+    campus,
+    section,
+  };
+
+  return courseObject;
+}
