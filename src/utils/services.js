@@ -77,7 +77,9 @@ export function getCampus(num) {
 
     case 4567:
       return "York College";
+
     default:
+      return "Unknown College";
   }
 }
 
@@ -422,4 +424,97 @@ export function createCourse(
   };
 
   return courseObject;
+}
+
+//studentId info sufficent
+export function checkInfo(first, last, campusid) {
+  if (first && last && campusid) return true;
+}
+
+//generate student email
+export function generateStudentEmail(first, last, campusid) {
+  var beforeAt = first + "." + last;
+  var fourNum = Math.floor(Math.random() * (99999 - 10000) + 10000);
+  var email = beforeAt + fourNum;
+  return email;
+}
+
+//generate student id
+export function generateStudentId(first, last, campusid, gender) {
+  var fs = first.charAt(0).toUpperCase();
+  var ls = last.charAt(0).toUpperCase();
+  var fe = first.charAt(first.length - 1).toUpperCase();
+  var le = last.charAt(last.length - 1).toUpperCase();
+  var fiveNum = Math.floor(Math.random() * (999999 - 100000) + 100000);
+  if (gender) {
+    var gs = gender.charAt(0);
+    var ge = gender.charAt(gender.length - 1).toUpperCase();
+    return fs + ls + gs + fiveNum + ge + fe + le;
+  } else {
+    return fs + ls + fiveNum + fe + le;
+  }
+}
+
+//generate registration code 8 letters
+export function generateRegistrationCode(first, last, major) {
+  var initial = (
+    first.charAt(0) + first.charAt(first.length - 1)
+  ).toLowerCase();
+  var fourNum = Math.floor(Math.random() * (9999 - 1000) + 1000);
+  if (major) {
+    var nextInitial = (
+      major.charAt(0) + major.charAt(major.length - 1)
+    ).toLowerCase();
+    return initial + fourNum + nextInitial;
+  } else {
+    return initial + fourNum;
+  }
+}
+
+//create advisor object for student
+export function advisorObject(advisor) {
+  var split = advisor.split(",");
+  var obj = {
+    name: split[0],
+    room: split[1],
+    hours: split[2],
+    contact: split[3],
+  };
+
+  return obj;
+}
+
+//create student object for database
+export function createStudent(
+  advisor,
+  attending,
+  email,
+  registrationCode,
+  studentId,
+  campusId,
+  credits,
+  firstName,
+  lastName,
+  gender,
+  gpa,
+  major,
+  year
+) {
+  const studentObject = {
+    adviser: advisorObject(advisor),
+    attending,
+    email: email + "@cuny.edu",
+    registrationCode,
+    studentId,
+    campusId,
+    credits,
+    firstName,
+    lastName,
+    gender,
+    gpa,
+    major,
+    year,
+  };
+
+  return studentObject;
 }

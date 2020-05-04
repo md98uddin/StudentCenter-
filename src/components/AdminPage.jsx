@@ -13,7 +13,7 @@ class AdminPage extends Component {
     this.state = {
       user: this.props.user,
       courses: this.props.courses,
-      currentTab: "Courses",
+      currentTab: "Students",
     };
   }
 
@@ -29,12 +29,6 @@ class AdminPage extends Component {
   onTabChange = (tab) => {
     this.setState({
       currentTab: tab,
-    });
-  };
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
     });
   };
 
