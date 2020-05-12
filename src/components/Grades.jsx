@@ -13,13 +13,17 @@ class Grades extends Component {
       activeYear: 2018,
       viewTranscript: false,
       printTranscript: false,
+      urlOnLoad: this.props.urlOnLoad,
     };
   }
-
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (
+      prevState.user !== nextProps.user ||
+      prevState.urlOnLoad !== nextProps.urlOnLoad
+    ) {
       return {
         user: nextProps.user,
+        urlOnLoad: nextProps.urlOnLoad,
       };
     }
     return null;
@@ -63,6 +67,7 @@ class Grades extends Component {
       activeYear,
       viewTranscript,
       printTranscript,
+      urlOnLoad,
     } = this.state;
     return user ? (
       <div
@@ -76,6 +81,8 @@ class Grades extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
           privilege={user.privilege}
+          urlOnLoad={urlOnLoad}
+          onUrlChange={this.props.onUrlChange}
         />
         <GradesTable
           semesterClasses={user.classesCompleted.concat(user.currentClasses)}

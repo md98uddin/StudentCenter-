@@ -4,6 +4,7 @@ import Navbar from "./NavBar";
 import UpcomingClasses from "../reusables/UpcomingClasses";
 import UserProfile from "../reusables/UserProfile";
 import HoldsResources from "../reusables/HoldsResources";
+import { upcomingSchedule } from "../utils/services";
 
 class Home extends Component {
   constructor(props) {
@@ -11,13 +12,18 @@ class Home extends Component {
 
     this.state = {
       user: this.props.user,
+      urlOnLoad: this.props.urlOnLoad,
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (
+      prevState.user !== nextProps.user ||
+      prevState.urlOnLoad !== nextProps.urlOnLoad
+    ) {
       return {
         user: nextProps.user,
+        urlOnLoad: nextProps.urlOnLoad,
       };
     }
     return null;
@@ -36,9 +42,13 @@ class Home extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
           privilege={user.privilege}
+          urlOnLoad={this.props.urlOnLoad}
+          onUrlChange={this.props.onUrlChange}
         />
-        <UpcomingClasses currentClasses={user.currentClasses} />
-        <UserProfile 
+        <UpcomingClasses
+          currentClasses={upcomingSchedule(user.currentClasses)}
+        />
+        <UserProfile
           firstName={user.firstName}
           lastName={user.lastName}
           studentPic={user.studentPic}
@@ -52,10 +62,7 @@ class Home extends Component {
           credits={user.credits}
           attending={user.attending}
         />
-        <HoldsResources
-          holds={user.holds}
-          adviser={user.adviser}
-         />
+        <HoldsResources holds={user.holds} adviser={user.adviser} />
       </div>
     ) : (
       <Redirect to="/login" />

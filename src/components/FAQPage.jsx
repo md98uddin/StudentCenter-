@@ -6,13 +6,17 @@ class FAQPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { user: this.props.user };
+    this.state = { user: this.props.user, urlOnLoad: this.props.urlOnLoad };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (
+      prevState.user !== nextProps.user ||
+      prevState.urlOnLoad !== nextProps.urlOnLoad
+    ) {
       return {
         user: nextProps.user,
+        urlOnLoad: nextProps.urlOnLoad,
       };
     }
     return null;
@@ -31,6 +35,8 @@ class FAQPage extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
           privilege={user.privilege}
+          urlOnLoad={this.props.urlOnLoad}
+          onUrlChange={this.props.onUrlChange}
         />
         <span>
           What is the name of this project?

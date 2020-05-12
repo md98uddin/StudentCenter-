@@ -7,20 +7,23 @@ class Advising extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { user: this.props.user };
+    this.state = { user: this.props.user, urlOnLoad: this.props.urlOnLoad };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (
+      prevState.user !== nextProps.user ||
+      prevState.urlOnLoad !== nextProps.urlOnLoad
+    ) {
       return {
         user: nextProps.user,
+        urlOnLoad: nextProps.urlOnLoad,
       };
     }
     return null;
   }
-
   render() {
-    const { user } = this.props;
+    const { user, urlOnLoad } = this.props;
     return user ? (
       <div
         style={{
@@ -32,6 +35,8 @@ class Advising extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
           privilege={user.privilege}
+          urlOnLoad={urlOnLoad}
+          onUrlChange={this.props.onUrlChange}
         />
         <AdviserCard adviser={user.adviser} />
       </div>

@@ -14,7 +14,6 @@ export default class Navbar extends Component {
       logOutButtonStyle,
       logOutButtonLabel,
     } = styles;
-    console.log("priv", this.props.privilege);
     return !this.props.privilege ? (
       <nav style={main} className="navbar navbar-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">
@@ -23,6 +22,7 @@ export default class Navbar extends Component {
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li
+              onClick={() => this.props.onUrlChange("/home")}
               style={tabMargin}
               className={
                 path.includes("/home") ? "navbar-item active" : "navbar-item"
@@ -34,6 +34,7 @@ export default class Navbar extends Component {
             </li>
             <li
               style={tabMargin}
+              onClick={() => this.props.onUrlChange("/classes")}
               className={
                 path.includes("/classes") ? "navbar-item active" : "navbar-item"
               }
@@ -43,6 +44,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
+              onClick={() => this.props.onUrlChange("/grades")}
               style={tabMargin}
               className={
                 path.includes("/grades") ? "navbar-item active" : "navbar-item"
@@ -53,6 +55,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
+              onClick={() => this.props.onUrlChange("/finaid")}
               style={tabMargin}
               className={
                 path.includes("/finaid") ? "navbar-item active" : "navbar-item"
@@ -63,6 +66,7 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li
+              onClick={() => this.props.onUrlChange("/advising")}
               style={tabMargin}
               className={
                 path.includes("/advising")
@@ -74,15 +78,10 @@ export default class Navbar extends Component {
                 ADVISING
               </Link>
             </li>
-            <li
-              style={tabMargin}
-              className={
-                path.includes("/admin") ? "navbar-item active" : "navbar-item"
-              }
-            ></li>
           </ul>
           <div style={ButtonDiv}>
             <button
+              onClick={() => this.props.onUrlChange("/faq")}
               style={faqButtonStyle}
               type="button"
               className="btn btn-warning"

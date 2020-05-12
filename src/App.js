@@ -27,16 +27,38 @@ class App extends Component {
       authError: null,
       courses: null,
       faculties: null,
+      urlOnLoad: null,
     };
   }
 
   componentDidMount() {
-    //this.signInStudent({ email: "nabil.123@yale.edu", password: "123456" });
-    this.signInStudent({ email: "admin@admin.com", password: "123456" });
+    var userdata = JSON.parse(localStorage.getItem("user-data"));
+    var user = JSON.parse(localStorage.getItem("user-auth"));
+    if (user) {
+      if (userdata) {
+        this.setState({
+          user,
+          course: userdata.courses,
+        });
+      }
+    }
+  }
+
+  onUrlChange = (url) => {
+    this.setState({
+      urlOnLoad: url,
+    });
+  };
+
+  componentDidUpdate() {
+    const { urlOnLoad, courses, faculties } = this.state;
+    localStorage.setItem("user-data", JSON.stringify({ courses, faculties }));
+    localStorage.setItem("url-load", JSON.stringify(urlOnLoad));
   }
 
   render() {
-    const { user, authError, courses } = this.state;
+    const { user, authError, courses, urlOnLoad } = this.state;
+    console.log("urlonload at home", urlOnLoad);
     return (
       <Router>
         <Switch>
@@ -45,7 +67,7 @@ class App extends Component {
               <Redirect to="/login" />
             ) : (
               <>
-                <Redirect to="/home" />
+                <Redirect to={urlOnLoad ? urlOnLoad : "/home"} />
               </>
             )}
           </Route>
@@ -58,6 +80,7 @@ class App extends Component {
                 signInStudent={this.signInStudent}
                 user={user}
                 authError={authError}
+                urlOnLoad={urlOnLoad}
               />
             )}
           />
@@ -69,6 +92,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 signUpStudent={this.signUpStudent}
+                urlOnLoad={urlOnLoad}
               />
             )}
           />
@@ -80,6 +104,7 @@ class App extends Component {
                 {...props}
                 user={user}
                 doPasswordReset={this.doPasswordReset}
+                urlOnLoad={urlOnLoad}
               />
             )}
           />
@@ -92,6 +117,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -104,6 +131,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -116,6 +145,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -128,6 +159,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -140,6 +173,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -152,6 +187,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -164,6 +201,8 @@ class App extends Component {
                 user={user}
                 signOutStudent={this.signOutStudent}
                 courses={courses}
+                urlOnLoad={urlOnLoad}
+                onUrlChange={this.onUrlChange}
               />
             )}
           />
@@ -184,7 +223,11 @@ class App extends Component {
         const courses = await axios.get(
           `http://localhost:3000/courses?campusId=${user.data[0].campusId}`
         );
-        this.setState({ user: user.data[0], courses: courses.data });
+        this.setState({
+          user: user.data[0],
+          courses: courses.data,
+        });
+        localStorage.setItem("user-auth", JSON.stringify(user.data[0]));
       })
       .catch((error) => {
         if (
@@ -224,7 +267,11 @@ class App extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.setState({ user: null });
+        localStorage.removeItem("user-data");
+        localStorage.removeItem("user-auth");
+      })
+      .then(() => {
+        window.location.assign("/login");
       });
   };
 

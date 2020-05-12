@@ -518,3 +518,15 @@ export function createStudent(
 
   return studentObject;
 }
+
+//filter upcoming schedule by day
+export function upcomingSchedule(arr) {
+  var filter = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].days[0].day === getDay(new Date().getDay())) {
+      filter.push(arr[i]);
+    }
+  }
+
+  return filter;
+}

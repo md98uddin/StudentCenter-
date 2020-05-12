@@ -23,13 +23,18 @@ class AidsAndLoans extends Component {
       payAmtError: null,
       fieldError: null,
       successMsgPay: null,
+      urlOnLoad: this.props.urlOnLoad,
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (
+      prevState.user !== nextProps.user ||
+      prevState.urlOnLoad !== nextProps.urlOnLoad
+    ) {
       return {
         user: nextProps.user,
+        urlOnLoad: nextProps.urlOnLoad,
       };
     }
     return null;
@@ -164,6 +169,7 @@ class AidsAndLoans extends Component {
       fieldError,
       successMsgPay,
       payAmtError,
+      urlOnLoad,
     } = this.state;
     return user ? (
       <div
@@ -175,6 +181,8 @@ class AidsAndLoans extends Component {
           signOutStudent={this.props.signOutStudent}
           campus={user.campusId}
           privilege={user.privilege}
+          urlOnLoad={urlOnLoad}
+          onUrlChange={this.props.onUrlChange}
         />
         <BalanceLoanPayCard
           tuition={user.tuition}

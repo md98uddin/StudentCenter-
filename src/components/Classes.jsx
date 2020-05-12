@@ -37,6 +37,7 @@ class Classes extends Component {
       onDropMsg: null,
       duplicateSwapMsg: null,
       swapSuccessMsg: null,
+      urlOnLoad: this.props.urlOnLoad,
     };
   }
 
@@ -57,9 +58,13 @@ class Classes extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.user !== nextProps.user) {
+    if (
+      prevState.user !== nextProps.user ||
+      prevState.urlOnLoad !== nextProps.urlOnLoad
+    ) {
       return {
         user: nextProps.user,
+        urlOnLoad: nextProps.urlOnLoad,
       };
     }
     return null;
@@ -282,6 +287,7 @@ class Classes extends Component {
       droppedMarker,
       swapSuccessMsg,
       duplicateSwapMsg,
+      urlOnLoad,
     } = this.state;
 
     console.log("swap success message", swapSuccessMsg);
@@ -300,6 +306,8 @@ class Classes extends Component {
             signOutStudent={this.props.signOutStudent}
             campus={user.campusId}
             privilege={user.privilege}
+            urlOnLoad={urlOnLoad}
+            onUrlChange={this.props.onUrlChange}
           />
           <Schedule currentTab={currentTab} currentClasses={currentClasses} />
           <AddCourseSearch
