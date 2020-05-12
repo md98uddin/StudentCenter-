@@ -245,7 +245,7 @@ export function getSchedule(arr) {
   for (let i = 0; i < arr.length; i++) {
     var day = [[getDayNum(arr[i].days[0].day)]];
     var obj = {
-      title: `${arr[i].prefix} ${arr[i].courseNumber}`,
+      title: `${arr[i].prefix} ${arr[i].courseNumber} ${arr[i].room} ${arr[i].professor}`,
       daysOfWeek: day,
       startTime: arr[i].days[0].startTime,
       endTime: arr[i].days[0].endTime,
