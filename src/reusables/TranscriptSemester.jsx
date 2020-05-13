@@ -1,7 +1,7 @@
 import React from "react";
 import { getSemestersAttended } from "../utils/services";
 
-const TranscriptSemester = props => {
+const TranscriptSemester = (props) => {
   const { btnStyles, listingStyle, titleStyle } = styles;
   const {
     onSemesterChange,
@@ -13,12 +13,9 @@ const TranscriptSemester = props => {
     onMouseHoverPrint,
     onMouseHoverTranscript,
     onMouseLeave,
-    onPrintTranscript
+    onPrintTranscript,
   } = props;
   const semesters = getSemestersAttended(semesterClasses);
-
-  console.log("on mouse enter transcript", viewTranscript);
-  console.log("on mouse enter print", printTranscript);
 
   return (
     <div className="main">
@@ -74,13 +71,13 @@ const styles = {
     borderColor: "#ffffff",
     marginTop: height / 13,
     height: height / 12,
-    width: width / 8
+    width: width / 8,
   },
   listingStyle: {
     marginLeft: width / 13,
     borderRadius: 3,
     height: height / 12,
-    width: width / 8
+    width: width / 8,
   },
   titleStyle: {
     marginLeft: width / 13,
@@ -89,8 +86,8 @@ const styles = {
     marginTop: height / 40,
     borderRadius: 3,
     height: height / 12,
-    width: width / 8
-  }
+    width: width / 8,
+  },
 };
 
 export default TranscriptSemester;

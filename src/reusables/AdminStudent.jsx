@@ -59,7 +59,6 @@ class AdminStudent extends Component {
       major &&
       year
     ) {
-      console.log("state", this.state);
       const student = createStudent(
         advisor,
         attending,
@@ -99,7 +98,6 @@ class AdminStudent extends Component {
           }
         });
     } else {
-      console.log("missin fields");
       var fieldMsg = "all fields must be filled in/correct";
       this.setState({
         fieldError: fieldMsg,

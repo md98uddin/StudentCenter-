@@ -8,9 +8,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 const EventCalendar = (props) => {
   const { currentTab, currentClasses } = props;
   const { main } = styles;
-  console.log("current classes schedule", currentClasses);
-  console.log("schedule classes schedule", getSchedule(currentClasses));
-
   return currentTab === "View Schedule" ? (
     <div style={main} className="main">
       <FullCalendar

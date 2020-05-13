@@ -75,11 +75,9 @@ class AdminCourses extends Component {
         section
       );
 
-      // console.log(course);
       await axios
         .post("http://localhost:3000/courses/add", course)
         .then((res) => {
-          console.log("res", res.data);
           if (res.data === "course was created") {
             var msg = "course was added to the database";
             this.setState({
@@ -101,7 +99,6 @@ class AdminCourses extends Component {
         successMsg: null,
       });
     }
-    //console.log("state", this.state);
   };
 
   render() {

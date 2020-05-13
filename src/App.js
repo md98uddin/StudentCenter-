@@ -58,7 +58,7 @@ class App extends Component {
 
   render() {
     const { user, authError, courses, urlOnLoad } = this.state;
-    console.log("urlonload at home", urlOnLoad);
+
     return (
       <Router>
         <Switch>
@@ -252,14 +252,10 @@ class App extends Component {
             .then(async (res) => {
               this.setState({ user: res.user });
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch((error) => {});
         }
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
+      .catch((error) => {});
   };
 
   signOutStudent = () => {

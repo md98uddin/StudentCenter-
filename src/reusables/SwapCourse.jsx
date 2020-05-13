@@ -24,7 +24,6 @@ const SwapCourse = (props) => {
     summaryDiv,
     swapMsg,
   } = styles;
-  console.log("initial swapNext", swapNext);
   return currentTab === "Swap Courses" ? (
     <div style={main} className="main">
       <div className="swap">

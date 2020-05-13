@@ -99,20 +99,16 @@ class Classes extends Component {
   };
 
   onSwapDrop = (courseId, courseName) => {
-    this.setState(
-      {
-        dropId: courseId,
-        swapCourseDrop: courseName,
-        swapNext: true,
-      },
-      console.log("on drop id", this.state.swapNext)
-    );
+    this.setState({
+      dropId: courseId,
+      swapCourseDrop: courseName,
+      swapNext: true,
+    });
   };
 
   onSelect = async (obj) => {
     const { user, shopCart } = this.state;
     const courseExist = checkCartDuplicate(obj, shopCart);
-    console.log("on select", courseExist);
     if (courseExist !== true) {
       await axios
         .post(`http://localhost:3000/students/cart/${user.email}`, obj)
@@ -134,7 +130,6 @@ class Classes extends Component {
 
   onDrop = async (id) => {
     const { user } = this.state;
-    console.log("id on drop", id);
     await axios
       .post(`http://localhost:3000/students/current/remove/${user.email}/${id}`)
       .then(() => {
@@ -289,10 +284,6 @@ class Classes extends Component {
       duplicateSwapMsg,
       urlOnLoad,
     } = this.state;
-
-    console.log("swap success message", swapSuccessMsg);
-    console.log("swap error message", duplicateSwapMsg);
-    console.log("on drop id", onDropId);
 
     return user ? (
       <div className="main">

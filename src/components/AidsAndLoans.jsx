@@ -98,7 +98,6 @@ class AidsAndLoans extends Component {
         yearError: yearErrorMessage,
       });
     } else {
-      console.log("no user detected");
     }
   };
 
@@ -116,7 +115,6 @@ class AidsAndLoans extends Component {
       date:
         new Date().getMonth() + new Date().getDay() + new Date().getFullYear(),
     };
-    console.log("on submit", this.state);
     if (user) {
       if (user.tuition < payAmt) {
         var payAmtErrorMessage = "amount is greater than balance";

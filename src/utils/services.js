@@ -193,12 +193,7 @@ export function getSemesterCredits(arr) {
   for (let i = 0; i < arr.length; i++) {
     totalCredits += arr[i].credits;
     totalGradePoint += getGradeValue(arr[i].grade) * arr[i].credits;
-    console.log("grade", getGradeValue(arr[i].grade));
   }
-
-  console.log("totalCredits", totalCredits);
-  console.log("totalGpaPoint", totalGradePoint);
-
   return [totalCredits, totalGradePoint];
 }
 
