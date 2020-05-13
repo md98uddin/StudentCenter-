@@ -523,7 +523,7 @@ export function createStudent(
 export function upcomingSchedule(arr) {
   var filter = [];
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i].days[0].day === getDay(new Date().getDay())) {
+    if (arr[i].days[0].day.toUpperCase() === getDay(new Date().getDay())) {
       filter.push(arr[i]);
     }
   }

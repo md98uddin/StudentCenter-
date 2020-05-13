@@ -1,5 +1,5 @@
 import React from "react";
-import { convertMilitaryTime } from "../utils/services";
+import { convertMilitaryTime, upcomingSchedule } from "../utils/services";
 
 const UpcomingClasses = (props) => {
   const {
@@ -14,7 +14,7 @@ const UpcomingClasses = (props) => {
     classRoom,
   } = styles;
   var top3 = props.currentClasses.slice(0, 3);
-  console.log(props.currentClasses);
+  console.log("sorted class", upcomingSchedule(props.currentClasses));
   if (top3)
     return (
       <div style={main} className="main">
